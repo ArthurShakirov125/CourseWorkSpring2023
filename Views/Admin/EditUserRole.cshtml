@@ -1,0 +1,31 @@
+﻿@using CourseWorkSpring2023.Models.AdminControllerViewModel;
+
+@model RoleViewModel
+
+<h2>Изменение роли для пользователя @Model.UserEmail</h2>
+
+<table class="table">
+    @foreach (var role in Model.AllRoles)
+    {
+        if (Model.UserRoles.Contains(role.Name))
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>
+                    Роль пользователя
+                </td>
+            </tr>
+        }
+        else
+        {
+            <tr>
+                <td>@role.Name</td>
+                <td>
+                    <a class="btn btn-sm btn-primary" asp-action="AddRole" asp-route-roleid="@role.Id" asp-route-userid="@Model.UserId">Выдать роль</a>
+                </td>
+            </tr>
+        }
+    }
+</table>
+
+@Html.ActionLink("Назад", "Index")
