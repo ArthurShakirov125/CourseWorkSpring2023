@@ -1,4 +1,5 @@
 ﻿using CourseWorkSpring2023.Constants;
+using CourseWorkSpring2023.Data.Custom;
 using CourseWorkSpring2023.Models.AdminControllerViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
@@ -12,10 +13,10 @@ namespace CourseWorkSpring2023.Controllers
     [Authorize(Roles = Roles.Admin)]
     public class AdminController : Controller
     {
-        UserManager<IdentityUser> userManager;
+        UserManager<CustomUser> userManager;
         RoleManager<IdentityRole> roleManager;
 
-        public AdminController(UserManager<IdentityUser> userManager, RoleManager<IdentityRole> roleManager)
+        public AdminController(UserManager<CustomUser> userManager, RoleManager<IdentityRole> roleManager)
         {
             this.userManager = userManager;
             this.roleManager = roleManager;
@@ -56,7 +57,7 @@ namespace CourseWorkSpring2023.Controllers
         {
             RoleViewModel model = new RoleViewModel();
 
-            IdentityUser user = await userManager.FindByIdAsync(userid);
+            CustomUser user = await userManager.FindByIdAsync(userid);
             if(user != null)
             {
                 model.UserEmail = user.Email;

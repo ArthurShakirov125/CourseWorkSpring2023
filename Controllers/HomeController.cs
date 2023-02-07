@@ -1,4 +1,5 @@
 ﻿using CourseWorkSpring2023.Constants;
+using CourseWorkSpring2023.Data.Custom;
 using CourseWorkSpring2023.Models;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -14,9 +15,9 @@ namespace CourseWorkSpring2023.Controllers
 {
     public class HomeController : Controller
     {
-        UserManager<IdentityUser> userManager;
+        UserManager<CustomUser> userManager;
         RoleManager<IdentityRole> roleManager;
-        public HomeController(RoleManager<IdentityRole> roleManager, UserManager<IdentityUser> userManager)
+        public HomeController(RoleManager<IdentityRole> roleManager, UserManager<CustomUser> userManager)
         {
             this.roleManager = roleManager;
             this.userManager = userManager;
