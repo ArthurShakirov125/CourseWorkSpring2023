@@ -10,8 +10,5 @@
 </div>
 
 @foreach(var user in Model){
-    <p>UserNAME</p>
-    <p>@user.NormalizedUserName</p>
-    <p>ID</p>
-    <p>@user.Id</p>
+    <p>Mail - @user.Email, nickname - @user.NickName</p>
 }
