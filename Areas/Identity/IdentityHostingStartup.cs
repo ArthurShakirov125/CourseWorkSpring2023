@@ -1,6 +1,6 @@
 ﻿using System;
 using CourseWorkSpring2023.Data;
-using CourseWorkSpring2023.Data.Custom;
+using CourseWorkSpring2023.Custom;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI;
