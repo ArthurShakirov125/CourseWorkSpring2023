@@ -9,6 +9,11 @@ namespace CourseWorkSpring2023.DataAccessLayer
     {
         private readonly ApplicationDbContext _context;
 
+        public TagsRepository(ApplicationDbContext context)
+        {
+            _context = context;
+        }
+
         public void Create(PostsTags model)
         {
             _context.Tags.Add(model);

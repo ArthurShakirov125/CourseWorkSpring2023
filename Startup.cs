@@ -1,5 +1,7 @@
+using CourseWorkSpring2023.Abstract;
 using CourseWorkSpring2023.Custom;
 using CourseWorkSpring2023.Data;
+using CourseWorkSpring2023.DataAccessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -48,6 +50,8 @@ namespace CourseWorkSpring2023
                 options.Password.RequiredLength = 6;
                 options.Password.RequiredUniqueChars = 1;
             });
+
+            services.AddTransient<ICrud<Post>, PostsRepository>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

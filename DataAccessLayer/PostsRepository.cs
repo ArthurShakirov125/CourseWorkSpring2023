@@ -7,6 +7,11 @@ namespace CourseWorkSpring2023.DataAccessLayer
 {
     public class PostsRepository : ICrud<Post>
     {
+
+        public PostsRepository(ApplicationDbContext dbContext)
+        {
+            _context = dbContext;
+        }
         private readonly ApplicationDbContext _context;
 
         public void Create(Post post)

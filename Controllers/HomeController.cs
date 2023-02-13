@@ -1,6 +1,8 @@
-﻿using CourseWorkSpring2023.Constants;
+﻿using CourseWorkSpring2023.Abstract;
+using CourseWorkSpring2023.Constants;
 using CourseWorkSpring2023.Custom;
 using CourseWorkSpring2023.Models;
+using CourseWorkSpring2023.Models.HomeViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -15,14 +17,36 @@ namespace CourseWorkSpring2023.Controllers
 {
     public class HomeController : Controller
     {
-        public HomeController()
+        private ICrud<Post> Crud { get; set; }
+        private HomeViewModel model;
+        public HomeController(ICrud<Post> crud)
         {
+            Crud = crud;
         }
 
         public IActionResult Index()
         {   
-            return View();
+            model = new HomeViewModel();
+            model.Posts = Crud.GetList().Take(20);
+
+            return View(model);
         }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()

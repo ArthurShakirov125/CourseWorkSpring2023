@@ -1,5 +1,6 @@
 ﻿@using CourseWorkSpring2023.Custom;
-@model List<CustomUser>
+@using CourseWorkSpring2023.Models.HomeViewModels;
+@model HomeViewModel;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -9,6 +10,12 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
-@foreach(var user in Model){
-    <p>Mail - @user.Email, nickname - @user.NickName</p>
-}
+
+<div class="posts-container">
+    @foreach (var post in Model.Posts)
+    {
+        <div>
+            @post.Text;
+        </div>
+    }
+</div>
