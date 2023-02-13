@@ -1,5 +1,5 @@
 ﻿using System.Threading.Tasks;
-using CourseWorkSpring2023.Data.Custom;
+using CourseWorkSpring2023.Custom;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;

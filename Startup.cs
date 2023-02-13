@@ -1,5 +1,5 @@
+using CourseWorkSpring2023.Custom;
 using CourseWorkSpring2023.Data;
-using CourseWorkSpring2023.Data.Custom;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;

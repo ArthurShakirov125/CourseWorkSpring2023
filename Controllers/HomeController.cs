@@ -15,33 +15,12 @@ namespace CourseWorkSpring2023.Controllers
 {
     public class HomeController : Controller
     {
-        UserManager<CustomUser> userManager;
-        RoleManager<IdentityRole> roleManager;
-        public HomeController(RoleManager<IdentityRole> roleManager, UserManager<CustomUser> userManager)
+        public HomeController()
         {
-            this.roleManager = roleManager;
-            this.userManager = userManager;
         }
 
         public IActionResult Index()
-        {
-            // await roleManager.CreateAsync(new IdentityRole("Admin"));
-
-            /* var user = new IdentityUser()
-             {
-                 UserName = "Gura@mail.com",
-                 Email = "Gura@mail.com"
-             };
-
-             await userManager.CreateAsync(user, "!Qwerty1"); */
-
-            var users = userManager.Users.ToList();
-            
-            return View(users);
-        }
-
-        public IActionResult Privacy()
-        {
+        {   
             return View();
         }
 

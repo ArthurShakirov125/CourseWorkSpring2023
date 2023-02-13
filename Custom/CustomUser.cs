@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Identity;
 using System;
+using System.Collections;
+using System.Collections.Generic;
 
-namespace CourseWorkSpring2023.Data.Custom
+namespace CourseWorkSpring2023.Custom
 {
     public class CustomUser : IdentityUser
     {
@@ -12,5 +14,7 @@ namespace CourseWorkSpring2023.Data.Custom
         public byte[] AvatarImg { get; set; }
 
         public DateTime RegistrationDay { get; set; }
+
+        public IEnumerable<Post> Posts { get; set; }
     }
 }

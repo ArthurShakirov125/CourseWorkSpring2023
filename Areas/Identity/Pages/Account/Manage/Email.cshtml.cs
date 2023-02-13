@@ -5,12 +5,12 @@ using System.Text;
 using System.Text.Encodings.Web;
 using System.Linq;
 using System.Threading.Tasks;
-using CourseWorkSpring2023.Data.Custom;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
+using CourseWorkSpring2023.Custom;
 
 namespace CourseWorkSpring2023.Areas.Identity.Pages.Account.Manage
 {
