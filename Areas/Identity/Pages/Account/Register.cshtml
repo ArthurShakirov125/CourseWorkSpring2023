@@ -10,8 +10,8 @@
     <div class="col-md-4">
         <form asp-route-returnUrl="@Model.ReturnUrl" method="post"  enctype='multipart/form-data'>
             <h4>Создайте аккаунт</h4>
+
             <hr />
-            <div asp-validation-summary="All" class="text-danger"></div>
             <div class="form-group">
                 <label asp-for="Input.NickName"></label>
                 <input asp-for="Input.NickName" class="form-control" />
@@ -20,6 +20,7 @@
             <div class="form-group">
                 <label for="avatar">Загрузите картинку для профиля</label>
                 <input id="avatar" name="avatar" class="form-control" type="file" />
+                <span id="Input_avatar-error" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Input.Email"></label>
@@ -73,7 +74,18 @@
     -->
     
 </div>
+<script>
+    var uploadField = document.getElementById("avatar");
 
+    uploadField.onchange = function() {
+        if(this.files[0].size > 2097152){
+        let errorsFiled = document.getElementById("Input_avatar-error");
+        errorsFiled.innerText = "Размер изображения не должен превышать 2 мегабайта";
+
+        this.value = "";
+    };
+};
+</script>
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Identity;
+using System;
 
 namespace CourseWorkSpring2023.Data.Custom
 {
@@ -9,5 +10,7 @@ namespace CourseWorkSpring2023.Data.Custom
         public string AvatarImgName { get; set; }
 
         public byte[] AvatarImg { get; set; }
+
+        public DateTime RegistrationDay { get; set; }
     }
 }

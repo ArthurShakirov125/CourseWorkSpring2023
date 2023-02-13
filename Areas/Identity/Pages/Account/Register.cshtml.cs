@@ -87,6 +87,7 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account
                     UserName = Input.Email,
                     Email = Input.Email,
                     NickName = Input.NickName,
+                    RegistrationDay = DateTime.Now
                 };
 
                 if (Request.Form.Files.Any())
