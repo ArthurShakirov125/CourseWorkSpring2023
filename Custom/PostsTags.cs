@@ -1,4 +1,7 @@
-﻿namespace CourseWorkSpring2023.Custom
+﻿using System.Collections;
+using System.Collections.Generic;
+
+namespace CourseWorkSpring2023.Custom
 {
     public class PostsTags
     {

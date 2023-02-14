@@ -1,7 +1,9 @@
 ﻿using CourseWorkSpring2023.Abstract;
 using CourseWorkSpring2023.Custom;
 using CourseWorkSpring2023.Data;
+using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace CourseWorkSpring2023.DataAccessLayer
 {
@@ -26,7 +28,7 @@ namespace CourseWorkSpring2023.DataAccessLayer
             _context.SaveChanges();
         }
 
-        public IEnumerable<Post> GetList() => _context.Posts;
+        public IEnumerable<Post> GetList() => _context.Posts.Include(p => p.User);
 
 
         public Post Read(int id) => _context.Posts.Find(id);
@@ -41,6 +43,6 @@ namespace CourseWorkSpring2023.DataAccessLayer
             post.Tags = model.Tags;
 
             _context.SaveChanges();
-        }
+        } 
     }
 }

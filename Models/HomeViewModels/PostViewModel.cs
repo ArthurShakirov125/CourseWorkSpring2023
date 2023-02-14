@@ -1,14 +1,18 @@
-﻿using System;
-using System.Collections;
+﻿using CourseWorkSpring2023.Custom;
+using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 
-namespace CourseWorkSpring2023.Custom
+namespace CourseWorkSpring2023.Models.HomeViewModels
 {
-    public class Post
+    public class PostViewModel
     {
-        public int Id { get; set; }
+        [Required]
+        [Display(Name = "Заголовок")]
         public string Header { get; set; }
 
+        [Required]
+        [StringLength(240, ErrorMessage = "Ограничение на 240 символов")]
         public string Text { get; set; }
 
         public int Upvotes { get; set; }
@@ -20,5 +24,6 @@ namespace CourseWorkSpring2023.Custom
         public IEnumerable<PostsTags> Tags { get; set; }
 
         public CustomUser User { get; set; }
+
     }
 }

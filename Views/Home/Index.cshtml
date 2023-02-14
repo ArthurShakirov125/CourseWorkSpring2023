@@ -15,7 +15,14 @@
     @foreach (var post in Model.Posts)
     {
         <div>
-            @post.Text;
+            Пользователь
+            @post.User.NickName
+            <br>
+            Заголовок
+            @post.Header
+            <br>
+            Текст
+            @post.Text
         </div>
     }
 </div>

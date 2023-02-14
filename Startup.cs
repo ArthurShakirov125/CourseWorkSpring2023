@@ -52,6 +52,7 @@ namespace CourseWorkSpring2023
             });
 
             services.AddTransient<ICrud<Post>, PostsRepository>();
+            services.AddTransient<ICrud<PostsTags>, TagsRepository>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

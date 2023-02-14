@@ -17,30 +17,56 @@ namespace CourseWorkSpring2023.Controllers
 {
     public class HomeController : Controller
     {
-        private ICrud<Post> Crud { get; set; }
-        private HomeViewModel model;
-        public HomeController(ICrud<Post> crud)
+        private ICrud<Post> postsManager;
+        private ICrud<PostsTags> tagsManager;
+        private UserManager<CustomUser> userManager;
+
+        public HomeController(ICrud<Post> postsManager, ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager)
         {
-            Crud = crud;
+            this.postsManager = postsManager;
+            this.tagsManager = tagsManager;
+            this.userManager = userManager;
         }
 
-        public IActionResult Index()
-        {   
-            model = new HomeViewModel();
-            model.Posts = Crud.GetList().Take(20);
+        public async Task<IActionResult> Index()
+        {
+            CustomUser user = await userManager.GetUserAsync(User);
+
+            var model = new HomeViewModel()
+            {
+                Posts = postsManager.GetList().Take(20),
+                User = user,
+            };
+            
 
             return View(model);
         }
 
+        public IActionResult CreatePost()
+        {
+            var model = new PostViewModel();
 
+            return View(model);
+        }
 
+        [HttpPost]
+        public async Task<IActionResult> CreatePost(PostViewModel model)
+        {
+            CustomUser user = await userManager.GetUserAsync(User);
 
+            var post = new Post()
+            {
+                Header = model.Header,
+                Text = model.Text,
+                User = user,
+                Downvotes = 0,
+                Upvotes = 0,
+                Posted = DateTime.Now,
+            };
 
-
-
-
-
-
+            postsManager.Create(post);
+            return RedirectToAction(nameof(Index));
+        }
 
 
 
