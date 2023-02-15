@@ -10,19 +10,32 @@
     <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
 </div>
 
+<style>
+    .post{
+        border: black solid 1px;
+        margin: 20px;
+    }
+</style>
+
+@await Component.InvokeAsync("PostsFilter")
 
 <div class="posts-container">
     @foreach (var post in Model.Posts)
     {
-        <div>
+        <div class="post">
             Пользователь
-            @post.User.NickName
+            @post.Author.NickName
             <br>
             Заголовок
             @post.Header
             <br>
             Текст
             @post.Text
+            <br>
+            Дата публикации - 
+            @post.Posted
+            <br>
+            Лайки @post.Rating
         </div>
     }
 </div>

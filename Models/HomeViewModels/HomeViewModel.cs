@@ -11,8 +11,8 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
         {
         }
 
-        public IEnumerable<Post> Posts { get; set; }
+        public IEnumerable<PostViewModel> Posts { get; set; }
 
-        public CustomUser User { get; set; }
+        public CustomUser ActiveUser { get; set; }
     }
 }

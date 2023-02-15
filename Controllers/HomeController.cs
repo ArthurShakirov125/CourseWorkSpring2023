@@ -1,11 +1,13 @@
 ﻿using CourseWorkSpring2023.Abstract;
 using CourseWorkSpring2023.Constants;
 using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Data.Migrations;
 using CourseWorkSpring2023.Models;
 using CourseWorkSpring2023.Models.HomeViewModels;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
@@ -28,18 +30,24 @@ namespace CourseWorkSpring2023.Controllers
             this.userManager = userManager;
         }
 
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string filter = null)
         {
             CustomUser user = await userManager.GetUserAsync(User);
+            var model = new HomeViewModel();
+            model.ActiveUser = user;
 
-            var model = new HomeViewModel()
+            switch (filter)
             {
-                Posts = postsManager.GetList().Take(20),
-                User = user,
-            };
-            
-
-            return View(model);
+                case "top":
+                    model.Posts = postsManager.GetList().OrderBy(p => p.Upvotes).Select(p => new PostViewModel(p));
+                    return View(model);
+                case "new":
+                    model.Posts = postsManager.GetList().OrderBy(p => p.Posted).Select(p => new PostViewModel(p));
+                    return View(model);
+                default:
+                    model.Posts = postsManager.GetList().Select(p => new PostViewModel(p));
+                    return View(model);
+            }
         }
 
         public IActionResult CreatePost()

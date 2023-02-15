@@ -7,6 +7,22 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
 {
     public class PostViewModel
     {
+        public PostViewModel()
+        {
+
+        }
+        public PostViewModel(Post post)
+        {
+            Header = post.Header;
+            Text = post.Text;
+            Upvotes = post.Upvotes;
+            Downvotes = post.Downvotes;
+            Posted = post.Posted;
+            Tags = post.Tags;
+            Author = post.User;
+
+        }
+
         [Required]
         [Display(Name = "Заголовок")]
         public string Header { get; set; }
@@ -19,11 +35,19 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
 
         public int Downvotes { get; set; }
 
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:dd/MM/yyyy}")]
         public DateTime Posted { get; set; }
 
         public IEnumerable<PostsTags> Tags { get; set; }
 
-        public CustomUser User { get; set; }
+        public CustomUser Author { get; set; }
+
+        public int Rating
+        {
+            get { return Upvotes - Downvotes; }
+        }
+
 
     }
 }
