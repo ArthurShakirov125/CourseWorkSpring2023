@@ -38,4 +38,31 @@
             Лайки @post.Rating
         </div>
     }
+    <button id="sendBtn" class="btn btn-primary">test</button>
 </div>
+
+<script>
+    $("#sendBtn").click(function(){
+
+        var testObject = new Object();
+        testObject.Name = "test";
+        testObject.Value = "1";
+
+        $.ajax({
+            type: "POST",
+            url: "/Home/GetAjax",
+            data: testObject,
+            succes: function(data){
+                if(data == "pass"){
+                    alert("success");
+                }
+                else{
+                    alert("fail" + data);
+                }
+            },
+            failure:function(err){
+
+            }
+        })
+    })
+</script>
