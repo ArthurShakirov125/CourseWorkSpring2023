@@ -76,11 +76,11 @@ namespace CourseWorkSpring2023.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public IActionResult GetAjax()
+        public string GetAjax()
         {
             string name = Request.Form["Name"];
             string a = Request.Form["Value"];
-            return Json("200");
+            return "200";
         }
 
 

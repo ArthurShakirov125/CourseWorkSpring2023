@@ -13,6 +13,7 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
         }
         public PostViewModel(Post post)
         {
+            Id = post.Id;
             Header = post.Header;
             Text = post.Text;
             Upvotes = post.Upvotes;
@@ -22,6 +23,8 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             Author = post.User;
 
         }
+
+        public int Id { get; }
 
         [Required]
         [Display(Name = "Заголовок")]

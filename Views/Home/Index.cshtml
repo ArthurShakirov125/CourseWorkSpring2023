@@ -36,12 +36,32 @@
             @post.Posted
             <br>
             Лайки @post.Rating
+            <br>
+            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-like="up">+</button>
+            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-like="down">-</button>
         </div>
     }
+    
     <button id="sendBtn" class="btn btn-primary">test</button>
 </div>
 
 <script>
+    window.onload = function(){
+
+
+    $(function(){
+        $(".likeBtn").click(function() {
+            console.log(this);
+            console.log($(this).attr("data-like"));
+        });
+    });
+
+
+    //btn.getAttribute("data-postId");
+
+
+
+
     $("#sendBtn").click(function(){
 
         var testObject = new Object();
@@ -52,8 +72,8 @@
             type: "POST",
             url: "/Home/GetAjax",
             data: testObject,
-            succes: function(data){
-                if(data == "pass"){
+            success: function(data){
+                if(data == "200"){
                     alert("success");
                 }
                 else{
@@ -64,5 +84,6 @@
 
             }
         })
-    })
+    });
+    }
 </script>
