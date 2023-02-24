@@ -15,6 +15,8 @@ namespace CourseWorkSpring2023.Custom
 
         public DateTime RegistrationDay { get; set; }
 
-        public IEnumerable<Post> Posts { get; set; }
+        public List<Post> Posts { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

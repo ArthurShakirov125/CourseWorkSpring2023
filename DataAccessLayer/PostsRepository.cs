@@ -43,6 +43,22 @@ namespace CourseWorkSpring2023.DataAccessLayer
             post.Tags = model.Tags;
 
             _context.SaveChanges();
-        } 
+        }
+
+        public void AddComment(Comment comment, Post post)
+        {
+            var postToUpdate = Read(post.Id);
+
+            _context.Comments.Add(new Comment()
+            {
+                Post = postToUpdate,
+                Text = comment.Text,
+                Commentator = comment.Commentator,
+            });
+
+            postToUpdate.Comments.Add(comment);
+
+            _context.SaveChanges();
+        }
     }
 }

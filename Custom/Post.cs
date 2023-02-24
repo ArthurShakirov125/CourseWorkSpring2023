@@ -17,8 +17,10 @@ namespace CourseWorkSpring2023.Custom
 
         public DateTime Posted { get; set; }
 
-        public IEnumerable<PostsTags> Tags { get; set; }
+        public List<PostsTags> Tags { get; set; }
 
         public CustomUser User { get; set; }
+
+        public List<Comment> Comments { get; set; }
     }
 }

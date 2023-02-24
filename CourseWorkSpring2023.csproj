@@ -6,6 +6,15 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Data\Migrations\20230224060811_comments_and_ratings.cs" />
+    <Compile Remove="Data\Migrations\20230224060811_comments_and_ratings.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230224064307_comments_to_posts.cs" />
+    <Compile Remove="Data\Migrations\20230224064307_comments_to_posts.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230224064544_comments_to_posts.cs" />
+    <Compile Remove="Data\Migrations\20230224064544_comments_to_posts.Designer.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.AspNetCore.Diagnostics.EntityFrameworkCore" Version="3.1.31" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.EntityFrameworkCore" Version="3.1.32" />
     <PackageReference Include="Microsoft.AspNetCore.Identity.UI" Version="3.1.32" />

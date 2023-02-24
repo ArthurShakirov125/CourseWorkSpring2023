@@ -11,9 +11,21 @@ namespace CourseWorkSpring2023.Data
     {
         public DbSet<Post> Posts { get; set; }
         public DbSet<PostsTags> Tags { get; set; }
+        public DbSet<Comment> Comments { get; set; }
+        public DbSet<UsersPostsRates> UsersPostsRates { get; set; }
+        public DbSet<UsersCommentsRates> UsersCommentsRates { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
+        }
+
+        protected override void OnModelCreating(ModelBuilder builder)
+        {
+            builder.Entity<UsersPostsRates>().HasNoKey();
+            builder.Entity<UsersCommentsRates>().HasNoKey();
+
+            base.OnModelCreating(builder);
         }
     }
 }

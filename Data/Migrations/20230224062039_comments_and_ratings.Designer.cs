@@ -4,14 +4,16 @@ using CourseWorkSpring2023.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseWorkSpring2023.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230224062039_comments_and_ratings")]
+    partial class comments_and_ratings
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -175,13 +177,8 @@ namespace CourseWorkSpring2023.Data.Migrations
 
             modelBuilder.Entity("CourseWorkSpring2023.Custom.UsersCommentsRates", b =>
                 {
-                    b.Property<int?>("CommentsId")
-                        .HasColumnType("int");
-
                     b.Property<string>("CustomUserId")
                         .HasColumnType("nvarchar(450)");
-
-                    b.HasIndex("CommentsId");
 
                     b.HasIndex("CustomUserId");
 
@@ -193,12 +190,7 @@ namespace CourseWorkSpring2023.Data.Migrations
                     b.Property<string>("CustomUserId")
                         .HasColumnType("nvarchar(450)");
 
-                    b.Property<int?>("PostId")
-                        .HasColumnType("int");
-
                     b.HasIndex("CustomUserId");
-
-                    b.HasIndex("PostId");
 
                     b.ToTable("UsersPostsRates");
                 });
@@ -341,7 +333,7 @@ namespace CourseWorkSpring2023.Data.Migrations
             modelBuilder.Entity("CourseWorkSpring2023.Custom.Comment", b =>
                 {
                     b.HasOne("CourseWorkSpring2023.Custom.CustomUser", "Commentator")
-                        .WithMany("Comments")
+                        .WithMany()
                         .HasForeignKey("CommentatorId");
 
                     b.HasOne("CourseWorkSpring2023.Custom.Post", "Post")
@@ -365,10 +357,6 @@ namespace CourseWorkSpring2023.Data.Migrations
 
             modelBuilder.Entity("CourseWorkSpring2023.Custom.UsersCommentsRates", b =>
                 {
-                    b.HasOne("CourseWorkSpring2023.Custom.Comment", "Comments")
-                        .WithMany()
-                        .HasForeignKey("CommentsId");
-
                     b.HasOne("CourseWorkSpring2023.Custom.CustomUser", "CustomUser")
                         .WithMany()
                         .HasForeignKey("CustomUserId");
@@ -379,10 +367,6 @@ namespace CourseWorkSpring2023.Data.Migrations
                     b.HasOne("CourseWorkSpring2023.Custom.CustomUser", "CustomUser")
                         .WithMany()
                         .HasForeignKey("CustomUserId");
-
-                    b.HasOne("CourseWorkSpring2023.Custom.Post", "Post")
-                        .WithMany()
-                        .HasForeignKey("PostId");
                 });
 
             modelBuilder.Entity("Microsoft.AspNetCore.Identity.IdentityRoleClaim<string>", b =>
