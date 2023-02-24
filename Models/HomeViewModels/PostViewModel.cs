@@ -21,7 +21,6 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             Posted = post.Posted;
             Tags = post.Tags;
             Author = post.User;
-
         }
 
         public int Id { get; }

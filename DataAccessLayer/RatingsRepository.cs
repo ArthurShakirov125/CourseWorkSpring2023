@@ -1,5 +1,6 @@
 ﻿using CourseWorkSpring2023.Custom;
 using CourseWorkSpring2023.Data;
+using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 using System.Collections.Generic;
 using System.Linq;
@@ -19,23 +20,40 @@ namespace CourseWorkSpring2023.DataAccessLayer
             return _context.UsersPostsRates.Where(r => r.CustomUser.Id == user.Id).Select(r => r.Post);
         }
 
-        public void Upload(Post post, CustomUser user)
+        public void Upvote(int postId, CustomUser user)
         {
-            Post liked = _context.Posts.Find(post);
-            liked.Upvotes++;
-
-            _context.UsersPostsRates.Add(new UsersPostsRates() { CustomUser = user, Post = liked});
+            if (_context.UsersPostsRates.Any(p => p.CustomUser.Id == user.Id && p.Post.Id == postId))
+            {
+                var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
+                Post liked = _context.Posts.Find(postId);
+                liked.Upvotes--;
+                _context.UsersPostsRates.Remove(entry);
+            }
+            else
+            {
+                Post liked = _context.Posts.Find(postId);
+                liked.Upvotes++;
+                _context.UsersPostsRates.Add(new UsersPostsRates() { CustomUser = user, Post = liked });
+            }
 
             _context.SaveChanges();
-
         }
 
-        public void Download(Post post, CustomUser user)
+        public void Downvote(int postId, CustomUser user)
         {
-            Post liked = _context.Posts.Find(post);
-            liked.Downvotes++;
-
-            _context.UsersPostsRates.Add(new UsersPostsRates() { CustomUser = user, Post = liked });
+            if (_context.UsersPostsRates.Any(p => p.CustomUser.Id == user.Id && p.Post.Id == postId))
+            {
+                var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
+                Post liked = _context.Posts.Find(postId);
+                liked.Downvotes--;
+                _context.UsersPostsRates.Remove(entry);
+            }
+            else
+            {
+                Post liked = _context.Posts.Find(postId);
+                liked.Downvotes++;
+                _context.UsersPostsRates.Add(new UsersPostsRates() { CustomUser = user, Post = liked });
+            }
 
             _context.SaveChanges();
         }

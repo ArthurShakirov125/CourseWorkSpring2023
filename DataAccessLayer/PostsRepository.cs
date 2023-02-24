@@ -31,7 +31,7 @@ namespace CourseWorkSpring2023.DataAccessLayer
         public IEnumerable<Post> GetList() => _context.Posts.Include(p => p.User);
 
 
-        public Post Read(int id) => _context.Posts.Find(id);
+        public Post Read(int id) => _context.Posts.Include(p => p.User).Where(p => p.Id == id).First();
 
         public void Update(Post model)
         {

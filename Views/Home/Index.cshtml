@@ -37,8 +37,9 @@
             <br>
             Лайки @post.Rating
             <br>
-            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-like="up">+</button>
-            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-like="down">-</button>
+            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-action="upvote">+</button>
+            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-action="downvote">-</button>
+            <a asp-action="Post" asp-route-postId=@post.Id>Открыть</a>
         </div>
     }
     
@@ -49,12 +50,12 @@
     window.onload = function(){
 
 
-    $(function(){
-        $(".likeBtn").click(function() {
-            console.log(this);
-            console.log($(this).attr("data-like"));
-        });
-    });
+    //$(function(){
+    //    $(".likeBtn").click(function() {
+    //        console.log(this);
+    //        console.log($(this).attr("data-like"));
+    //    });
+    //});
 
 
     //btn.getAttribute("data-postId");
@@ -62,22 +63,28 @@
 
 
 
-    $("#sendBtn").click(function(){
+    $(".likeBtn").click(function(){
 
-        var testObject = new Object();
-        testObject.Name = "test";
-        testObject.Value = "1";
-
+        if($(this).attr("data-action") == null){
+            alert("null");
+            return;
+        }
+        else{
+            var dataObject = new Object();
+            dataObject.Action = $(this).attr("data-action");
+            dataObject.PostId = $(this).attr("data-postId");
+        }
+        
         $.ajax({
             type: "POST",
             url: "/Home/GetAjax",
-            data: testObject,
+            data: dataObject,
             success: function(data){
                 if(data == "200"){
                     alert("success");
                 }
-                else{
-                    alert("fail" + data);
+                else if(data = "400"){
+                    alert("bad request");
                 }
             },
             failure:function(err){

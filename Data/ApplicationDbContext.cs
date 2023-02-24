@@ -22,9 +22,6 @@ namespace CourseWorkSpring2023.Data
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
-            builder.Entity<UsersPostsRates>().HasNoKey();
-            builder.Entity<UsersCommentsRates>().HasNoKey();
-
             base.OnModelCreating(builder);
         }
     }

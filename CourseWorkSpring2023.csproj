@@ -12,6 +12,8 @@
     <Compile Remove="Data\Migrations\20230224064307_comments_to_posts.Designer.cs" />
     <Compile Remove="Data\Migrations\20230224064544_comments_to_posts.cs" />
     <Compile Remove="Data\Migrations\20230224064544_comments_to_posts.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230224070301_comments3.cs" />
+    <Compile Remove="Data\Migrations\20230224070301_comments3.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

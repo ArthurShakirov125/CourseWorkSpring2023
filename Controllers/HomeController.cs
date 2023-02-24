@@ -2,6 +2,7 @@
 using CourseWorkSpring2023.Constants;
 using CourseWorkSpring2023.Custom;
 using CourseWorkSpring2023.Data.Migrations;
+using CourseWorkSpring2023.DataAccessLayer;
 using CourseWorkSpring2023.Models;
 using CourseWorkSpring2023.Models.HomeViewModels;
 using Microsoft.AspNetCore.Authorization;
@@ -22,17 +23,25 @@ namespace CourseWorkSpring2023.Controllers
         private ICrud<Post> postsManager;
         private ICrud<PostsTags> tagsManager;
         private UserManager<CustomUser> userManager;
+        private RatingsRepository ratingsManager;
 
-        public HomeController(ICrud<Post> postsManager, ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager)
+        public HomeController(ICrud<Post> postsManager, ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, RatingsRepository ratingsManager)
         {
             this.postsManager = postsManager;
             this.tagsManager = tagsManager;
             this.userManager = userManager;
+            this.ratingsManager = ratingsManager;
         }
+
+        private async Task<CustomUser> GetUser()
+        {
+            return await userManager.GetUserAsync(User);
+        }
+
 
         public async Task<IActionResult> Index(string filter = null)
         {
-            CustomUser user = await userManager.GetUserAsync(User);
+            CustomUser user = await GetUser();
             var model = new HomeViewModel();
             model.ActiveUser = user;
 
@@ -60,7 +69,7 @@ namespace CourseWorkSpring2023.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePost(PostViewModel model)
         {
-            CustomUser user = await userManager.GetUserAsync(User);
+            CustomUser user = await GetUser();
 
             var post = new Post()
             {
@@ -76,12 +85,48 @@ namespace CourseWorkSpring2023.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public string GetAjax()
+        public async Task<string> GetAjax()
         {
-            string name = Request.Form["Name"];
-            string a = Request.Form["Value"];
-            return "200";
+            /// сделать обработку 
+            /// разработать наш протокол
+            /// 
+
+            switch (Request.Form["Action"])
+            {
+                case "upvote":
+                    {
+                        int postId = int.Parse(Request.Form["PostId"]);
+                        CustomUser user = await GetUser();
+                        ratingsManager.Upvote(postId, user);
+
+                        return "200";
+                    }
+
+                case "downvote":
+                    {
+                        int postId = int.Parse(Request.Form["PostId"]);
+                        CustomUser user = await GetUser();
+                        ratingsManager.Downvote(postId, user);
+
+                        return "200";
+                    }
+
+                default:
+                    return "400";
+            }
         }
+
+
+        public IActionResult Post(int postId)
+        {
+            var model = new PostViewModel(postsManager.Read(postId));
+            
+            return View(model);
+        }
+
+
+
+
 
 
 
