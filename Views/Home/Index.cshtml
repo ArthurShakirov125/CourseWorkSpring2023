@@ -35,10 +35,23 @@
             Дата публикации - 
             @post.Posted
             <br>
-            Лайки @post.Rating
-            <br>
-            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-action="upvote">+</button>
-            <button class="btn btn-dark likeBtn" data-postId=@post.Id data-action="downvote">-</button>
+            <p class="rating">@post.Rating</p>
+            @if (Model.UpvotedPostsIds.Contains(post.Id))
+            {
+                <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-postId=@post.Id data-action="remove_upvote">+</button>
+                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="downvote">-</button>
+            }
+            else if(Model.DownvotedPostsIds.Contains(post.Id))
+            {
+                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="upvote">+</button>
+                <button class="btn btn-warning likeBtn"   data-isPicked="true" data-postId=@post.Id data-action="remove_downvote">-</button>
+            }
+            else
+            {
+                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="upvote">+</button>
+                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="downvote">-</button>
+            }
+
             <a asp-action="Post" asp-route-postId=@post.Id>Открыть</a>
         </div>
     }
@@ -73,6 +86,35 @@
             var dataObject = new Object();
             dataObject.Action = $(this).attr("data-action");
             dataObject.PostId = $(this).attr("data-postId");
+
+
+            // обрабатываем уже выбранный вариант
+            if($(this).attr("data-isPicked") == "true"){
+                $(this).removeClass("btn-warning").addClass("btn-secondary");
+                $(this).attr("data-isPicked", "false");
+                
+                if($(this).attr("data-action") == "remove_upvote"){
+                    $(this).attr("data-action", "upvote");
+                }
+                if($(this).attr("data-action") == "remove_downvote"){
+                    $(this).attr("data-action", "downvote");
+                }
+               // console.log($(this).siblings(".rating").innerText);
+            }
+            // обрабатываем новый вариант
+            else{
+                $(this).removeClass("btn-secondary").addClass("btn-warning");
+                $(this).attr("data-isPicked", "true");
+               //  $(this).siblings(".rating").innerText--;
+               
+                if($(this).attr("data-action") == "upvote"){
+                    $(this).attr("data-action", "remove_upvote");
+                }
+                if($(this).attr("data-action") == "downvote"){
+                    $(this).attr("data-action", "remove_downvote");
+                }
+            }
+           
         }
         
         $.ajax({
@@ -81,10 +123,8 @@
             data: dataObject,
             success: function(data){
                 if(data == "200"){
-                    alert("success");
                 }
                 else if(data = "400"){
-                    alert("bad request");
                 }
             },
             failure:function(err){

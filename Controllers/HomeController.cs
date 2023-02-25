@@ -44,6 +44,10 @@ namespace CourseWorkSpring2023.Controllers
             CustomUser user = await GetUser();
             var model = new HomeViewModel();
             model.ActiveUser = user;
+            model.UpvotedPostsIds = ratingsManager.UsersUpvotes(user).Select(p => p.Id);
+            model.DownvotedPostsIds = ratingsManager.UsersDownvotes(user).Select(p => p.Id);
+
+
 
             switch (filter)
             {
@@ -98,7 +102,6 @@ namespace CourseWorkSpring2023.Controllers
                         int postId = int.Parse(Request.Form["PostId"]);
                         CustomUser user = await GetUser();
                         ratingsManager.Upvote(postId, user);
-
                         return "200";
                     }
 
@@ -107,7 +110,20 @@ namespace CourseWorkSpring2023.Controllers
                         int postId = int.Parse(Request.Form["PostId"]);
                         CustomUser user = await GetUser();
                         ratingsManager.Downvote(postId, user);
-
+                        return "200";
+                    }
+                case "remove_downvote":
+                    {
+                        int postId = int.Parse(Request.Form["PostId"]);
+                        CustomUser user = await GetUser();
+                        ratingsManager.RemoveDownvote(postId, user);
+                        return "200";
+                    }
+                case "remove_upvote":
+                    {
+                        int postId = int.Parse(Request.Form["PostId"]);
+                        CustomUser user = await GetUser();
+                        ratingsManager.RemoveUpvote(postId, user);
                         return "200";
                     }
 
@@ -120,16 +136,9 @@ namespace CourseWorkSpring2023.Controllers
         public IActionResult Post(int postId)
         {
             var model = new PostViewModel(postsManager.Read(postId));
-            
+
             return View(model);
         }
-
-
-
-
-
-
-
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
