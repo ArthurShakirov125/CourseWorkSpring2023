@@ -63,5 +63,31 @@ namespace CourseWorkSpring2023.DataAccessLayer
             _context.UsersPostsRates.Remove(entry);
             _context.SaveChanges();
         }
+
+        public void DownvoteAndRemoveUpvote(int postId, CustomUser user)
+        {
+            var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
+            Post post = _context.Posts.Find(postId);
+
+            entry.isUpvote = false;
+
+            post.Downvotes++;
+            post.Upvotes--;
+
+            _context.SaveChanges();
+        }
+
+        public void UpvoteAndRemoveDownvote(int postId, CustomUser user)
+        {
+            var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
+            Post post = _context.Posts.Find(postId);
+
+            entry.isUpvote = true;
+
+            post.Downvotes--;
+            post.Upvotes++;
+
+            _context.SaveChanges();
+        }
     }
 }

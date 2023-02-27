@@ -94,36 +94,40 @@ namespace CourseWorkSpring2023.Controllers
             /// сделать обработку 
             /// разработать наш протокол
             /// 
+            int postId = int.Parse(Request.Form["PostId"]);
+            CustomUser user = await GetUser();
 
             switch (Request.Form["Action"])
             {
                 case "upvote":
                     {
-                        int postId = int.Parse(Request.Form["PostId"]);
-                        CustomUser user = await GetUser();
                         ratingsManager.Upvote(postId, user);
                         return "200";
                     }
 
                 case "downvote":
                     {
-                        int postId = int.Parse(Request.Form["PostId"]);
-                        CustomUser user = await GetUser();
                         ratingsManager.Downvote(postId, user);
                         return "200";
                     }
                 case "remove_downvote":
                     {
-                        int postId = int.Parse(Request.Form["PostId"]);
-                        CustomUser user = await GetUser();
                         ratingsManager.RemoveDownvote(postId, user);
                         return "200";
                     }
                 case "remove_upvote":
                     {
-                        int postId = int.Parse(Request.Form["PostId"]);
-                        CustomUser user = await GetUser();
                         ratingsManager.RemoveUpvote(postId, user);
+                        return "200";
+                    }
+                case "downvote_and_remove_upvote":
+                    {
+                        ratingsManager.DownvoteAndRemoveUpvote(postId, user);
+                        return "200";
+                    }
+                case "upvote_and_remove_downvote":
+                    {
+                        ratingsManager.UpvoteAndRemoveDownvote(postId, user);
                         return "200";
                     }
 
