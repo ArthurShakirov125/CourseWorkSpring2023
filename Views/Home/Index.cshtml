@@ -39,11 +39,11 @@
             @if (Model.UpvotedPostsIds.Contains(post.Id))
             {
                 <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-postId=@post.Id data-action="remove_upvote">+</button>
-                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="downvote">-</button>
+                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="downvote_and_remove_upvote">-</button>
             }
             else if(Model.DownvotedPostsIds.Contains(post.Id))
             {
-                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="upvote">+</button>
+                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="upvote_and_remove_downvote">+</button>
                 <button class="btn btn-warning likeBtn"   data-isPicked="true" data-postId=@post.Id data-action="remove_downvote">-</button>
             }
             else
@@ -56,7 +56,8 @@
         </div>
     }
     
-    <button id="sendBtn" class="btn btn-primary">test</button>
+    <button class="like btn btn-primary" data-isPicked="false">like</button>
+    <button class="dis btn btn-primary" data-isPicked="false">dis</button>
 </div>
 
 <script>
@@ -74,6 +75,73 @@
     //btn.getAttribute("data-postId");
 
 
+    $(".like").click(function(){
+
+        console.log($(this));
+        let mirror = $(this).next(".dis");
+        
+        let dataObject = new Object();
+        dataObject.Action = $(this).attr("data-action");
+        dataObject.PostId = $(this).attr("data-postId");
+
+        let isDisPicked = mirror.attr("data-isPicked") == "true";
+        let isLikePicked = $(this).attr("data-isPicked") == "true";
+
+
+
+        if(!isDisPicked && !isLikePicked){ // обычный лайк
+            $(this).removeClass("btn-primary").addClass("btn-danger");
+            $(this).attr("data-isPicked", "true");
+
+        }
+        if(isLikePicked && !isDisPicked){ // убираем лайк
+            $(this).removeClass("btn-danger").addClass("btn-primary");
+            $(this).attr("data-isPicked", "false");
+
+        }
+        if(!isLikePicked && isDisPicked){ // меняем диз на лайк
+            $(this).removeClass("btn-primary").addClass("btn-danger");
+            $(this).attr("data-isPicked", "true");
+
+            mirror.removeClass("btn-danger").addClass("btn-primary");
+            mirror.attr("data-isPicked", "false");
+        }
+    });
+
+
+    $(".dis").click(function(){
+
+        console.log($(this));
+        let mirror = $(this).prev(".like");
+
+        let dataObject = new Object();
+        dataObject.Action = $(this).attr("data-action");
+        dataObject.PostId = $(this).attr("data-postId");
+
+        let isDisPicked = mirror.attr("data-isPicked") == "true";
+        let isLikePicked = $(this).attr("data-isPicked") == "true";
+
+
+
+        if(!isDisPicked && !isLikePicked){ // обычный диз
+            $(this).removeClass("btn-primary").addClass("btn-danger");
+            $(this).attr("data-isPicked", "true");
+
+        }
+        if(isLikePicked && !isDisPicked){ // убираем диз
+            $(this).removeClass("btn-danger").addClass("btn-primary");
+            $(this).attr("data-isPicked", "false");
+
+        }
+        if(!isLikePicked && isDisPicked){ // меняем лайк на диз
+            $(this).removeClass("btn-primary").addClass("btn-danger");
+            $(this).attr("data-isPicked", "true");
+
+            mirror.removeClass("btn-danger").addClass("btn-primary");
+            mirror.attr("data-isPicked", "false");
+        }
+    });
+
 
 
     $(".likeBtn").click(function(){
@@ -87,17 +155,29 @@
             dataObject.Action = $(this).attr("data-action");
             dataObject.PostId = $(this).attr("data-postId");
 
+            console.log($(this));
+
 
             // обрабатываем уже выбранный вариант
-            if($(this).attr("data-isPicked") == "true"){
+           /* if($(this).attr("data-isPicked") == "true"){
                 $(this).removeClass("btn-warning").addClass("btn-secondary");
                 $(this).attr("data-isPicked", "false");
                 
                 if($(this).attr("data-action") == "remove_upvote"){
                     $(this).attr("data-action", "upvote");
+                    // соседняя кнопка должна менять хначение экшена
                 }
                 if($(this).attr("data-action") == "remove_downvote"){
                     $(this).attr("data-action", "downvote");
+                    // соседняя кнопка должна менять хначение экшена
+                }
+                if($(this).attr("data-action") == "downvote_and_remove_upvote"){
+                    $(this).attr("data-action", "remove_downvote");
+                    // соседняя кнопка должна менять хначение экшена
+                }
+                if($(this).attr("data-action") == "upvote_and_remove_downvote"){
+                    $(this).attr("data-action", "remove_upvote");
+                    // соседняя кнопка должна менять хначение экшена
                 }
                // console.log($(this).siblings(".rating").innerText);
             }
@@ -113,7 +193,7 @@
                 if($(this).attr("data-action") == "downvote"){
                     $(this).attr("data-action", "remove_downvote");
                 }
-            }
+            }*/
            
         }
         
@@ -125,6 +205,7 @@
                 if(data == "200"){
                 }
                 else if(data = "400"){
+                    alert("error 400");
                 }
             },
             failure:function(err){
