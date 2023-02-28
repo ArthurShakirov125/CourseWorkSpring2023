@@ -43,16 +43,24 @@ namespace CourseWorkSpring2023.Controllers
         {
             CustomUser user = await GetUser();
             var model = new HomeViewModel();
-            model.ActiveUser = user;
-            model.UpvotedPostsIds = ratingsManager.UsersUpvotes(user).Select(p => p.Id);
-            model.DownvotedPostsIds = ratingsManager.UsersDownvotes(user).Select(p => p.Id);
 
-
+            if (user != null)
+            {
+                model.ActiveUser = user;
+                model.UpvotedPostsIds = ratingsManager.UsersUpvotes(user).Select(p => p.Id);
+                model.DownvotedPostsIds = ratingsManager.UsersDownvotes(user).Select(p => p.Id);
+            }
+            else
+            {
+                model.ActiveUser = null;
+                model.UpvotedPostsIds = null;
+                model.DownvotedPostsIds = null;
+            }
 
             switch (filter)
             {
                 case "top":
-                    model.Posts = postsManager.GetList().OrderBy(p => p.Upvotes).Select(p => new PostViewModel(p));
+                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Upvotes).Select(p => new PostViewModel(p));
                     return View(model);
                 case "new":
                     model.Posts = postsManager.GetList().OrderBy(p => p.Posted).Select(p => new PostViewModel(p));
