@@ -21,6 +21,7 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             Posted = post.Posted;
             Tags = post.Tags;
             Author = post.User;
+            Comments = post.Comments;
         }
 
         public int Id { get; }
@@ -42,6 +43,9 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
         public DateTime Posted { get; set; }
 
         public IEnumerable<PostsTags> Tags { get; set; }
+
+
+        public IEnumerable<Comment> Comments { get; set; }
 
         public CustomUser Author { get; set; }
 

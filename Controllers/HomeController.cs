@@ -20,12 +20,12 @@ namespace CourseWorkSpring2023.Controllers
 {
     public class HomeController : Controller
     {
-        private ICrud<Post> postsManager;
+        private PostsRepository postsManager;
         private ICrud<PostsTags> tagsManager;
         private UserManager<CustomUser> userManager;
         private RatingsRepository ratingsManager;
 
-        public HomeController(ICrud<Post> postsManager, ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, RatingsRepository ratingsManager)
+        public HomeController(PostsRepository postsManager, ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, RatingsRepository ratingsManager)
         {
             this.postsManager = postsManager;
             this.tagsManager = tagsManager;
@@ -112,7 +112,6 @@ namespace CourseWorkSpring2023.Controllers
                         ratingsManager.Upvote(postId, user);
                         return "200";
                     }
-
                 case "downvote":
                     {
                         ratingsManager.Downvote(postId, user);
@@ -136,6 +135,11 @@ namespace CourseWorkSpring2023.Controllers
                 case "upvote_and_remove_downvote":
                     {
                         ratingsManager.UpvoteAndRemoveDownvote(postId, user);
+                        return "200";
+                    }
+                case "comment":
+                    {
+                        postsManager.AddComment(user, postId, Request.Form["Text"]);
                         return "200";
                     }
 

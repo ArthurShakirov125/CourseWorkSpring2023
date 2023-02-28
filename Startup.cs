@@ -51,7 +51,7 @@ namespace CourseWorkSpring2023
                 options.Password.RequiredUniqueChars = 1;
             });
 
-            services.AddTransient<ICrud<Post>, PostsRepository>();
+            services.AddTransient<PostsRepository>();
             services.AddTransient<ICrud<PostsTags>, TagsRepository>();
             services.AddTransient<RatingsRepository>();
 

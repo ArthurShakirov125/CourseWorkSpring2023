@@ -3,3 +3,65 @@
 
 <h1>@Model.Header</h1>
 <h2>@Model.Author.NickName</h2>
+<p class="postId" hidden>@Model.Id</p>
+
+     <textarea class="comment_text"></textarea>
+     <br>
+     <button class="leave_comment_btn btn btn-primary">Оставить комментарий</button>
+
+<style>
+    .comment-section .comment{
+        border: 1px solid black;
+        margin:5px;
+        padding:5px;
+    }
+</style>
+
+<div class="comment-section">
+    @if(Model.Comments.Any()){
+        @foreach (var comment in Model.Comments)
+        {
+            <div class="comment">
+                <h4>@comment.Commentator</h4>
+                <p>@comment.Text</p>
+            </div>
+        }
+    }else{
+        <div class="no-comments">
+            <p>Комментариев пока нету</p>
+        </div>
+    }    
+</div>
+
+<script>
+    window.onload = function(){
+
+        $(".leave_comment_btn").click(function(){
+           let txt = $(".comment_text").val();
+
+           let dataObject = new Object();
+           dataObject.Text = txt;
+           dataObject.PostId = $(".postId").text();
+           dataObject.Action = "comment";
+
+           console.log(dataObject);
+           
+           $.ajax({
+            type: "POST",
+            url: "/Home/GetAjax",
+            data: dataObject,
+            success: function(data){
+                if(data == "200"){
+                }
+                else if(data = "400"){
+                    alert("error 400");
+                }
+            },
+            failure:function(err){
+
+            }
+        })
+        });
+
+    }
+</script>
