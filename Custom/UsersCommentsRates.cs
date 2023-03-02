@@ -6,7 +6,7 @@ namespace CourseWorkSpring2023.Custom
     {
         public int Id { get; set; }
         public CustomUser CustomUser { get; set; }
-        public Comment Comments { get; set; }
+        public Comment Comment { get; set; }
         public bool isUpvote { get; set; }
     }
 }

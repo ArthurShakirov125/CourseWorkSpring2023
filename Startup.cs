@@ -54,6 +54,7 @@ namespace CourseWorkSpring2023
             services.AddTransient<PostsRepository>();
             services.AddTransient<ICrud<PostsTags>, TagsRepository>();
             services.AddTransient<RatingsRepository>();
+            services.AddTransient<CommentsRepository>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

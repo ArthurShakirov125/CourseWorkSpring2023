@@ -4,14 +4,16 @@ using CourseWorkSpring2023.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 namespace CourseWorkSpring2023.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    partial class ApplicationDbContextModelSnapshot : ModelSnapshot
+    [Migration("20230302112033_comments")]
+    partial class comments
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -189,7 +191,7 @@ namespace CourseWorkSpring2023.Data.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<int?>("CommentId")
+                    b.Property<int?>("CommentsId")
                         .HasColumnType("int");
 
                     b.Property<string>("CustomUserId")
@@ -200,7 +202,7 @@ namespace CourseWorkSpring2023.Data.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CommentId");
+                    b.HasIndex("CommentsId");
 
                     b.HasIndex("CustomUserId");
 
@@ -394,9 +396,9 @@ namespace CourseWorkSpring2023.Data.Migrations
 
             modelBuilder.Entity("CourseWorkSpring2023.Custom.UsersCommentsRates", b =>
                 {
-                    b.HasOne("CourseWorkSpring2023.Custom.Comment", "Comment")
+                    b.HasOne("CourseWorkSpring2023.Custom.Comment", "Comments")
                         .WithMany()
-                        .HasForeignKey("CommentId");
+                        .HasForeignKey("CommentsId");
 
                     b.HasOne("CourseWorkSpring2023.Custom.CustomUser", "CustomUser")
                         .WithMany()
