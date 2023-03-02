@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.Linq;
 
 namespace CourseWorkSpring2023.Models.HomeViewModels
 {
@@ -52,6 +53,16 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
         public int Rating
         {
             get { return Upvotes - Downvotes; }
+        }
+
+        public CustomUser ActiveUser { get; set; }
+
+        public int CommentsCount
+        {
+            get
+            {
+                return Comments != null ? Comments.Count() : 0;
+            }
         }
 
 

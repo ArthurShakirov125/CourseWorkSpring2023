@@ -28,7 +28,7 @@ namespace CourseWorkSpring2023.DataAccessLayer
             _context.SaveChanges();
         }
 
-        public IEnumerable<Post> GetList() => _context.Posts.Include(p => p.User);
+        public IEnumerable<Post> GetList() => _context.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
 
 
         public Post Read(int id) => _context.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags).Where(p => p.Id == id).First();
@@ -54,6 +54,7 @@ namespace CourseWorkSpring2023.DataAccessLayer
                 Post = postToUpdate,
                 Text = commentText,
                 Commentator = user,
+                Commented = System.DateTime.Now
             };
 
             _context.Comments.Add(comment);

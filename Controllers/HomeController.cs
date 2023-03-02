@@ -63,7 +63,7 @@ namespace CourseWorkSpring2023.Controllers
                     model.Posts = postsManager.GetList().OrderByDescending(p => p.Upvotes).Select(p => new PostViewModel(p));
                     return View(model);
                 case "new":
-                    model.Posts = postsManager.GetList().OrderBy(p => p.Posted).Select(p => new PostViewModel(p));
+                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Posted).Select(p => new PostViewModel(p));
                     return View(model);
                 default:
                     model.Posts = postsManager.GetList().Select(p => new PostViewModel(p));
@@ -149,10 +149,12 @@ namespace CourseWorkSpring2023.Controllers
         }
 
 
-        public IActionResult Post(int postId)
+        public async Task<IActionResult> Post(int postId)
         {
             var model = new PostViewModel(postsManager.Read(postId));
+            CustomUser user = await GetUser();
 
+            model.ActiveUser = user;
             return View(model);
         }
 

@@ -4,11 +4,16 @@
 <h1>@Model.Header</h1>
 <h2>@Model.Author.NickName</h2>
 <p class="postId" hidden>@Model.Id</p>
+<p>@Model.Text</p>
 
      <textarea class="comment_text"></textarea>
      <br>
-     <button class="leave_comment_btn btn btn-primary">Оставить комментарий</button>
-
+     @if(Model.ActiveUser == null){
+        <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">Оставить комментарий</a>
+     }
+     else{
+        <button class="leave_comment_btn btn btn-primary" data-Nickname=@Model.ActiveUser.NickName>Оставить комментарий</button>
+     }
 <style>
     .comment-section .comment{
         border: 1px solid black;
@@ -22,8 +27,11 @@
         @foreach (var comment in Model.Comments)
         {
             <div class="comment">
-                <h4>@comment.Commentator</h4>
+                <h4>@comment.Commentator.NickName</h4>
                 <p>@comment.Text</p>
+
+
+
             </div>
         }
     }else{
@@ -39,12 +47,15 @@
         $(".leave_comment_btn").click(function(){
            let txt = $(".comment_text").val();
 
+           if(!txt){
+               // добавить валидацию
+               return;
+           }
+
            let dataObject = new Object();
            dataObject.Text = txt;
            dataObject.PostId = $(".postId").text();
            dataObject.Action = "comment";
-
-           console.log(dataObject);
            
            $.ajax({
             type: "POST",
@@ -60,7 +71,15 @@
             failure:function(err){
 
             }
-        })
+            });
+
+            if($(".comment-section").children(".no-comments").length){
+                // комментариев ещё нет
+                $(".comment-section").children(".no-comments").remove();
+            }
+                // комменты уже есть
+            $(".comment-section").append('<div class="comment"> <h4>' + $(this).attr("data-Nickname") + '</h4> <p>' + txt + '</p> </div>');
+
         });
 
     }

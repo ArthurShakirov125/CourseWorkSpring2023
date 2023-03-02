@@ -26,14 +26,11 @@
             Пользователь
             @post.Author.NickName
             <br>
-            Заголовок
             @post.Header
             <br>
-            Текст
-            @post.Text
+            Дата публикации - @post.Posted
             <br>
-            Дата публикации - 
-            @post.Posted
+            Комментарии - @post.CommentsCount
             <br>
             <p class="rating">@post.Rating</p>
             @if(Model.ActiveUser == null)
