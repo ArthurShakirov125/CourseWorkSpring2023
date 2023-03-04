@@ -53,8 +53,8 @@ namespace CourseWorkSpring2023.DataAccessLayer
             {
                 Post = postToUpdate,
                 Text = commentText,
-                Commentator = user,
-                Commented = System.DateTime.Now
+                User = user,
+                Uploaded = System.DateTime.Now
             };
 
             _context.Comments.Add(comment);

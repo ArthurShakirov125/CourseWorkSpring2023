@@ -63,7 +63,7 @@ namespace CourseWorkSpring2023.Controllers
                     model.Posts = postsManager.GetList().OrderByDescending(p => p.Upvotes).Select(p => new PostViewModel(p));
                     return View(model);
                 case "new":
-                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Posted).Select(p => new PostViewModel(p));
+                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Uploaded).Select(p => new PostViewModel(p));
                     return View(model);
                 default:
                     model.Posts = postsManager.GetList().Select(p => new PostViewModel(p));
@@ -90,7 +90,7 @@ namespace CourseWorkSpring2023.Controllers
                 User = user,
                 Downvotes = 0,
                 Upvotes = 0,
-                Posted = DateTime.Now,
+                Uploaded = DateTime.Now,
             };
 
             postsManager.Create(post);
@@ -102,43 +102,48 @@ namespace CourseWorkSpring2023.Controllers
             /// сделать обработку 
             /// разработать наш протокол
             /// 
-            int postId = int.Parse(Request.Form["PostId"]);
+            int id = 0;
+            if (Request.Form.ContainsKey("Id"))
+            {
+               id  = int.Parse(Request.Form["Id"]);
+            }
             CustomUser user = await GetUser();
 
             switch (Request.Form["Action"])
             {
                 case "upvote":
                     {
-                        ratingsManager.Upvote(postId, user);
+                        ratingsManager.Upvote(id, user);
                         return "200";
                     }
                 case "downvote":
                     {
-                        ratingsManager.Downvote(postId, user);
+                        ratingsManager.Downvote(id, user);
                         return "200";
                     }
                 case "remove_downvote":
                     {
-                        ratingsManager.RemoveDownvote(postId, user);
+                        ratingsManager.RemoveDownvote(id, user);
                         return "200";
                     }
                 case "remove_upvote":
                     {
-                        ratingsManager.RemoveUpvote(postId, user);
+                        ratingsManager.RemoveUpvote(id, user);
                         return "200";
                     }
                 case "downvote_and_remove_upvote":
                     {
-                        ratingsManager.DownvoteAndRemoveUpvote(postId, user);
+                        ratingsManager.DownvoteAndRemoveUpvote(id, user);
                         return "200";
                     }
                 case "upvote_and_remove_downvote":
                     {
-                        ratingsManager.UpvoteAndRemoveDownvote(postId, user);
+                        ratingsManager.UpvoteAndRemoveDownvote(id, user);
                         return "200";
                     }
                 case "comment":
                     {
+                        int postId = int.Parse(Request.Form["PostId"]);
                         postsManager.AddComment(user, postId, Request.Form["Text"]);
                         return "200";
                     }
@@ -154,6 +159,8 @@ namespace CourseWorkSpring2023.Controllers
             var model = new PostViewModel(postsManager.Read(postId));
             CustomUser user = await GetUser();
 
+            model.UpvotedCommentsIds = ratingsManager.UsersUpvotes(user).Select(p => p.Id);
+            model.DownvotedCommentsIds = ratingsManager.UsersDownvotes(user).Select(p => p.Id);
             model.ActiveUser = user;
             return View(model);
         }

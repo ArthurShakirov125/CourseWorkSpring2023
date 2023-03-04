@@ -1,12 +1,12 @@
-﻿using System.Collections.Generic;
+﻿using CourseWorkSpring2023.Abstract;
 
 namespace CourseWorkSpring2023.Custom
 {
-    public class UsersCommentsRates
+    public class UserContentRates
     {
         public int Id { get; set; }
         public CustomUser CustomUser { get; set; }
-        public Comment Comment { get; set; }
+        public UploadableContent Content { get; set; }
         public bool isUpvote { get; set; }
     }
 }

@@ -16,6 +16,8 @@
     <Compile Remove="Data\Migrations\20230224070301_comments3.Designer.cs" />
     <Compile Remove="Data\Migrations\20230228083159_test.cs" />
     <Compile Remove="Data\Migrations\20230228083159_test.Designer.cs" />
+    <Compile Remove="Data\Migrations\20230304092251_refactoring_uploadable_content.cs" />
+    <Compile Remove="Data\Migrations\20230304092251_refactoring_uploadable_content.Designer.cs" />
   </ItemGroup>
 
   <ItemGroup>

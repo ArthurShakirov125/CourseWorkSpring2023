@@ -1,4 +1,5 @@
-﻿using CourseWorkSpring2023.Custom;
+﻿using CourseWorkSpring2023.Abstract;
+using CourseWorkSpring2023.Custom;
 using CourseWorkSpring2023.Data;
 using Microsoft.EntityFrameworkCore.Internal;
 using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
@@ -16,76 +17,86 @@ namespace CourseWorkSpring2023.DataAccessLayer
             _context = context;
         }
 
-        public IEnumerable<Post> UsersRates(CustomUser user)
+        public IEnumerable<UploadableContent> UsersRates(CustomUser user)
         {
-            return _context.UsersPostsRates.Where(r => r.CustomUser.Id == user.Id).Select(r => r.Post);
+            return _context.Rates.Where(r => r.CustomUser.Id == user.Id).Select(r => r.Content);
         }
 
-        public IEnumerable<Post> UsersUpvotes(CustomUser user)
+        public IEnumerable<UploadableContent> UsersUpvotes(CustomUser user)
         {
-            return _context.UsersPostsRates.Where(r => r.CustomUser.Id == user.Id && r.isUpvote).Select(r => r.Post);
+            return _context.Rates.Where(r => r.CustomUser.Id == user.Id && r.isUpvote).Select(r => r.Content);
         }
 
-        public IEnumerable<Post> UsersDownvotes(CustomUser user)
+        public IEnumerable<UploadableContent> UsersDownvotes(CustomUser user)
         {
-            return _context.UsersPostsRates.Where(r => r.CustomUser.Id == user.Id && !r.isUpvote).Select(r => r.Post);
+            return _context.Rates.Where(r => r.CustomUser.Id == user.Id && !r.isUpvote).Select(r => r.Content);
         }
 
-        public void Upvote(int postId, CustomUser user)
+        public UploadableContent FindContent(int contentId)
         {
-            Post post = _context.Posts.Find(postId);
-            post.Upvotes++;
-            _context.UsersPostsRates.Add(new UsersPostsRates() { CustomUser = user, Post = post, isUpvote = true });
+            UploadableContent content = _context.Posts.Find(contentId);
+            if(content == null)
+            {
+                content = _context.Comments.Find(contentId);
+            }
+            return content;
+        }
+
+        public void Upvote(int contentId, CustomUser user)
+        {
+            UploadableContent content = FindContent(contentId);
+            content.Upvotes++;
+            _context.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = true });
             _context.SaveChanges();
         }
-        public void RemoveUpvote(int postId, CustomUser user)
+        public void RemoveUpvote(int contentId, CustomUser user)
         {
-            var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
-            Post post = _context.Posts.Find(postId);
-            post.Upvotes--;
-            _context.UsersPostsRates.Remove(entry);
-            _context.SaveChanges();
-        }
-
-        public void Downvote(int postId, CustomUser user)
-        {
-            Post post = _context.Posts.Find(postId);
-            post.Downvotes++;
-            _context.UsersPostsRates.Add(new UsersPostsRates() { CustomUser = user, Post = post, isUpvote = false });
-            _context.SaveChanges();
-        }
-
-        public void RemoveDownvote(int postId, CustomUser user)
-        {
-            var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
-            Post post = _context.Posts.Find(postId);
-            post.Downvotes--;
-            _context.UsersPostsRates.Remove(entry);
+            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            UploadableContent content = FindContent(contentId);
+            content.Upvotes--;
+            _context.Rates.Remove(entry);
             _context.SaveChanges();
         }
 
-        public void DownvoteAndRemoveUpvote(int postId, CustomUser user)
+        public void Downvote(int contentId, CustomUser user)
         {
-            var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
-            Post post = _context.Posts.Find(postId);
+            UploadableContent content = FindContent(contentId);
+            content.Downvotes++;
+            _context.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = false });
+            _context.SaveChanges();
+        }
+
+        public void RemoveDownvote(int contentId, CustomUser user)
+        {
+            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            UploadableContent content = FindContent(contentId);
+            content.Downvotes--;
+            _context.Rates.Remove(entry);
+            _context.SaveChanges();
+        }
+
+        public void DownvoteAndRemoveUpvote(int contentId, CustomUser user)
+        {
+            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            UploadableContent content = FindContent(contentId);
 
             entry.isUpvote = false;
 
-            post.Downvotes++;
-            post.Upvotes--;
+            content.Downvotes++;
+            content.Upvotes--;
 
             _context.SaveChanges();
         }
 
-        public void UpvoteAndRemoveDownvote(int postId, CustomUser user)
+        public void UpvoteAndRemoveDownvote(int contentId, CustomUser user)
         {
-            var entry = _context.UsersPostsRates.First(p => p.CustomUser.Id == user.Id && p.Post.Id == postId);
-            Post post = _context.Posts.Find(postId);
+            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            UploadableContent content = FindContent(contentId);
 
             entry.isUpvote = true;
 
-            post.Downvotes--;
-            post.Upvotes++;
+            content.Downvotes--;
+            content.Upvotes++;
 
             _context.SaveChanges();
         }

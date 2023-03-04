@@ -19,7 +19,7 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             Text = post.Text;
             Upvotes = post.Upvotes;
             Downvotes = post.Downvotes;
-            Posted = post.Posted;
+            Posted = post.Uploaded;
             Tags = post.Tags;
             Author = post.User;
             Comments = post.Comments;
@@ -65,6 +65,9 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             }
         }
 
+        public IEnumerable<int> UpvotedCommentsIds { get; set; }
+
+        public IEnumerable<int> DownvotedCommentsIds { get; set; }
 
     }
 }

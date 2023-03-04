@@ -42,18 +42,18 @@
             {
                 @if (Model.UpvotedPostsIds.Contains(post.Id))
                 {
-                    <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-postId=@post.Id data-action="remove_upvote">+</button>
-                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-postId=@post.Id data-action="downvote_and_remove_upvote">-</button>
+                    <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-Id=@post.Id data-action="remove_upvote">+</button>
+                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote_and_remove_upvote">-</button>
                 }
                 else if (Model.DownvotedPostsIds.Contains(post.Id))
                 {
-                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="upvote_and_remove_downvote">+</button>
-                    <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-postId=@post.Id data-action="remove_downvote">-</button>
+                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote_and_remove_downvote">+</button>
+                    <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-Id=@post.Id data-action="remove_downvote">-</button>
                 }
                 else
                 {
-                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-postId=@post.Id data-action="upvote">+</button>
-                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-postId=@post.Id data-action="downvote">-</button>
+                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote">+</button>
+                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote">-</button>
                 }
             }
             <a asp-action="Post" asp-route-postId=@post.Id>Открыть</a>
@@ -61,206 +61,145 @@
     }
 </div>
 
+@section scripts{
+    
 <script>
     window.onload = function(){
+    
+        $(".likeBtn").click(function(){
 
-
-    //$(function(){
-    //    $(".likeBtn").click(function() {
-    //        console.log(this);
-    //        console.log($(this).attr("data-like"));
-    //    });
-    //});
-
-
-    //btn.getAttribute("data-postId");
-
-    $(".likeBtn").click(function(){
-
-        let rating = parseInt($(this).parent().children(".rating").html());
+            let rating = parseInt($(this).parent().children(".rating").html());
         
 
-        let mirror = $(this).next(".dislikeBtn");
+            let mirror = $(this).next(".dislikeBtn");
 
-        let dataObject = new Object();
-        dataObject.Action = $(this).attr("data-action");
-        dataObject.PostId = $(this).attr("data-postId");
+            let dataObject = new Object();
+            dataObject.Action = $(this).attr("data-action");
+            dataObject.Id = $(this).attr("data-Id");
 
-        let isDisPicked = mirror.attr("data-isPicked") == "true";
-        let isLikePicked = $(this).attr("data-isPicked") == "true";
+            let isDisPicked = mirror.attr("data-isPicked") == "true";
+            let isLikePicked = $(this).attr("data-isPicked") == "true";
 
 
 
-        if(!isDisPicked && !isLikePicked){ // обычный лайк
-            $(this).removeClass("btn-secondary").addClass("btn-warning");
-            $(this).attr("data-isPicked", "true");
+            if(!isDisPicked && !isLikePicked){ // обычный лайк
+                $(this).removeClass("btn-secondary").addClass("btn-warning");
+                $(this).attr("data-isPicked", "true");
 
-            $(this).attr("data-action", "remove_upvote");
-            mirror.attr("data-action", "downvote_and_remove_upvote");
+                $(this).attr("data-action", "remove_upvote");
+                mirror.attr("data-action", "downvote_and_remove_upvote");
 
-            rating = rating + 1;
-
-        }
-        if(isLikePicked && !isDisPicked){ // убираем лайк
-            $(this).removeClass("btn-warning").addClass("btn-secondary");
-            $(this).attr("data-isPicked", "false");
-
-            $(this).attr("data-action", "upvote");
-            mirror.attr("data-action", "downvote");
-
-            rating = rating - 1;
-        }
-        if(!isLikePicked && isDisPicked){ // меняем диз на лайк
-            $(this).removeClass("btn-secondary").addClass("btn-warning");
-            $(this).attr("data-isPicked", "true");
-
-            mirror.removeClass("btn-warning").addClass("btn-secondary");
-            mirror.attr("data-isPicked", "false");
-
-            $(this).attr("data-action", "remove_upvote");
-            mirror.attr("data-action", "downvote_and_remove_upvote");
-
-            rating = rating + 2;
-        }
-
-        $(this).parent().children(".rating").text(rating);
-
-        $.ajax({
-            type: "POST",
-            url: "/Home/GetAjax",
-            data: dataObject,
-            success: function(data){
-                if(data == "200"){
-                }
-                else if(data = "400"){
-                    alert("error 400");
-                }
-            },
-            failure:function(err){
+                rating = rating + 1;
 
             }
-        })
-    });
+            if(isLikePicked && !isDisPicked){ // убираем лайк
+                $(this).removeClass("btn-warning").addClass("btn-secondary");
+                $(this).attr("data-isPicked", "false");
 
+                $(this).attr("data-action", "upvote");
+                mirror.attr("data-action", "downvote");
 
-    $(".dislikeBtn").click(function(){
+                rating = rating - 1;
+            }
+            if(!isLikePicked && isDisPicked){ // меняем диз на лайк
+                $(this).removeClass("btn-secondary").addClass("btn-warning");
+                $(this).attr("data-isPicked", "true");
 
-        let mirror = $(this).prev(".likeBtn");
+                mirror.removeClass("btn-warning").addClass("btn-secondary");
+                mirror.attr("data-isPicked", "false");
 
-        let dataObject = new Object();
-        dataObject.Action = $(this).attr("data-action");
-        dataObject.PostId = $(this).attr("data-postId");
+                $(this).attr("data-action", "remove_upvote");
+                mirror.attr("data-action", "downvote_and_remove_upvote");
 
-        let isDisPicked = mirror.attr("data-isPicked") == "true";
-        let isLikePicked = $(this).attr("data-isPicked") == "true";
+                rating = rating + 2;
+            }
 
-        let rating = parseInt($(this).parent().children(".rating").html());
+            $(this).parent().children(".rating").text(rating);
 
-        if(!isDisPicked && !isLikePicked){ // обычный диз
-            $(this).removeClass("btn-secondary").addClass("btn-warning");
-            $(this).attr("data-isPicked", "true");
+            $.ajax({
+                type: "POST",
+                url: "/Home/GetAjax",
+                data: dataObject,
+                success: function(data){
+                    if(data == "200"){
+                    }
+                    else if(data = "400"){
+                        alert("error 400");
+                    }
+                },
+                failure:function(err){
 
-            $(this).attr("data-action", "remove_downvote");
-            mirror.attr("data-action", "upvote_and_remove_downvote");
-
-            rating = rating - 1;
-
-        }
-        if(isLikePicked && !isDisPicked){ // убираем диз
-            $(this).removeClass("btn-warning").addClass("btn-secondary");
-            $(this).attr("data-isPicked", "false");
-
-            $(this).attr("data-action", "downvote");
-            mirror.attr("data-action", "upvote");
-
-            rating = rating + 1;
-
-        }
-        if(!isLikePicked && isDisPicked){ // меняем лайк на диз
-            $(this).removeClass("btn-secondary").addClass("btn-warning");
-            $(this).attr("data-isPicked", "true");
-
-            mirror.removeClass("btn-warning").addClass("btn-secondary");
-            mirror.attr("data-isPicked", "false");
-
-            $(this).attr("data-action", "remove_downvote");
-            mirror.attr("data-action", "upvote_and_remove_downvote");
-
-            rating = rating - 2;
-        }
-
-        $(this).parent().children(".rating").text(rating);
-
-        $.ajax({
-            type: "POST",
-            url: "/Home/GetAjax",
-            data: dataObject,
-            success: function(data){
-                if(data == "200"){
                 }
-                else if(data = "400"){
-                    alert("error 400");
-                }
-            },
-            failure:function(err){
+            })
+        });
+
+
+        $(".dislikeBtn").click(function(){
+
+            let mirror = $(this).prev(".likeBtn");
+
+            let dataObject = new Object();
+            dataObject.Action = $(this).attr("data-action");
+            dataObject.Id = $(this).attr("data-Id");
+
+            let isDisPicked = mirror.attr("data-isPicked") == "true";
+            let isLikePicked = $(this).attr("data-isPicked") == "true";
+
+            let rating = parseInt($(this).parent().children(".rating").html());
+
+            if(!isDisPicked && !isLikePicked){ // обычный диз
+                $(this).removeClass("btn-secondary").addClass("btn-warning");
+                $(this).attr("data-isPicked", "true");
+
+                $(this).attr("data-action", "remove_downvote");
+                mirror.attr("data-action", "upvote_and_remove_downvote");
+
+                rating = rating - 1;
 
             }
-        })
-    });
+            if(isLikePicked && !isDisPicked){ // убираем диз
+                $(this).removeClass("btn-warning").addClass("btn-secondary");
+                $(this).attr("data-isPicked", "false");
+
+                $(this).attr("data-action", "downvote");
+                mirror.attr("data-action", "upvote");
+
+                rating = rating + 1;
+
+            }
+            if(!isLikePicked && isDisPicked){ // меняем лайк на диз
+                $(this).removeClass("btn-secondary").addClass("btn-warning");
+                $(this).attr("data-isPicked", "true");
+
+                mirror.removeClass("btn-warning").addClass("btn-secondary");
+                mirror.attr("data-isPicked", "false");
+
+                $(this).attr("data-action", "remove_downvote");
+                mirror.attr("data-action", "upvote_and_remove_downvote");
+
+                rating = rating - 2;
+            }
+
+            $(this).parent().children(".rating").text(rating);
+
+            $.ajax({
+                type: "POST",
+                url: "/Home/GetAjax",
+                data: dataObject,
+                success: function(data){
+                    if(data == "200"){
+                    }
+                    else if(data = "400"){
+                        alert("error 400");
+                    }
+                },
+                failure:function(err){
+
+                }
+            })
+        });
 
 
     };
-
-
-
-   /* $(".likeBtn").click(function(){
-
-        if($(this).attr("data-action") == null){
-            alert("null");
-            return;
-        }
-        else{
-            var dataObject = new Object();
-            dataObject.Action = $(this).attr("data-action");
-            dataObject.PostId = $(this).attr("data-postId");
-
-            console.log($(this));
-
-
-            // обрабатываем уже выбранный вариант
-           /* if($(this).attr("data-isPicked") == "true"){
-                $(this).removeClass("btn-warning").addClass("btn-secondary");
-                $(this).attr("data-isPicked", "false");
-                
-                if($(this).attr("data-action") == "remove_upvote"){
-                    $(this).attr("data-action", "upvote");
-                    // соседняя кнопка должна менять хначение экшена
-                }
-                if($(this).attr("data-action") == "remove_downvote"){
-                    $(this).attr("data-action", "downvote");
-                    // соседняя кнопка должна менять хначение экшена
-                }
-                if($(this).attr("data-action") == "downvote_and_remove_upvote"){
-                    $(this).attr("data-action", "remove_downvote");
-                    // соседняя кнопка должна менять хначение экшена
-                }
-                if($(this).attr("data-action") == "upvote_and_remove_downvote"){
-                    $(this).attr("data-action", "remove_upvote");
-                    // соседняя кнопка должна менять хначение экшена
-                }
-               // console.log($(this).siblings(".rating").innerText);
-            }
-            // обрабатываем новый вариант
-            else{
-                $(this).removeClass("btn-secondary").addClass("btn-warning");
-                $(this).attr("data-isPicked", "true");
-               //  $(this).siblings(".rating").innerText--;
-               
-                if($(this).attr("data-action") == "upvote"){
-                    $(this).attr("data-action", "remove_upvote");
-                }
-                if($(this).attr("data-action") == "downvote"){
-                    $(this).attr("data-action", "remove_downvote");
-                }
-            }*/
 </script>
+}
