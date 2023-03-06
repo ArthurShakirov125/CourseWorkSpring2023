@@ -34,6 +34,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Component\" />
+    <Folder Include="wwwroot\Users\UsersAvatarsImages\" />
   </ItemGroup>
 
 </Project>

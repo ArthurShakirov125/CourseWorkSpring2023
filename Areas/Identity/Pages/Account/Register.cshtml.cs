@@ -17,6 +17,7 @@ using Microsoft.Extensions.Configuration.UserSecrets;
 using System.ComponentModel;
 using System.IO;
 using CourseWorkSpring2023.Custom;
+using static System.Net.Mime.MediaTypeNames;
 
 namespace CourseWorkSpring2023.Areas.Identity.Pages.Account
 {
@@ -95,15 +96,17 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account
                     var post = Request.Form.Files["avatar"];
                     string ImageName = post.FileName;
 
-                    MemoryStream ms = new MemoryStream();
-                    post.CopyTo(ms);
-                    var binaryImg = ms.ToArray();
+                    string uniqueName = Guid.NewGuid().ToString() + ImageName;
 
-                    ms.Close();
-                    ms.Dispose();
+                    
+                    string filename = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Users\\UsersAvatarsImages", uniqueName);
 
-                    user.AvatarImg = binaryImg;
-                    user.AvatarImgName = ImageName;
+                    using (var stream = System.IO.File.Create(filename))
+                    {
+                        post.CopyTo(stream);
+                    }
+
+                    user.AvatarImgName = uniqueName;
                 }
                 
 

@@ -71,6 +71,14 @@ namespace CourseWorkSpring2023.Controllers
             }
         }
 
+        public async Task<IActionResult> UserMain()
+        {
+            var user = await GetUser();
+
+            var model = new UserViewModel(user);
+            return View();
+        }
+
         public IActionResult CreatePost()
         {
             var model = new PostViewModel();
