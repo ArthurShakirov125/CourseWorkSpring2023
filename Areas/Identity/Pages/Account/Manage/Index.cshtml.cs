@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using CourseWorkSpring2023.Custom;
@@ -47,7 +48,6 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account.Manage
             var userName = await _userManager.GetUserNameAsync(user);
             var nickname = user.NickName;
             var CakeDay = user.RegistrationDay;
-
             Username = userName;
 
             Input = new InputModel
@@ -81,6 +81,31 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account.Manage
             {
                 await LoadAsync(user);
                 return Page();
+            }
+
+            if (Request.Form.Files.Any())
+            {
+                var file = Request.Form.Files["avatar"];
+                string pathToSave;
+
+                if (user.AvatarImgName == null)
+                {
+                    string ImageName = file.FileName;
+                    string uniqueName = Guid.NewGuid().ToString() + ImageName;
+
+                    pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Users\\UsersAvatarsImages", uniqueName);
+                    user.AvatarImgName = uniqueName;
+                }
+                else
+                {
+                    pathToSave = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot\\Users\\UsersAvatarsImages", user.AvatarImgName);
+                }
+
+                using (var stream = System.IO.File.Create(pathToSave))
+                {
+                    file.CopyTo(stream);
+                }
+
             }
 
             var OldNickname = user.NickName;

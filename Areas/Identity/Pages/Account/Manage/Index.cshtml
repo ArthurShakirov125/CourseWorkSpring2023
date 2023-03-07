@@ -9,8 +9,13 @@
 <partial name="_StatusMessage" model="Model.StatusMessage" />
 <div class="row">
     <div class="col-md-6">
-        <form id="profile-form" method="post">
+        <form id="profile-form" method="post" enctype="multipart/form-data">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <div class="form-group">
+                <label for="avatar">Загрузите картинку для профиля</label>
+                <input id="avatar" name="avatar" class="form-control" type="file" />
+                <span id="Input_avatar-error" class="text-danger"></span>
+            </div>
             <div class="form-group">
                 <label asp-for="Username">Логин пользователя</label>
                 <input asp-for="Username" class="form-control" disabled />
@@ -30,5 +35,17 @@
 </div>
 
 @section Scripts {
+    <script>
+        var uploadField = document.getElementById("avatar");
+
+        uploadField.onchange = function() {
+            if(this.files[0].size > 2097152){
+            let errorsFiled = document.getElementById("Input_avatar-error");
+            errorsFiled.innerText = "Размер изображения не должен превышать 2 мегабайта";
+
+            this.value = "";
+        };
+    };
+    </script>
     <partial name="_ValidationScriptsPartial" />
 }
