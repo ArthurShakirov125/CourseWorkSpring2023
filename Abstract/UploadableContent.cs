@@ -10,5 +10,6 @@ namespace CourseWorkSpring2023.Abstract
         public int Upvotes { get; set; }
         public int Downvotes { get; set; }
         public DateTime Uploaded { get; set; }
+        public bool IsHidden { get; set; } = false;
     }
 }

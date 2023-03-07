@@ -22,7 +22,7 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             Posted = post.Uploaded;
             Tags = post.Tags;
             Author = post.User;
-            Comments = post.Comments;
+            IsHidden = post.IsHidden;
         }
 
         public int Id { get; }
@@ -47,7 +47,7 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
 
 
         public IEnumerable<Comment> Comments { get; set; }
-
+        public bool IsHidden { get; }
         public CustomUser Author { get; set; }
 
         public int Rating

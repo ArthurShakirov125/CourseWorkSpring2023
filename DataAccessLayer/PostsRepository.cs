@@ -24,12 +24,24 @@ namespace CourseWorkSpring2023.DataAccessLayer
 
         public void Delete(int id)
         {
+            var ratings = _context.Rates.Where(r => r.Content.Id == id);
+            var comments = _context.Comments.Where(c => c.Post.Id == id);
+
+            _context.RemoveRange(ratings);
+
+            _context.RemoveRange(comments);
+
             _context.Posts.Remove(Read(id));
+
             _context.SaveChanges();
         }
 
         public IEnumerable<Post> GetList() => _context.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
 
+        public IEnumerable<Comment> GetPostsComments(int postId)
+        {
+            return _context.Comments.Where(c => c.Post.Id == postId).Include(c => c.User);
+        }
 
         public Post Read(int id) => _context.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags).Where(p => p.Id == id).First();
 
@@ -54,12 +66,28 @@ namespace CourseWorkSpring2023.DataAccessLayer
                 Post = postToUpdate,
                 Text = commentText,
                 User = user,
-                Uploaded = System.DateTime.Now
+                Uploaded = System.DateTime.Now,
             };
 
             _context.Comments.Add(comment);
             postToUpdate.Comments.Add(comment);
 
+            _context.SaveChanges();
+        }
+
+        public void DeleteComment(int postId) { }
+
+        public void HidePost(int postId)
+        {
+            var postToUpdate = Read(postId);
+            postToUpdate.IsHidden = true;
+            _context.SaveChanges();
+        }
+
+        public void UnHidePost(int postId)
+        {
+            var postToUpdate = Read(postId);
+            postToUpdate.IsHidden = false;
             _context.SaveChanges();
         }
     }

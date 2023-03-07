@@ -71,6 +71,7 @@ namespace CourseWorkSpring2023.Controllers
             }
         }
 
+        [Authorize]
         public async Task<IActionResult> UserMainPage()
         {
             var user = await GetUser();
@@ -79,6 +80,7 @@ namespace CourseWorkSpring2023.Controllers
             return View(model);
         }
 
+        [Authorize]
         public IActionResult CreatePost()
         {
             var model = new PostViewModel();
@@ -155,7 +157,21 @@ namespace CourseWorkSpring2023.Controllers
                         postsManager.AddComment(user, postId, Request.Form["Text"]);
                         return "200";
                     }
-
+                case "hide_post":
+                    {
+                        postsManager.HidePost(id);
+                        return "200";
+                    }
+                case "unhide_post":
+                    {
+                        postsManager.UnHidePost(id);
+                        return "200";
+                    }
+                case "delete_post":
+                    {
+                        postsManager.Delete(id);
+                        return "200";
+                    }
                 default:
                     return "400";
             }
@@ -165,6 +181,7 @@ namespace CourseWorkSpring2023.Controllers
         public async Task<IActionResult> Post(int postId)
         {
             var model = new PostViewModel(postsManager.Read(postId));
+            model.Comments = postsManager.GetPostsComments(postId);
             CustomUser user = await GetUser();
 
             model.UpvotedCommentsIds = ratingsManager.UsersUpvotes(user).Select(p => p.Id);

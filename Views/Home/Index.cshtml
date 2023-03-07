@@ -23,6 +23,7 @@
     @foreach (var post in Model.Posts)
     {
         <div class="post">
+            @if (User.IsInRole("Moderator")) @await Component.InvokeAsync("ModeratorTools", post.Id)
             Пользователь
             @post.Author.NickName
             <br>
@@ -32,6 +33,7 @@
             <br>
             Комментарии - @post.CommentsCount
             <br>
+            Пост спрятан - @post.IsHidden.ToString()
             <p class="rating">@post.Rating</p>
             @if(Model.ActiveUser == null)
             {
