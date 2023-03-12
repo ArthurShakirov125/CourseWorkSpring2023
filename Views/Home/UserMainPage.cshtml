@@ -6,3 +6,38 @@
 
 <a asp-area="Identity" asp-page="/Account/Manage/Index">Управление акккаунтом</a>
 <a asp-action="CreatePost">Post</a>
+
+<style>
+    .post{
+        border: black solid 1px;
+        margin: 20px;
+    }
+</style>
+
+<div class="posts-container">
+    @if (Model.Posts.Any())
+    {
+        @foreach (var post in Model.Posts)
+        {
+            <div class="post content">
+                @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id})
+                <br>
+                @post.Header
+                <br>
+                Дата публикации - @post.Posted
+                <br>
+                Комментарии - @post.CommentsCount
+                <br>
+                Пост спрятан - @post.IsHidden
+                <p class="rating">@post.Rating</p>
+                <a class="btn btn-primary" asp-action="CommentsOfPost" asp-route-postId="@post.Id">Открыть комментарии</a>
+            </div>
+        }
+
+    }
+    else
+    {
+        <p>У вас пока нет постов</p>
+        <a asp-action="CreatePost">Post</a>
+    }
+</div>

@@ -1,0 +1,25 @@
+﻿@model IEnumerable<Comment>
+
+@Html.ActionLink("Назад", "UserMainPage");
+<div class="comment-section">
+    @if (Model.Any())
+    {
+        @foreach (var comment in Model)
+        {
+            <div class="comment content">
+            @await Component.InvokeAsync("ModeratorTools", new { ContentType = "comment", Id = comment.Id})
+                    <h4>@comment.User.NickName</h4>
+                    <p>@comment.Text</p>
+                    <p>Рейтинг:</p>
+                    <p>isHidden  -  @comment.IsHidden</p>
+                    <p class="rating">@comment.Rating</p>
+            </div>
+        }
+    }
+    else
+    {
+        <div class="no-comments">
+            <p>Комментариев пока нету</p>
+        </div>
+    }    
+</div>

@@ -83,7 +83,14 @@ namespace CourseWorkSpring2023.Controllers
             var user = await GetUser();
 
             var model = new UserViewModel(user);
+            model.Posts = postsManager.GetUsersPosts(user).Select(p => new PostViewModel(p));
             return View(model);
+        }
+
+        public IActionResult CommentsOfPost(int postId)
+        {
+            var comments = postsManager.GetPostsComments(postId);
+            return View(comments);
         }
 
         [Authorize]

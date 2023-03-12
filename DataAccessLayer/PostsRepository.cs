@@ -8,7 +8,7 @@ using System.Linq;
 namespace CourseWorkSpring2023.DataAccessLayer
 {
     public class PostsRepository : ICrud<Post>
-    { 
+    {
 
         public PostsRepository(ApplicationDbContext dbContext)
         {
@@ -37,6 +37,11 @@ namespace CourseWorkSpring2023.DataAccessLayer
         }
 
         public IEnumerable<Post> GetList() => db.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
+
+        public IEnumerable<Post> GetUsersPosts(CustomUser user)
+        {
+            return db.Posts.Where(p => p.User.Id == user.Id).Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
+        }
 
         public IEnumerable<Comment> GetPostsComments(int postId)
         {

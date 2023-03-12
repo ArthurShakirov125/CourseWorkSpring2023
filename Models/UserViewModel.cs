@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
+using CourseWorkSpring2023.Models.HomeViewModels;
+using System.Linq;
 
 namespace CourseWorkSpring2023.Models
 {
@@ -13,7 +15,6 @@ namespace CourseWorkSpring2023.Models
             NickName = user.NickName;
             AvatarImgName = user.AvatarImgName;
             RegistrationDay = user.RegistrationDay;
-            Posts = user.Posts;
             Comments = user.Comments;
         }
 
@@ -25,9 +26,9 @@ namespace CourseWorkSpring2023.Models
 
         public DateTime RegistrationDay { get; set; }
 
-        public List<Post> Posts { get; set; }
+        public IEnumerable<PostViewModel> Posts { get; set; }
 
-        public List<Comment> Comments { get; set; }
+        public IEnumerable<Comment> Comments { get; set; }
 
         public string AvatarImagePath
         {
