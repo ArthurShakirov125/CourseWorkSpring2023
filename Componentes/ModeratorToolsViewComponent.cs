@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Models.Moderator;
+using Microsoft.AspNetCore.Mvc;
+using System.Net.Mime;
 
 namespace CourseWorkSpring2023.Componentes
 {
@@ -6,9 +9,14 @@ namespace CourseWorkSpring2023.Componentes
     {
         public ModeratorToolsViewComponent() {}
 
-        public IViewComponentResult Invoke(int id)
+        public IViewComponentResult Invoke(string ContentType, int Id)
         {
-            return View(id);
+            var model = new ModeratorToolsViewModel()
+            {
+                ContentType = ContentType,
+                Id = Id
+            };
+            return View(model);
         }
     }
 }

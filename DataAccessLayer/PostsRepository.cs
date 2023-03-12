@@ -12,38 +12,38 @@ namespace CourseWorkSpring2023.DataAccessLayer
 
         public PostsRepository(ApplicationDbContext dbContext)
         {
-            _context = dbContext;
+            db = dbContext;
         }
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext db;
 
         public void Create(Post post)
         {
-            _context.Posts.Add(post);
-            _context.SaveChanges();
+            db.Posts.Add(post);
+            db.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            var ratings = _context.Rates.Where(r => r.Content.Id == id);
-            var comments = _context.Comments.Where(c => c.Post.Id == id);
+            var ratings = db.Rates.Where(r => r.Content.Id == id);
+            var comments = db.Comments.Where(c => c.Post.Id == id);
 
-            _context.RemoveRange(ratings);
+            db.RemoveRange(ratings);
 
-            _context.RemoveRange(comments);
+            db.RemoveRange(comments);
 
-            _context.Posts.Remove(Read(id));
+            db.Posts.Remove(Read(id));
 
-            _context.SaveChanges();
+            db.SaveChanges();
         }
 
-        public IEnumerable<Post> GetList() => _context.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
+        public IEnumerable<Post> GetList() => db.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
 
         public IEnumerable<Comment> GetPostsComments(int postId)
         {
-            return _context.Comments.Where(c => c.Post.Id == postId).Include(c => c.User);
+            return db.Comments.Where(c => c.Post.Id == postId).Include(c => c.User);
         }
 
-        public Post Read(int id) => _context.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags).Where(p => p.Id == id).First();
+        public Post Read(int id) => db.Posts.Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags).Where(p => p.Id == id).First();
 
         public void Update(Post model)
         {
@@ -54,7 +54,7 @@ namespace CourseWorkSpring2023.DataAccessLayer
             post.Upvotes = model.Upvotes;
             post.Tags = model.Tags;
 
-            _context.SaveChanges();
+            db.SaveChanges();
         }
 
         public void AddComment(CustomUser user, int postId, string commentText)
@@ -69,26 +69,10 @@ namespace CourseWorkSpring2023.DataAccessLayer
                 Uploaded = System.DateTime.Now,
             };
 
-            _context.Comments.Add(comment);
+            db.Comments.Add(comment);
             postToUpdate.Comments.Add(comment);
 
-            _context.SaveChanges();
-        }
-
-        public void DeleteComment(int postId) { }
-
-        public void HidePost(int postId)
-        {
-            var postToUpdate = Read(postId);
-            postToUpdate.IsHidden = true;
-            _context.SaveChanges();
-        }
-
-        public void UnHidePost(int postId)
-        {
-            var postToUpdate = Read(postId);
-            postToUpdate.IsHidden = false;
-            _context.SaveChanges();
+            db.SaveChanges();
         }
     }
 }

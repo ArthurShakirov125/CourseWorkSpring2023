@@ -11,33 +11,33 @@ namespace CourseWorkSpring2023.DataAccessLayer
 {
     public class RatingsRepository
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext db;
         public RatingsRepository(ApplicationDbContext context)
         {
-            _context = context;
+            db = context;
         }
 
         public IEnumerable<UploadableContent> UsersRates(CustomUser user)
         {
-            return _context.Rates.Where(r => r.CustomUser.Id == user.Id).Select(r => r.Content);
+            return db.Rates.Where(r => r.CustomUser.Id == user.Id).Select(r => r.Content);
         }
 
         public IEnumerable<UploadableContent> UsersUpvotes(CustomUser user)
         {
-            return _context.Rates.Where(r => r.CustomUser.Id == user.Id && r.isUpvote).Select(r => r.Content);
+            return db.Rates.Where(r => r.CustomUser.Id == user.Id && r.isUpvote).Select(r => r.Content);
         }
 
         public IEnumerable<UploadableContent> UsersDownvotes(CustomUser user)
         {
-            return _context.Rates.Where(r => r.CustomUser.Id == user.Id && !r.isUpvote).Select(r => r.Content);
+            return db.Rates.Where(r => r.CustomUser.Id == user.Id && !r.isUpvote).Select(r => r.Content);
         }
 
         public UploadableContent FindContent(int contentId)
         {
-            UploadableContent content = _context.Posts.Find(contentId);
+            UploadableContent content = db.Posts.Find(contentId);
             if(content == null)
             {
-                content = _context.Comments.Find(contentId);
+                content = db.Comments.Find(contentId);
             }
             return content;
         }
@@ -46,38 +46,38 @@ namespace CourseWorkSpring2023.DataAccessLayer
         {
             UploadableContent content = FindContent(contentId);
             content.Upvotes++;
-            _context.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = true });
-            _context.SaveChanges();
+            db.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = true });
+            db.SaveChanges();
         }
         public void RemoveUpvote(int contentId, CustomUser user)
         {
-            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
             content.Upvotes--;
-            _context.Rates.Remove(entry);
-            _context.SaveChanges();
+            db.Rates.Remove(entry);
+            db.SaveChanges();
         }
 
         public void Downvote(int contentId, CustomUser user)
         {
             UploadableContent content = FindContent(contentId);
             content.Downvotes++;
-            _context.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = false });
-            _context.SaveChanges();
+            db.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = false });
+            db.SaveChanges();
         }
 
         public void RemoveDownvote(int contentId, CustomUser user)
         {
-            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
             content.Downvotes--;
-            _context.Rates.Remove(entry);
-            _context.SaveChanges();
+            db.Rates.Remove(entry);
+            db.SaveChanges();
         }
 
         public void DownvoteAndRemoveUpvote(int contentId, CustomUser user)
         {
-            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
 
             entry.isUpvote = false;
@@ -85,12 +85,12 @@ namespace CourseWorkSpring2023.DataAccessLayer
             content.Downvotes++;
             content.Upvotes--;
 
-            _context.SaveChanges();
+            db.SaveChanges();
         }
 
         public void UpvoteAndRemoveDownvote(int contentId, CustomUser user)
         {
-            var entry = _context.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
 
             entry.isUpvote = true;
@@ -98,7 +98,7 @@ namespace CourseWorkSpring2023.DataAccessLayer
             content.Downvotes--;
             content.Upvotes++;
 
-            _context.SaveChanges();
+            db.SaveChanges();
         }
     }
 }

@@ -24,13 +24,19 @@ namespace CourseWorkSpring2023.Controllers
         private ICrud<PostsTags> tagsManager;
         private UserManager<CustomUser> userManager;
         private RatingsRepository ratingsManager;
+        private ContentRepository contentManager;
+        private CommentsRepository commentsManager;
 
-        public HomeController(PostsRepository postsManager, ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, RatingsRepository ratingsManager)
+        public HomeController(PostsRepository postsManager, 
+            ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, 
+            RatingsRepository ratingsManager, ContentRepository contentManager, CommentsRepository commentsRepository)
         {
             this.postsManager = postsManager;
             this.tagsManager = tagsManager;
             this.userManager = userManager;
             this.ratingsManager = ratingsManager;
+            this.contentManager = contentManager;
+            this.commentsManager = commentsRepository;
         }
 
         private async Task<CustomUser> GetUser()
@@ -157,19 +163,24 @@ namespace CourseWorkSpring2023.Controllers
                         postsManager.AddComment(user, postId, Request.Form["Text"]);
                         return "200";
                     }
-                case "hide_post":
+                case "hide":
                     {
-                        postsManager.HidePost(id);
+                        contentManager.Hide(id);
                         return "200";
                     }
-                case "unhide_post":
+                case "unhide":
                     {
-                        postsManager.UnHidePost(id);
+                        contentManager.UnHide(id);
                         return "200";
                     }
                 case "delete_post":
                     {
                         postsManager.Delete(id);
+                        return "200";
+                    }
+                case "delete_comment":
+                    {
+                        commentsManager.Delete(id);
                         return "200";
                     }
                 default:

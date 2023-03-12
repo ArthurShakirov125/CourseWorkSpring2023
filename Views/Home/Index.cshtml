@@ -1,5 +1,6 @@
 ﻿@using CourseWorkSpring2023.Custom;
 @using CourseWorkSpring2023.Models.HomeViewModels;
+@using CourseWorkSpring2023.Models.Moderator;
 @model HomeViewModel;
 @{
     ViewData["Title"] = "Home Page";
@@ -22,8 +23,9 @@
 <div class="posts-container">
     @foreach (var post in Model.Posts)
     {
-        <div class="post">
-            @if (User.IsInRole("Moderator")) @await Component.InvokeAsync("ModeratorTools", post.Id)
+        <div class="post content">
+            @if (User.IsInRole("Moderator"))
+                @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id})
             Пользователь
             @post.Author.NickName
             <br>

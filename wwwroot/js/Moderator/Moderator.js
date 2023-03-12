@@ -4,21 +4,28 @@
 
     $(".moder_btn_hide").click(function () {
         let id = $(this).parent().attr("data-id");
-        dataObject.Action = "hide_post";
+        dataObject.Action = "hide";
         dataObject.Id = id;
         MyRequest();
     });
 
     $(".moder_btn_unhide").click(function () {
         let id = $(this).parent().attr("data-id");
-        dataObject.Action = "unhide_post";
+        dataObject.Action = "unhide";
         dataObject.Id = id;
         MyRequest();
     });
 
     $(".moder_btn_delete").click(function () {
         let id = $(this).parent().attr("data-id");
-        dataObject.Action = "delete_post";
+        console.log($(this).parent().attr("data-content-type"));
+        if ($(this).parent().attr("data-content-type") == "post") {
+            dataObject.Action = "delete_post";
+        }
+        else if ($(this).parent().attr("data-content-type") == "comment") {
+            dataObject.Action = "delete_comment";
+        }
+        
         dataObject.Id = id;
         MyRequest();
     });

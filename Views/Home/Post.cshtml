@@ -1,4 +1,5 @@
 ﻿@using CourseWorkSpring2023.Models.HomeViewModels;
+@using CourseWorkSpring2023.Models.Moderator;
 @model PostViewModel
 
 <h1>@Model.Header</h1>
@@ -26,10 +27,14 @@
     @if(Model.Comments.Any()){
         @foreach (var comment in Model.Comments)
         {
-            <div class="comment">
+            <div class="comment content">
+                @if (User.IsInRole("Moderator"))
+                    @await Component.InvokeAsync("ModeratorTools", new { ContentType = "comment", Id = comment.Id})
+
                 <h4>@comment.User.NickName</h4>
                 <p>@comment.Text</p>
                 <p>Рейтинг:</p>
+                <p>isHidden  -  @comment.IsHidden</p>
                 <p class="rating">@comment.Rating</p>
             
             @if(Model.ActiveUser == null)

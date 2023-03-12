@@ -1,6 +1,9 @@
-﻿@model int
-<div data-id="@Model">
-   <p>id - @Model.ToString()</p>
+﻿@using CourseWorkSpring2023.Models.Moderator;
+@model ModeratorToolsViewModel
+
+<div data-id="@Model.Id" data-content-type="@Model.ContentType">
+   <p>id - @Model.Id</p>
+   <p>cont type - @Model.ContentType</p>
    <button class="moder_btn_hide">hide</button>
    <button class="moder_btn_delete">delete</button>
    <button class="moder_btn_unhide">unhide</button>

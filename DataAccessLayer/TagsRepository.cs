@@ -7,28 +7,28 @@ namespace CourseWorkSpring2023.DataAccessLayer
 {
     public class TagsRepository : ICrud<PostsTags>
     {
-        private readonly ApplicationDbContext _context;
+        private readonly ApplicationDbContext db;
 
         public TagsRepository(ApplicationDbContext context)
         {
-            _context = context;
+            db = context;
         }
 
         public void Create(PostsTags model)
         {
-            _context.Tags.Add(model);
-            _context.SaveChanges();
+            db.Tags.Add(model);
+            db.SaveChanges();
         }
 
         public void Delete(int id)
         {
-            _context.Tags.Remove(Read(id));
-            _context.SaveChanges();
+            db.Tags.Remove(Read(id));
+            db.SaveChanges();
         }
 
-        public IEnumerable<PostsTags> GetList() => _context.Tags;
+        public IEnumerable<PostsTags> GetList() => db.Tags;
 
-        public PostsTags Read(int id) => _context.Tags.Find(id);
+        public PostsTags Read(int id) => db.Tags.Find(id);
 
         public void Update(PostsTags model)
         {
