@@ -23,6 +23,7 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             Tags = post.Tags;
             Author = post.User;
             IsHidden = post.IsHidden;
+            Comments = post.Comments;
         }
 
         public int Id { get; }
@@ -44,8 +45,6 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
         public DateTime Posted { get; set; }
 
         public IEnumerable<PostsTags> Tags { get; set; }
-
-
         public IEnumerable<Comment> Comments { get; set; }
         public bool IsHidden { get; }
         public CustomUser Author { get; set; }
