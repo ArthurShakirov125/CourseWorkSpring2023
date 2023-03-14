@@ -36,9 +36,10 @@
             url: "/Home/GetAjax",
             data: dataObject,
             success: function (data) {
-                if (data == 200) {
+                console.log(data);
+                if (data.reply == 200) {
                 }
-                else if (data = 400) {
+                else if (data.reply == 400) {
                     alert("error 400");
                 }
             },

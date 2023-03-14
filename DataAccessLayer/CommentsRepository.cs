@@ -18,6 +18,9 @@ namespace CourseWorkSpring2023.DataAccessLayer
         public void Delete(int id)
         {
             var com = Read(id);
+            var rates = db.Rates.Where(r => r.Content.Id == com.Id);
+
+            db.Rates.RemoveRange(rates);
             db.Comments.Remove(com);
             db.SaveChanges();
         }

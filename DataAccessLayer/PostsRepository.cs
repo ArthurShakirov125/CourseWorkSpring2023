@@ -24,12 +24,20 @@ namespace CourseWorkSpring2023.DataAccessLayer
 
         public void Delete(int id)
         {
-            var ratings = db.Rates.Where(r => r.Content.Id == id);
+            var postRatings = db.Rates.Where(r => r.Content.Id == id);
             var comments = db.Comments.Where(c => c.Post.Id == id);
 
-            db.RemoveRange(ratings);
+            var commentsRatings = new List<UserContentRates>();
 
-            db.RemoveRange(comments);
+            foreach (var comment in comments)
+            {
+                commentsRatings.AddRange(db.Rates.Where(r => r.Content.Id == comment.Id));
+            }
+
+            db.Rates.RemoveRange(commentsRatings);
+            db.Rates.RemoveRange(postRatings);
+
+            db.Comments.RemoveRange(comments);
 
             db.Posts.Remove(Read(id));
 
