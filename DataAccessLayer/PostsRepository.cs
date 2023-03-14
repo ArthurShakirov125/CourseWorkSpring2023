@@ -62,7 +62,7 @@ namespace CourseWorkSpring2023.DataAccessLayer
             db.SaveChanges();
         }
 
-        public void AddComment(CustomUser user, int postId, string commentText)
+        public int AddComment(CustomUser user, int postId, string commentText)
         {
             var postToUpdate = Read(postId);
 
@@ -78,6 +78,8 @@ namespace CourseWorkSpring2023.DataAccessLayer
             postToUpdate.Comments.Add(comment);
 
             db.SaveChanges();
+
+            return comment.Id;
         }
     }
 }

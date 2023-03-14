@@ -120,7 +120,7 @@ namespace CourseWorkSpring2023.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        public async Task<string> GetAjax()
+        public async Task<JsonResult> GetAjax()
         {
             /// сделать обработку 
             /// разработать наш протокол
@@ -137,61 +137,61 @@ namespace CourseWorkSpring2023.Controllers
                 case "upvote":
                     {
                         ratingsManager.Upvote(id, user);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "downvote":
                     {
                         ratingsManager.Downvote(id, user);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "remove_downvote":
                     {
                         ratingsManager.RemoveDownvote(id, user);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "remove_upvote":
                     {
                         ratingsManager.RemoveUpvote(id, user);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "downvote_and_remove_upvote":
                     {
                         ratingsManager.DownvoteAndRemoveUpvote(id, user);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "upvote_and_remove_downvote":
                     {
                         ratingsManager.UpvoteAndRemoveDownvote(id, user);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "comment":
                     {
                         int postId = int.Parse(Request.Form["PostId"]);
-                        postsManager.AddComment(user, postId, Request.Form["Text"]);
-                        return "200";
+                        int commentId = postsManager.AddComment(user, postId, Request.Form["Text"]);
+                        return Json(new { reply = 200, commentId = commentId.ToString(), username = user.NickName });
                     }
                 case "hide":
                     {
                         contentManager.Hide(id);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "unhide":
                     {
                         contentManager.UnHide(id);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "delete_post":
                     {
                         postsManager.Delete(id);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 case "delete_comment":
                     {
                         commentsManager.Delete(id);
-                        return "200";
+                        return Json(new { reply = 200 });
                     }
                 default:
-                    return "400";
+                    return Json(new { reply = 400 });
             }
         }
 
