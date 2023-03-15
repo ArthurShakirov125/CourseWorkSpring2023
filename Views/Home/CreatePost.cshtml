@@ -3,7 +3,7 @@
 @{
     ViewData["Title"] = "CreatePost";
 }
-
+<link rel="stylesheet" href="~/lib/Trumbowyg/dist/ui/trumbowyg.min.css">
 <h1>CreatePost</h1>
 
 <h4>Post</h4>
@@ -31,3 +31,11 @@
     <a asp-action="Index">Back to List</a>
 </div>
 
+
+<div class="test"></div>
+@section scripts{
+    <script src="~/lib/Trumbowyg/dist/trumbowyg.min.js"></script>
+    <script>
+        $('.test').trumbowyg();
+    </script>
+}
