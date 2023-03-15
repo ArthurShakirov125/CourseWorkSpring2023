@@ -104,6 +104,11 @@ namespace CourseWorkSpring2023.Controllers
         [HttpPost]
         public async Task<IActionResult> CreatePost(PostViewModel model)
         {
+            if (!ModelState.IsValid)
+            {
+                return View(nameof(CreatePost), model);
+            }
+
             CustomUser user = await GetUser();
 
             var post = new Post()

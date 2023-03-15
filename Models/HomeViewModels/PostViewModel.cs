@@ -31,12 +31,12 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
 
         public int Id { get; }
 
-        [Required]
+        [Required(ErrorMessage = "Заголовок обязателен")]
         [Display(Name = "Заголовок")]
+        [StringLength(10, ErrorMessage = "Ограничение на 250 символов")]
         public string Header { get; set; }
 
-        [Required]
-        [StringLength(240, ErrorMessage = "Ограничение на 240 символов")]
+        [StringLength(250, ErrorMessage = "Ограничение на 250 символов")]
         public string RawText { get; set; }
 
         public HtmlString ProcessedText { get; set; }

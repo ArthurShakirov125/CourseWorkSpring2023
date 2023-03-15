@@ -4,9 +4,8 @@
     ViewData["Title"] = "CreatePost";
 }
 <link rel="stylesheet" href="~/lib/Trumbowyg/dist/ui/trumbowyg.min.css">
-<h1>CreatePost</h1>
+<h1>Создайте пост</h1>
 
-<h4>Post</h4>
 <hr />
 <div class="row">
     <div class="col-md-12">
@@ -17,25 +16,25 @@
                 <span asp-validation-for="Header" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <textarea asp-for="RawText" class="form-control" maxlength="5000"></textarea>
+                <textarea asp-for="RawText" class="form-control"></textarea>
                 <span asp-validation-for="RawText" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <input type="submit" value="Create" class="btn btn-primary" />
+                <input type="submit" value="Запостить" class="btn btn-primary" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Index">Back to List</a>
+    <a asp-action="Index">Вернутся на главную</a>
 </div>
 
 @section scripts{
     <script src="~/lib/Trumbowyg/dist/trumbowyg.min.js"></script>
     <script src="~/lib/Trumbowyg/dist/langs/ru.js"></script>
     <script>
-        $('#Text').trumbowyg({
+        $('#RawText').trumbowyg({
             lang: 'ru',
             tagsToRemove: ['script', 'link'],
             autogrow: true,
