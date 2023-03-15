@@ -109,7 +109,7 @@ namespace CourseWorkSpring2023.Controllers
             var post = new Post()
             {
                 Header = model.Header,
-                Text = model.Text,
+                Text = model.RawText,
                 User = user,
                 Downvotes = 0,
                 Upvotes = 0,

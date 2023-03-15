@@ -1,4 +1,5 @@
 ﻿using CourseWorkSpring2023.Custom;
+using Microsoft.AspNetCore.Html;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -16,7 +17,7 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
         {
             Id = post.Id;
             Header = post.Header;
-            Text = post.Text;
+            RawText = post.Text;
             Upvotes = post.Upvotes;
             Downvotes = post.Downvotes;
             Posted = post.Uploaded;
@@ -24,6 +25,8 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
             Author = post.User;
             IsHidden = post.IsHidden;
             Comments = post.Comments;
+
+            ProcessedText = new HtmlString(RawText);
         }
 
         public int Id { get; }
@@ -34,7 +37,9 @@ namespace CourseWorkSpring2023.Models.HomeViewModels
 
         [Required]
         [StringLength(240, ErrorMessage = "Ограничение на 240 символов")]
-        public string Text { get; set; }
+        public string RawText { get; set; }
+
+        public HtmlString ProcessedText { get; set; }
 
         public int Upvotes { get; set; }
 
