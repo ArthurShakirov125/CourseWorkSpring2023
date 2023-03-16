@@ -50,16 +50,17 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Пожалуйста, укажите имя пользователя")]
+            [StringLength(30, ErrorMessage = "{0} должно содержать от {2} до {1} букв.", MinimumLength = 2)]
             [Display(Name = "Имя пользователя")]
             public string NickName { get; set; }
             
-            [Required]
+            [Required(ErrorMessage = "Пожалуйста, укажите электронную почту")]
             [EmailAddress]
             [Display(Name = "Электронная почта")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Пожалуйста, укажите пароль")]
             [StringLength(100, ErrorMessage = "{0} должен содержать от {2} до {1} букв.", MinimumLength = 6)]
             [DataType(DataType.Password)]
             [Display(Name = "Пароль")]

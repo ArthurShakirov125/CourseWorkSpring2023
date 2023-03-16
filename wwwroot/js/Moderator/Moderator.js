@@ -18,12 +18,15 @@
 
     $(".moder_btn_delete").click(function () {
         let id = $(this).parent().attr("data-id");
-        console.log($(this).parent().attr("data-content-type"));
         if ($(this).parent().attr("data-content-type") == "post") {
             dataObject.Action = "delete_post";
+            $(this).closest(".post").remove();
+            // надо удалить элемент из верстки
         }
         else if ($(this).parent().attr("data-content-type") == "comment") {
             dataObject.Action = "delete_comment";
+            $(this).closest(".comment").remove();
+            // надо удалить элемент из верстки
         }
         
         dataObject.Id = id;

@@ -4,6 +4,7 @@ using System;
 using System.Threading.Tasks;
 using CourseWorkSpring2023.Models.HomeViewModels;
 using System.Linq;
+using System.ComponentModel.DataAnnotations;
 
 namespace CourseWorkSpring2023.Models
 {
@@ -19,7 +20,6 @@ namespace CourseWorkSpring2023.Models
         }
 
         public string UserName { get; set; }
-
         public string NickName { get; set; }
 
         public string AvatarImgName { get; set; }
