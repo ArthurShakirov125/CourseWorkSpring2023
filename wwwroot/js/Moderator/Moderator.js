@@ -3,33 +3,27 @@
     let dataObject = new Object();
 
     $(".moder_btn_hide").click(function () {
-        let id = $(this).parent().attr("data-id");
+        FindId($(this));
         dataObject.Action = "hide";
-        dataObject.Id = id;
         MyRequest();
     });
 
     $(".moder_btn_unhide").click(function () {
-        let id = $(this).parent().attr("data-id");
+        FindId($(this));
         dataObject.Action = "unhide";
-        dataObject.Id = id;
         MyRequest();
     });
 
     $(".moder_btn_delete").click(function () {
-        let id = $(this).parent().attr("data-id");
-        if ($(this).parent().attr("data-content-type") == "post") {
+        FindId($(this));
+        if ($(this).closest(".moder_tools").attr("data-content-type") == "post") {
             dataObject.Action = "delete_post";
             $(this).closest(".post").remove();
-            // надо удалить элемент из верстки
         }
-        else if ($(this).parent().attr("data-content-type") == "comment") {
+        else if ($(this).closest(".moder_tools").attr("data-content-type") == "comment") {
             dataObject.Action = "delete_comment";
             $(this).closest(".comment").remove();
-            // надо удалить элемент из верстки
         }
-        
-        dataObject.Id = id;
         MyRequest();
     });
 
@@ -50,5 +44,10 @@
 
             }
         });
+    }
+
+    function FindId(elem) {
+        let id = elem.closest(".moder_tools").attr("data-id");
+        dataObject.Id = id;
     }
 }
