@@ -32,6 +32,7 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account.Manage
 
         public string Username { get; set; }
 
+        [Display(Name = "Электроннная почта")]
         public string Email { get; set; }
 
         public bool IsEmailConfirmed { get; set; }
@@ -46,7 +47,7 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account.Manage
         {
             [Required]
             [EmailAddress]
-            [Display(Name = "New email")]
+            [Display(Name = "Новая электронная почта")]
             public string NewEmail { get; set; }
         }
 

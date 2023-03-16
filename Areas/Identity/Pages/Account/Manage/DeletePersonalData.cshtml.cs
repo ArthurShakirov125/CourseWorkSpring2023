@@ -30,8 +30,9 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account.Manage
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Введите пароль")]
             [DataType(DataType.Password)]
+            [Display(Name = "Пароль")]
             public string Password { get; set; }
         }
 
