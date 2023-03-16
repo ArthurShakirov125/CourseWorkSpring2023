@@ -9,5 +9,10 @@ uploadField.onchange = function () {
     }
     else {
         $("#Input_avatar-error").text("");
+
+        const [file] = uploadField.files
+        if (file) {
+            $("#preview").attr("src", URL.createObjectURL(file));
+        }
     };
 };

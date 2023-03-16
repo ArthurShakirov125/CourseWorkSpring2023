@@ -17,6 +17,9 @@
                 <input asp-for="Input.NickName" class="form-control" />
                 <span asp-validation-for="Input.NickName" class="text-danger"></span>
             </div>
+            <div>
+                <img id="preview" width="150" height="150"/>
+            </div>
             <div class="form-group">
                 <label for="avatar">Загрузите картинку для профиля</label>
                 <input id="avatar" name="avatar" class="form-control" type="file" />
