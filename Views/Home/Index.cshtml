@@ -27,7 +27,7 @@
             @if (User.IsInRole("Moderator"))
                 @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id})
             Пользователь
-            @post.Author.NickName
+            @Html.ActionLink(@post.Author.NickName, "UserPage", "Home", new { userName = post.Author.UserName})
             <br>
             @post.Header
             <br>

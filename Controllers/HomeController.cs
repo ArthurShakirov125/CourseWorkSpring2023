@@ -87,6 +87,14 @@ namespace CourseWorkSpring2023.Controllers
             return View(model);
         }
 
+        public async Task<IActionResult> UserPage(string userName)
+        {
+            var user = await userManager.FindByNameAsync(userName);
+            UserViewModel model = new UserViewModel(user);
+            
+            return View(model);
+        }
+
         public IActionResult CommentsOfPost(int postId)
         {
             var comments = postsManager.GetPostsComments(postId);
