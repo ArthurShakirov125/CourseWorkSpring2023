@@ -3,25 +3,33 @@
 @inject SignInManager<CustomUser> SignInManager
 @inject UserManager<CustomUser> UserManager
 
-<ul class="navbar-nav">
+@{
+    CustomUser user = await UserManager.FindByNameAsync(User.Identity.Name);
+    string path = @"/Users/UsersAvatarsImages/" + user.AvatarImgName;
+}
+
+<ul>
 @if (SignInManager.IsSignedIn(User))
 {
-    <li class="nav-item">
-        <a  class="nav-link text-dark" asp-controller="Home" asp-action="UserMainPage">Привет @User.Identity.Name!</a>
+    <li>
+        <div class="custom-user_greet">
+            <img class="custom-greet_img" src="@path">
+            <a asp-controller="Home" asp-action="UserMainPage">Привет @User.Identity.Name!</a>
+        </div>
     </li>
-    <li class="nav-item">
-        <form  class="form-inline" asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
-            <button  type="submit" class="nav-link btn btn-link text-dark">Выйти</button>
+    <li>
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+            <button class="custom-navbar_logout" type="submit" >Выйти</button>
         </form>
     </li>
 }
 else
 {
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
+    <li>
+        <a asp-area="Identity" asp-page="/Account/Register">Регистрация</a>
     </li>
-    <li class="nav-item">
-        <a class="nav-link text-dark" asp-area="Identity" asp-page="/Account/Login">Войти</a>
+    <li>
+        <a asp-area="Identity" asp-page="/Account/Login">Войти</a>
     </li>
 }
 </ul>

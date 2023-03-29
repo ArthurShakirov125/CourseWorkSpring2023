@@ -1,0 +1,57 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&display=swap');
+
+/*header*/
+header {
+    display: flex;
+}
+header a{
+    text-decoration: none;
+    color: #FCF7F4;
+}
+.custom-logo {
+    font-family: 'Oswald', sans-serif;
+    font-size: 24px;
+}
+.custom-navbar {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    background: rgb(152, 1, 16);
+}
+.custom-navbar ul{
+    list-style-type: none;
+    display: inherit;
+    align-items: center;
+}
+.custom-navbar ul li {
+    margin-right: 2em;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+.custom-nav-links {
+    display: flex;
+}
+.custom-navbar_logout {
+    border: none;
+    background: none;
+    font-size: 16px;
+    color: #FCF7F4;
+    font-family: 'Montserrat', sans-serif;
+    cursor:pointer;
+}
+
+.custom-user_greet {
+    display: flex;
+    align-items: center;
+}
+
+.custom-greet_img {
+    margin-right: 0.3em;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+}
+/*header*/
+body {
+    margin: 0;
+}
