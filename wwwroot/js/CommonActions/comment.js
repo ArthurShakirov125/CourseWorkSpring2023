@@ -53,7 +53,4 @@
 
         $(".comment-section").append(comment);
     }
-
-    
-
 });

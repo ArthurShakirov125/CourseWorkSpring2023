@@ -9,7 +9,7 @@
             <div class="comment content">
             @await Component.InvokeAsync("ModeratorTools", new { ContentType = "comment", Id = comment.Id})
                     <h4>@comment.User.NickName</h4>
-                    <p>@comment.Text</p>
+                    <p>@comment.ProcessedText</p>
                     <p>Рейтинг:</p>
                     <p>isHidden  -  @comment.IsHidden</p>
                     <p class="rating">@comment.Rating</p>

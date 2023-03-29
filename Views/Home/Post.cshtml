@@ -1,76 +1,100 @@
 ﻿@using CourseWorkSpring2023.Models.HomeViewModels;
 @using CourseWorkSpring2023.Models.Moderator;
 @model PostViewModel
+<link rel="stylesheet" href="~/lib/Trumbowyg/dist/ui/trumbowyg.min.css">
+<div class="row">
+    <div class="col-md-12">
+    <h1>@Model.Header</h1>
+    <h2>@Html.ActionLink(Model.Author.NickName, "UserPage", "Home", new { userName = Model.Author.UserName})</h2>
+    <p class="postId" hidden>@Model.Id</p>
+    <div>@Model.ProcessedText</div>
 
-<h1>@Model.Header</h1>
-<h2>@Html.ActionLink(Model.Author.NickName, "UserPage", "Home", new { userName = Model.Author.UserName})</h2>
-<p class="postId" hidden>@Model.Id</p>
-<div>@Model.ProcessedText</div>
+         <textarea id="RawText" class="comment_text"></textarea>
+         <br>
+         @if(Model.ActiveUser == null){
+            <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">Оставить комментарий</a>
+         }
+         else{
+            <button class="leave_comment_btn btn btn-primary" data-Nickname=@Model.ActiveUser.NickName>Оставить комментарий</button>
+         }
+    <style>
+        .comment-section .comment{
+            border: 1px solid black;
+            margin:5px;
+            padding:5px;
+        }
+    </style>
 
-     <textarea class="comment_text"></textarea>
-     <br>
-     @if(Model.ActiveUser == null){
-        <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">Оставить комментарий</a>
-     }
-     else{
-        <button class="leave_comment_btn btn btn-primary" data-Nickname=@Model.ActiveUser.NickName>Оставить комментарий</button>
-     }
-<style>
-    .comment-section .comment{
-        border: 1px solid black;
-        margin:5px;
-        padding:5px;
-    }
-</style>
+    <div class="comment-section">
+        @if(Model.Comments.Any()){
+            @foreach (var comment in Model.Comments)
+            {
+                <div class="comment content">
+                    @if (User.IsInRole("Moderator"))
+                        @await Component.InvokeAsync("ModeratorTools", new { ContentType = "comment", Id = comment.Id})
 
-<div class="comment-section">
-    @if(Model.Comments.Any()){
-        @foreach (var comment in Model.Comments)
-        {
-            <div class="comment content">
-                @if (User.IsInRole("Moderator"))
-                    @await Component.InvokeAsync("ModeratorTools", new { ContentType = "comment", Id = comment.Id})
-
-                <h4>@Html.ActionLink(comment.User.NickName, "UserPage", "Home", new { userName = comment.User.UserName})</h4>
-                <p>@comment.Text</p>
-                <p>Рейтинг:</p>
-                <p>isHidden  -  @comment.IsHidden</p>
-                <p class="rating">@comment.Rating</p>
+                    <h4>@Html.ActionLink(comment.User.NickName, "UserPage", "Home", new { userName = comment.User.UserName})</h4>
+                    <p>@comment.ProcessedText</p>
+                    <p>Рейтинг:</p>
+                    <p>isHidden  -  @comment.IsHidden</p>
+                    <p class="rating">@comment.Rating</p>
             
-            @if(Model.ActiveUser == null)
-            {
-                <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">+</a>
-                <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">-</a>
-            }
-            else
-            {
-                @if (Model.UpvotedCommentsIds.Contains(comment.Id))
+                @if(Model.ActiveUser == null)
                 {
-                    <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-Id=@comment.Id data-action="remove_upvote">+</button>
-                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote_and_remove_upvote">-</button>
-                }
-                else if (Model.DownvotedCommentsIds.Contains(comment.Id))
-                {
-                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote_and_remove_downvote">+</button>
-                    <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-Id=@comment.Id data-action="remove_downvote">-</button>
+                    <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">+</a>
+                    <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">-</a>
                 }
                 else
                 {
-                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote">+</button>
-                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote">-</button>
+                    @if (Model.UpvotedCommentsIds.Contains(comment.Id))
+                    {
+                        <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-Id=@comment.Id data-action="remove_upvote">+</button>
+                        <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote_and_remove_upvote">-</button>
+                    }
+                    else if (Model.DownvotedCommentsIds.Contains(comment.Id))
+                    {
+                        <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote_and_remove_downvote">+</button>
+                        <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-Id=@comment.Id data-action="remove_downvote">-</button>
+                    }
+                    else
+                    {
+                        <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote">+</button>
+                        <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote">-</button>
+                    }
                 }
+                </div>
             }
+        }else{
+            <div class="no-comments">
+                <p>Комментариев пока нету</p>
             </div>
-        }
-    }else{
-        <div class="no-comments">
-            <p>Комментариев пока нету</p>
+        }    
         </div>
-    }    
+</div>
 </div>
 
 
 @section scripts{
+
+    <script src="~/lib/Trumbowyg/dist/trumbowyg.min.js"></script>
+    <script src="~/lib/Trumbowyg/dist/langs/ru.js"></script>
+    <script>
+        $('#RawText').trumbowyg({
+            lang: 'ru',
+            tagsToRemove: ['script', 'link'],
+            autogrow: true,
+            autogrowOnEnter: true,
+            btns:[
+                ['formatting'],
+                ['strong', 'em', 'del'],
+                ['superscript', 'subscript'],
+                ['unorderedList', 'orderedList'],
+                ['horizontalRule'],
+                ['removeformat'],
+                ['fullscreen']
+            ]
+        });
+    </script>
     <script src="~/js/CommonActions/ratings.js"></script>
     <script src="~/js/CommonActions/comment.js"></script>
 }
