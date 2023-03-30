@@ -3,14 +3,12 @@
 @inject SignInManager<CustomUser> SignInManager
 @inject UserManager<CustomUser> UserManager
 
-@{
-    CustomUser user = await UserManager.FindByNameAsync(User.Identity.Name);
-    string path = @"/Users/UsersAvatarsImages/" + user.AvatarImgName;
-}
 
 <ul>
 @if (SignInManager.IsSignedIn(User))
 {
+    CustomUser user = await UserManager.FindByNameAsync(User.Identity.Name);
+    string path = @"/Users/UsersAvatarsImages/" + user.AvatarImgName;
     <li>
         <div class="custom-user_greet">
             <img class="custom-greet_img" src="@path">
