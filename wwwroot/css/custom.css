@@ -1,5 +1,9 @@
 ﻿@import url('https://fonts.googleapis.com/css2?family=Montserrat&family=Oswald&display=swap');
 
+body {
+    margin: 0;
+    font-family: 'Montserrat', sans-serif;
+}
 /*header*/
 header {
     display: flex;
@@ -52,6 +56,96 @@ header a{
     border-radius: 50%;
 }
 /*header*/
-body {
+
+/*body*/
+.custom-container{
+    width:100%;
+}
+main {
+    margin: auto;
+    width: 60%;
+}
+
+.post {
+    border: 1px solid black;
+    margin: 15px 0 15px 0;
+    position: relative;
+    min-height: 150px;
+    font-size:18px;
+}
+
+.custom-post-title {
+    position: absolute;
+    top: 1.3rem;
+    left: 10rem;
     margin: 0;
+}
+.custom-post-info {
+    position: absolute;
+    top: 0.2rem;
+    right: 0;
+    display: flex;
+}
+.custom-post-info div{
+    margin-right: 0.5rem;
+}
+
+.custom-rate-btns {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 33px;
+    position: absolute;
+    top: 0.2rem;
+    left: 0.5rem;
+}
+
+.custom-rate-btns div{
+    margin: 0.2rem 0 0.2rem 0;
+}
+
+.custom-rate-btns :first-child{
+    transform: rotate(180deg);
+    cursor:pointer;
+}
+
+.custom-rate-btns :last-child{
+    cursor:pointer;
+}
+
+.custom-post-comments_count {
+    position: absolute;
+    right: 0.45rem;
+    bottom: 0.2rem;
+}
+
+.custom-post-open {
+    position: absolute;
+    left: 10rem;
+    bottom: 0.3rem;
+}
+
+.custom-red_btn {
+    padding: 0.85rem;
+    background: #980110;
+    color: #FCF7F4;
+    text-decoration: none;
+}
+
+.custom-posts_filter {
+    display: flex;
+    justify-content: space-between;
+    margin: 2rem 0 2rem 0;
+}
+
+.custom-nav_btns {
+    gap: 1.5rem;
+    display: flex;
+}
+
+.custom-go_top_btn {
+    position: fixed;
+    right: 14rem;
+    bottom: 1rem;
+    border-radius: 100px;
 }

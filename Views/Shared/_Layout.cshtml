@@ -21,7 +21,7 @@
             <div class="custom-nav-links">
                 <ul>
                     <li>
-                        <a class="custom-logo" asp-controller="Home" asp-action="Index">CourseWorkSpring2023</a>
+                        <a id="logo" class="custom-logo" asp-controller="Home" asp-action="Index">CourseWorkSpring2023</a>
                     </li>
                     <li>
                         <a asp-controller="Home" asp-action="Index">Home</a>
@@ -36,17 +36,11 @@
             </div>
         </div>
     </header>
-    <div class="container">
-        <main role="main" class="pb-3">
+    <div class="custom-container">
+        <main role="main">
             @RenderBody()
         </main>
     </div>
-
-    <footer class="border-top footer text-muted">
-        <div class="container">
-            &copy; 2023 - CourseWorkSpring2023 - <a asp-controller="Home" asp-action="Privacy">Privacy</a>
-        </div>
-    </footer>
     @RenderSection("Scripts", required: false)
 </body>
 </html>

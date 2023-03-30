@@ -6,64 +6,78 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
-
-<style>
-    .post{
-        border: black solid 1px;
-        margin: 20px;
-    }
-</style>
-
 @await Component.InvokeAsync("PostsFilter")
 
 <div class="posts-container">
     @foreach (var post in Model.Posts)
     {
         <div class="post content">
+            <div class="custom-post-info">
+                <div>@Html.ActionLink(@post.Author.NickName, "UserPage", "Home", new { userName = post.Author.UserName})</div>
+                <div>Дата публикации - @post.Posted</div>
+            </div>
+
+            <!--Пост спрятан - @post.IsHidden.ToString()-->
+            
+
             @if (User.IsInRole("Moderator"))
                 @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id})
-            Пользователь
-            @Html.ActionLink(@post.Author.NickName, "UserPage", "Home", new { userName = post.Author.UserName})
-            <br>
-            @post.Header
-            <br>
-            Дата публикации - @post.Posted
-            <br>
-            Комментарии - @post.CommentsCount
-            <br>
-            Пост спрятан - @post.IsHidden.ToString()
-            <p class="rating">@post.Rating</p>
+
+            <h2 class="custom-post-title">@post.Header</h2>
+            
+            <div class="custom-post-comments_count">
+                Комментарии - @post.CommentsCount
+            </div>
+            
+            <div class="custom-rate-btns">
             @if(Model.ActiveUser == null)
             {
-                <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">+</a>
-                <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">-</a>
+                <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/></a>
+                <div class="rating">@post.Rating</div>
+                <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/> </a>
             }
             else
             {
                 @if (Model.UpvotedPostsIds.Contains(post.Id))
                 {
-                    <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-Id=@post.Id data-action="remove_upvote">+</button>
-                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote_and_remove_upvote">-</button>
+                    <div class="likeBtn" data-isPicked="true" data-Id=@post.Id data-action="remove_upvote">
+                        <img src="~/icons/RatingIcon.svg"/>
+                        </div>
+                    <div class="rating">@post.Rating</div>
+                    <div class="dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote_and_remove_upvote">
+                        <img src="~/icons/RatingIcon.svg"/>
+                    </div>
                 }
                 else if (Model.DownvotedPostsIds.Contains(post.Id))
                 {
-                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote_and_remove_downvote">+</button>
-                    <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-Id=@post.Id data-action="remove_downvote">-</button>
+                    <div class="likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote_and_remove_downvote">
+                        <img src="~/icons/RatingIcon.svg"/>
+                    </div>
+                    <div class="rating">@post.Rating</div>
+                    <div class="dislikeBtn" data-isPicked="true" data-Id=@post.Id data-action="remove_downvote">
+                        <img src="~/icons/RatingIcon.svg"/>
+                    </div>
                 }
                 else
                 {
-                    <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote">+</button>
-                    <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote">-</button>
+                    <div class="likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote">
+                        <img src="~/icons/RatingIcon.svg"/>
+                    </div>
+                    <div class="rating">@post.Rating</div>
+                    <div class="dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote">
+                        <img src="~/icons/RatingIcon.svg"/>
+                    </div>
                 }
             }
-            <a asp-action="Post" asp-route-postId=@post.Id>Открыть</a>
+            </div>
+            <a class="custom-post-open custom-red_btn" asp-action="Post" asp-route-postId=@post.Id>Открыть</a>
         </div>
     }
 </div>
+
+<a href="#logo" class="custom-go_top_btn custom-red_btn">
+    Наверх
+</a>
 
 @section scripts{
     <script src="~/js/CommonActions/ratings.js"></script>
