@@ -10,7 +10,7 @@ using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
-using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Entities;
 
 namespace CourseWorkSpring2023.Areas.Identity.Pages.Account.Manage
 {

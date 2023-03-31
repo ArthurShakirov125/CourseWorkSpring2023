@@ -1,5 +1,5 @@
 ﻿using CourseWorkSpring2023.Abstract;
-using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Entities;
 using CourseWorkSpring2023.Data;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;

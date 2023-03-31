@@ -1,4 +1,4 @@
-﻿using CourseWorkSpring2023.Custom;
+﻿using CourseWorkSpring2023.Entities;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System;

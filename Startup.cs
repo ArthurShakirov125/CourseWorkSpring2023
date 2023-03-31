@@ -1,5 +1,5 @@
 using CourseWorkSpring2023.Abstract;
-using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Entities;
 using CourseWorkSpring2023.Data;
 using CourseWorkSpring2023.DataAccessLayer;
 using Microsoft.AspNetCore.Builder;

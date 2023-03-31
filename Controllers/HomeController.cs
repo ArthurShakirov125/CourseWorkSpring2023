@@ -1,6 +1,6 @@
 ﻿using CourseWorkSpring2023.Abstract;
 using CourseWorkSpring2023.Constants;
-using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Entities;
 using CourseWorkSpring2023.Data.Migrations;
 using CourseWorkSpring2023.DataAccessLayer;
 using CourseWorkSpring2023.Models;
@@ -29,7 +29,8 @@ namespace CourseWorkSpring2023.Controllers
 
         public HomeController(PostsRepository postsManager, 
             ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, 
-            RatingsRepository ratingsManager, ContentRepository contentManager, CommentsRepository commentsRepository)
+            RatingsRepository ratingsManager, ContentRepository contentManager, 
+            CommentsRepository commentsRepository)
         {
             this.postsManager = postsManager;
             this.tagsManager = tagsManager;
@@ -70,6 +71,12 @@ namespace CourseWorkSpring2023.Controllers
                     return View(model);
                 case "new":
                     model.Posts = postsManager.GetList().OrderByDescending(p => p.Uploaded).Select(p => new PostViewModel(p));
+                    return View(model);
+                case "follow":
+                    model.Posts = new List<PostViewModel>();
+                    return View(model);
+                case "popular":
+                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Comments.Count).Select(p => new PostViewModel(p));
                     return View(model);
                 default:
                     model.Posts = postsManager.GetList().Select(p => new PostViewModel(p));

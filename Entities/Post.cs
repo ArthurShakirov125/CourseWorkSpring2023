@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace CourseWorkSpring2023.Custom
+namespace CourseWorkSpring2023.Entities
 {
     public class Post : UploadableContent
     {

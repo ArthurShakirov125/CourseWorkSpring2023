@@ -1,6 +1,6 @@
 ﻿using CourseWorkSpring2023.Abstract;
 
-namespace CourseWorkSpring2023.Custom
+namespace CourseWorkSpring2023.Entities
 {
     public class UserContentRates
     {

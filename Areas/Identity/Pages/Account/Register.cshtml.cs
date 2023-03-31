@@ -16,7 +16,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Configuration.UserSecrets;
 using System.ComponentModel;
 using System.IO;
-using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Entities;
 using static System.Net.Mime.MediaTypeNames;
 
 namespace CourseWorkSpring2023.Areas.Identity.Pages.Account

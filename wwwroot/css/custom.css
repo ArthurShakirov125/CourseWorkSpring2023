@@ -89,6 +89,10 @@ main {
 .custom-post-info div{
     margin-right: 0.5rem;
 }
+.custom-post-info a{
+    text-decoration: none;
+    color: #980110;
+}
 
 .custom-rate-btns {
     display: flex;

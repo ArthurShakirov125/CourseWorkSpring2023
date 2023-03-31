@@ -1,4 +1,4 @@
-﻿using CourseWorkSpring2023.Custom;
+﻿using CourseWorkSpring2023.Entities;
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
@@ -17,7 +17,11 @@ namespace CourseWorkSpring2023.Models
             AvatarImgName = user.AvatarImgName;
             RegistrationDay = user.RegistrationDay;
             Comments = user.Comments;
+            Id = user.Id;
+          //  Followers = user.Followers;
         }
+
+        public string Id { get; set; }
 
         public string UserName { get; set; }
         public string NickName { get; set; }

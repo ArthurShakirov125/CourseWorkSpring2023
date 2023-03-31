@@ -1,4 +1,8 @@
-﻿<div class="custom-posts_filter">
+﻿@using Microsoft.AspNetCore.Identity;
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
+
+<div class="custom-posts_filter">
     <div class="custom-nav_btns">
         <div>
             <a class="custom-red_btn" asp-action="Index" asp-controller="Home" asp-route-filter="follow">Подписки</a>
@@ -14,7 +18,14 @@
         </div>
     </div>
         <div>
-            <a class="custom-red_btn" asp-action="Index" asp-controller="Home">Сделать пост</a>
+        @if (SignInManager.IsSignedIn(User))
+        {
+            <a class="custom-red_btn" asp-action="CreatePost" asp-controller="Home">Сделать пост</a>
+        }
+        else
+        {
+            <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Register">Сделать пост</a>
+        }
         </div>
     
 </div>

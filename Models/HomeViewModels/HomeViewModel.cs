@@ -1,5 +1,5 @@
 ﻿using CourseWorkSpring2023.Abstract;
-using CourseWorkSpring2023.Custom;
+using CourseWorkSpring2023.Entities;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;

@@ -1,4 +1,4 @@
-﻿using CourseWorkSpring2023.Custom;
+﻿using CourseWorkSpring2023.Entities;
 using System;
 
 namespace CourseWorkSpring2023.Abstract

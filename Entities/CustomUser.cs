@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-namespace CourseWorkSpring2023.Custom
+namespace CourseWorkSpring2023.Entities
 {
     public class CustomUser : IdentityUser
     {
@@ -16,5 +16,6 @@ namespace CourseWorkSpring2023.Custom
         public List<Post> Posts { get; set; }
 
         public List<Comment> Comments { get; set; }
+
     }
 }

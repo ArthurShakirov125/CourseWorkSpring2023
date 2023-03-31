@@ -2,7 +2,7 @@
 using Microsoft.AspNetCore.Html;
 using System;
 
-namespace CourseWorkSpring2023.Custom
+namespace CourseWorkSpring2023.Entities
 {
     public class Comment : UploadableContent
     {
