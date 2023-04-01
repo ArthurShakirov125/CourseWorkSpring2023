@@ -51,6 +51,11 @@ namespace CourseWorkSpring2023.DataAccessLayer
             return db.Posts.Where(p => p.User.Id == user.Id).Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
         }
 
+        public IEnumerable<Post> GetUsersPosts(string userId)
+        {
+            return db.Posts.Where(p => p.User.Id == userId).Include(p => p.User).Include(p => p.Comments).Include(p => p.Tags);
+        }
+
         public IEnumerable<Comment> GetPostsComments(int postId)
         {
             return db.Comments.Where(c => c.Post.Id == postId).Include(c => c.User);
@@ -89,5 +94,23 @@ namespace CourseWorkSpring2023.DataAccessLayer
 
             return comment.Id;
         }
+
+        public IEnumerable<Post> GetFollowedPosts(CustomUser user)
+        {
+            var users = db.Followers.Where(f => f.FollowerId == user.Id).Select(f => f.FollowedId);
+
+            List<Post> posts = new List<Post>();
+
+            foreach(var u in users)
+            {
+                posts.AddRange(GetUsersPosts(u));
+            }
+
+            return posts;
+
+        }
     }
+
+
+    
 }

@@ -26,11 +26,12 @@ namespace CourseWorkSpring2023.Controllers
         private RatingsRepository ratingsManager;
         private ContentRepository contentManager;
         private CommentsRepository commentsManager;
+        private FollowersRepository followersManager;
 
         public HomeController(PostsRepository postsManager, 
             ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, 
             RatingsRepository ratingsManager, ContentRepository contentManager, 
-            CommentsRepository commentsRepository)
+            CommentsRepository commentsRepository, FollowersRepository followersManager)
         {
             this.postsManager = postsManager;
             this.tagsManager = tagsManager;
@@ -38,6 +39,7 @@ namespace CourseWorkSpring2023.Controllers
             this.ratingsManager = ratingsManager;
             this.contentManager = contentManager;
             this.commentsManager = commentsRepository;
+            this.followersManager = followersManager;
         }
 
         private async Task<CustomUser> GetUser()
@@ -73,7 +75,7 @@ namespace CourseWorkSpring2023.Controllers
                     model.Posts = postsManager.GetList().OrderByDescending(p => p.Uploaded).Select(p => new PostViewModel(p));
                     return View(model);
                 case "follow":
-                    model.Posts = new List<PostViewModel>();
+                    model.Posts = postsManager.GetFollowedPosts(user).Select(p => new PostViewModel(p));
                     return View(model);
                 case "popular":
                     model.Posts = postsManager.GetList().OrderByDescending(p => p.Comments.Count).Select(p => new PostViewModel(p));
@@ -213,6 +215,16 @@ namespace CourseWorkSpring2023.Controllers
                 default:
                     return Json(new { reply = 400 });
             }
+        }
+
+        public async Task<IActionResult> FollowTest(string userId)
+        {
+            var follower = await GetUser();
+
+            followersManager.FollowUser(follower.Id, userId);
+
+            return RedirectToAction("Index");
+
         }
 
 

@@ -16,6 +16,8 @@ namespace CourseWorkSpring2023.Data
      //   public DbSet<UsersPostsRates> UsersPostsRates { get; set; }
       //  public DbSet<UsersCommentsRates> UsersCommentsRates { get; set; }
 
+        public DbSet<Followers> Followers { get; set; }
+
         public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options)
             : base(options)
         {
