@@ -4,7 +4,7 @@ using CourseWorkSpring2023.Entities;
 using CourseWorkSpring2023.Data.Migrations;
 using CourseWorkSpring2023.DataAccessLayer;
 using CourseWorkSpring2023.Models;
-using CourseWorkSpring2023.Models.HomeViewModels;
+using CourseWorkSpring2023.Models.IndexViewModel;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
@@ -21,125 +21,25 @@ namespace CourseWorkSpring2023.Controllers
     public class HomeController : Controller
     {
         private PostsRepository postsManager;
-        private ICrud<PostsTags> tagsManager;
         private UserManager<CustomUser> userManager;
         private RatingsRepository ratingsManager;
         private ContentRepository contentManager;
         private CommentsRepository commentsManager;
-        private FollowersRepository followersManager;
 
-        public HomeController(PostsRepository postsManager, 
-            ICrud<PostsTags> tagsManager, UserManager<CustomUser> userManager, 
+        public HomeController(PostsRepository postsManager, UserManager<CustomUser> userManager, 
             RatingsRepository ratingsManager, ContentRepository contentManager, 
-            CommentsRepository commentsRepository, FollowersRepository followersManager)
+            CommentsRepository commentsRepository)
         {
             this.postsManager = postsManager;
-            this.tagsManager = tagsManager;
             this.userManager = userManager;
             this.ratingsManager = ratingsManager;
             this.contentManager = contentManager;
             this.commentsManager = commentsRepository;
-            this.followersManager = followersManager;
         }
 
         private async Task<CustomUser> GetUser()
         {
             return await userManager.GetUserAsync(User);
-        }
-
-
-        public async Task<IActionResult> Index(string filter = null)
-        {
-            CustomUser user = await GetUser();
-            var model = new HomeViewModel();
-
-            if (user != null)
-            {
-                model.ActiveUser = user;
-                model.UpvotedPostsIds = ratingsManager.UsersUpvotes(user).Select(p => p.Id);
-                model.DownvotedPostsIds = ratingsManager.UsersDownvotes(user).Select(p => p.Id);
-            }
-            else
-            {
-                model.ActiveUser = null;
-                model.UpvotedPostsIds = null;
-                model.DownvotedPostsIds = null;
-            }
-
-            switch (filter)
-            {
-                case "top":
-                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Upvotes).Select(p => new PostViewModel(p));
-                    return View(model);
-                case "new":
-                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Uploaded).Select(p => new PostViewModel(p));
-                    return View(model);
-                case "follow":
-                    model.Posts = postsManager.GetFollowedPosts(user).Select(p => new PostViewModel(p));
-                    return View(model);
-                case "popular":
-                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Comments.Count).Select(p => new PostViewModel(p));
-                    return View(model);
-                default:
-                    model.Posts = postsManager.GetList().Select(p => new PostViewModel(p));
-                    return View(model);
-            }
-        }
-
-        [Authorize]
-        public async Task<IActionResult> UserMainPage()
-        {
-            var user = await GetUser();
-
-            var model = new UserViewModel(user);
-            model.Posts = postsManager.GetUsersPosts(user).Select(p => new PostViewModel(p));
-            return View(model);
-        }
-
-        public async Task<IActionResult> UserPage(string userName)
-        {
-            var user = await userManager.FindByNameAsync(userName);
-            UserViewModel model = new UserViewModel(user);
-            
-            return View(model);
-        }
-
-        public IActionResult CommentsOfPost(int postId)
-        {
-            var comments = postsManager.GetPostsComments(postId);
-            return View(comments);
-        }
-
-        [Authorize]
-        public IActionResult CreatePost()
-        {
-            var model = new PostViewModel();
-
-            return View(model);
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> CreatePost(PostViewModel model)
-        {
-            if (!ModelState.IsValid)
-            {
-                return View(nameof(CreatePost), model);
-            }
-
-            CustomUser user = await GetUser();
-
-            var post = new Post()
-            {
-                Header = model.Header,
-                Text = model.RawText,
-                User = user,
-                Downvotes = 0,
-                Upvotes = 0,
-                Uploaded = DateTime.Now,
-            };
-
-            postsManager.Create(post);
-            return RedirectToAction(nameof(Index));
         }
 
         public async Task<JsonResult> GetAjax()
@@ -217,28 +117,6 @@ namespace CourseWorkSpring2023.Controllers
             }
         }
 
-        public async Task<IActionResult> FollowTest(string userId)
-        {
-            var follower = await GetUser();
-
-            followersManager.FollowUser(follower.Id, userId);
-
-            return RedirectToAction("Index");
-
-        }
-
-
-        public async Task<IActionResult> Post(int postId)
-        {
-            var model = new PostViewModel(postsManager.Read(postId));
-            model.Comments = postsManager.GetPostsComments(postId);
-            CustomUser user = await GetUser();
-
-            model.UpvotedCommentsIds = ratingsManager.UsersUpvotes(user).Select(p => p.Id);
-            model.DownvotedCommentsIds = ratingsManager.UsersDownvotes(user).Select(p => p.Id);
-            model.ActiveUser = user;
-            return View(model);
-        }
 
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]

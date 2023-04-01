@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System;
 using System.Threading.Tasks;
-using CourseWorkSpring2023.Models.HomeViewModels;
+using CourseWorkSpring2023.Models.IndexViewModel;
 using System.Linq;
 using System.ComponentModel.DataAnnotations;
 

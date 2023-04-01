@@ -1,4 +1,4 @@
-﻿@model CourseWorkSpring2023.Models.HomeViewModels.PostViewModel
+﻿@model CourseWorkSpring2023.Models.IndexViewModel.PostViewModel
 
 @{
     ViewData["Title"] = "CreatePost";
@@ -27,7 +27,7 @@
 </div>
 
 <div>
-    <a asp-action="UserMainPage">Вернутся на главную</a>
+    <a asp-controller="User" asp-action="UserMainPage">Вернутся на главную</a>
 </div>
 
 @section scripts{

@@ -90,7 +90,7 @@ namespace CourseWorkSpring2023
             {
                 endpoints.MapControllerRoute(
                     name: "default",
-                    pattern: "{controller=Home}/{action=Index}/{id?}");
+                    pattern: "{controller=Posts}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
             });
         }

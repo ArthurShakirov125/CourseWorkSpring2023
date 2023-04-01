@@ -1,7 +1,7 @@
 ﻿@using CourseWorkSpring2023.Entities;
-@using CourseWorkSpring2023.Models.HomeViewModels;
+@using CourseWorkSpring2023.Models.IndexViewModel;
 @using CourseWorkSpring2023.Models.Moderator;
-@model HomeViewModel;
+@model IndexViewModel;
 @{
     ViewData["Title"] = "Home Page";
 }
@@ -13,7 +13,7 @@
     {
         <div class="post content">
             <div class="custom-post-info">
-                <div>@Html.ActionLink(@post.Author.NickName, "UserPage", "Home", new { userName = post.Author.UserName})</div>
+                <div>@Html.ActionLink(@post.Author.NickName, "UserPage", "User", new { userName = post.Author.UserName})</div>
                 <div>Дата публикации - @post.Posted</div>
             </div>
 
@@ -70,7 +70,7 @@
                 }
             }
             </div>
-            <a class="custom-post-open custom-red_btn" asp-action="Post" asp-route-postId=@post.Id>Открыть</a>
+            <a class="custom-post-open custom-red_btn" asp-action="ReadPost" asp-route-postId=@post.Id>Открыть</a>
         </div>
     }
 </div>

@@ -12,11 +12,11 @@
     <li>
         <div class="custom-user_greet">
             <img class="custom-greet_img" src="@path">
-            <a asp-controller="Home" asp-action="UserMainPage">Привет @User.Identity.Name!</a>
+            <a asp-controller="User" asp-action="UserMainPage">Привет @User.Identity.Name!</a>
         </div>
     </li>
     <li>
-        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Home", new { area = "" })">
+        <form asp-area="Identity" asp-page="/Account/Logout" asp-route-returnUrl="@Url.Action("Index", "Posts", new { area = "" })">
             <button class="custom-navbar_logout" type="submit" >Выйти</button>
         </form>
     </li>

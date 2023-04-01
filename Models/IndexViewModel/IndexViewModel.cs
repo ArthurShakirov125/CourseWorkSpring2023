@@ -4,11 +4,11 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
-namespace CourseWorkSpring2023.Models.HomeViewModels
+namespace CourseWorkSpring2023.Models.IndexViewModel
 {
-    public class HomeViewModel
+    public class IndexViewModel
     {
-        public HomeViewModel()
+        public IndexViewModel()
         {
         }
 
