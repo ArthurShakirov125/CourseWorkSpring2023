@@ -4,18 +4,11 @@ using CourseWorkSpring2023.Data;
 using CourseWorkSpring2023.DataAccessLayer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Identity;
-using Microsoft.AspNetCore.Identity.UI;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Options;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace CourseWorkSpring2023
 {
@@ -60,6 +53,7 @@ namespace CourseWorkSpring2023
             services.AddTransient<CommentsRepository>();
             services.AddTransient<ContentRepository>();
             services.AddTransient<FollowersRepository>();
+            services.AddTransient<ClientServerBlazor.BlazorCallsHandler>();
 
             services.AddControllersWithViews();
             services.AddRazorPages();

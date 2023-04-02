@@ -1,14 +1,14 @@
 ﻿@using CourseWorkSpring2023.BlazorComponents;
+@using Microsoft.AspNetCore.Identity;
 @model UserViewModel
+@inject SignInManager<CustomUser> SignInManager
+@inject UserManager<CustomUser> UserManager
 
 <h1>@Model.NickName</h1>
 
 <img src="@Model.AvatarImagePath" width="100" height="100"/>
 
-
-    <a class="custom-red_btn" asp-action="FollowTest" asp-route-userId="@Model.Id">&lt;3</a>
-
     <div >
-        @(await Html.RenderComponentAsync<Test>(RenderMode.ServerPrerendered,new {  Data= " Hello World " }))
- </div> 
+        @(await Html.RenderComponentAsync<FollowBtn>(RenderMode.ServerPrerendered,new {  ActiveUserId = (await UserManager.FindByNameAsync(User.Identity.Name)).Id, FollowedUserId = Model.Id }))
+    </div> 
 
