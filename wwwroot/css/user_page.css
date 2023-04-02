@@ -1,0 +1,63 @@
+﻿.custom-username{
+}
+
+.custom-userpage_container {
+    display: flex;
+    min-height: 500px;
+}
+
+.custom-user_posts{
+    width: 60%;
+}
+
+.custom-userpage_info {
+    max-height: 500px;
+    width: 40%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: end;
+    position: sticky;
+    top: 3rem;
+}
+
+.custom-userpage_info img {
+    width: 65%;
+    height: 55%;
+    border-radius: 50%;
+    margin-bottom: 1rem;
+    border: 2px solid #980110;
+}
+
+.custom-userpage_info_btns {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    width: 65%;
+    height: 45%;
+}
+
+.custom-posts_container{
+    margin-top:3rem;
+}
+
+.custom-post {
+    width: 100%;
+    display: flex;
+    align-items: end;
+    justify-content: space-around;
+    margin-top: 0.4rem;
+    padding: 0.4rem;
+    border: 1px solid #980110;
+}
+
+.custom-post :last-child{
+    display: flex;
+    flex-direction: column;
+}
+
+.custom-post .custom-red_btn{
+    background-color: #FCF7F4;
+    color: #980110;
+    border: 1px solid #980110;
+}

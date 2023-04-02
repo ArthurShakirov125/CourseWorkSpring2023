@@ -43,6 +43,7 @@ namespace CourseWorkSpring2023.Controllers
         {
             var user = await userManager.FindByNameAsync(userName);
             UserViewModel model = new UserViewModel(user);
+            model.Posts = postsManager.GetUsersPosts(user.Id).Select(p => new PostViewModel(p));
 
             return View(model);
         }

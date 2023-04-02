@@ -4,6 +4,7 @@
 @model IndexViewModel;
 @{
     ViewData["Title"] = "Home Page";
+    string HiddenPostStyle = string.Empty;
 }
 
 @await Component.InvokeAsync("PostsFilter")
@@ -11,17 +12,35 @@
 <div class="posts-container">
     @foreach (var post in Model.Posts)
     {
-        <div class="post content">
+        @if(!User.IsInRole("Moderator") && post.IsHidden)
+        {
+            continue;
+        }
+
+        @if (User.IsInRole("Moderator"))
+        {
+            @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id})
+            if(post.IsHidden){
+                HiddenPostStyle = "custom-postIsHidden";
+            }
+        }
+
+        <div class="post content @HiddenPostStyle">
             <div class="custom-post-info">
-                <div>@Html.ActionLink(@post.Author.NickName, "UserPage", "User", new { userName = post.Author.UserName})</div>
+                @if(post.Author.Email == User.Identity.Name)
+                {
+                    <div>@Html.ActionLink(@post.Author.NickName, "UserMainPage", "User", new { userName = post.Author.UserName})</div>
+                }
+                else
+                {
+                    <div>@Html.ActionLink(@post.Author.NickName, "UserPage", "User", new { userName = post.Author.UserName})</div>
+                }
+                
                 <div>Дата публикации - @post.Posted</div>
             </div>
-
-            <!--Пост спрятан - @post.IsHidden.ToString()-->
             
 
-            @if (User.IsInRole("Moderator"))
-                @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id})
+
 
             <h2 class="custom-post-title">@post.Header</h2>
             

@@ -4,11 +4,43 @@
 @inject SignInManager<CustomUser> SignInManager
 @inject UserManager<CustomUser> UserManager
 
-<h1>@Model.NickName</h1>
+<link rel="stylesheet" href="~/css/user_page.css"/>
 
-<img src="@Model.AvatarImagePath" width="100" height="100"/>
 
-    <div >
-        @(await Html.RenderComponentAsync<FollowBtn>(RenderMode.ServerPrerendered,new {  ActiveUserId = (await UserManager.FindByNameAsync(User.Identity.Name)).Id, FollowedUserId = Model.Id }))
-    </div> 
+
+
+
+<h1 class="custom-username">@Model.NickName</h1>
+<hr />
+
+<div class="custom-userpage_container">
+    <div class="custom-user_posts">
+        <div>
+            <h3>
+                Посты
+            </h3>
+            <div>
+                <a class="custom-red_btn">Новые</a>
+                <a class="custom-red_btn">Лучшие</a>
+            </div>
+        </div>
+        <div class="custom-posts_container">
+            @foreach(var post in Model.Posts)
+            {
+                @await Html.PartialAsync("Partial/PostInfo.cshtml", post);
+            }
+        </div>
+    </div>
+    <div class="custom-userpage_info">
+        <img src="@Model.AvatarImagePath" width="100" height="100"/>
+
+        <div class="custom-userpage_info_btns">
+            @(await Html.RenderComponentAsync<FollowBtn>(RenderMode.ServerPrerendered,new {  ActiveUserId = (await UserManager.FindByNameAsync(User.Identity.Name)).Id, FollowedUserId = Model.Id }))
+            <a class="custom-red_btn" asp-action="Index" asp-controller="Posts">Вернуться</a>
+        </div>
+
+    </div>
+</div>
+
+
 

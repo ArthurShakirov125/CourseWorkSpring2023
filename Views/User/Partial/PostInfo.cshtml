@@ -1,0 +1,16 @@
+﻿@model CourseWorkSpring2023.Models.IndexViewModel.PostViewModel
+
+<div class="custom-post">
+    <div>
+        <h3>
+            @Model.Header
+        </h3>
+        <div>Лайки - @Model.Upvotes</div>
+        <div>Дизлайки - @Model.Downvotes</div>
+    </div>
+    <div>
+        <div>Дата публикации - @Model.Posted</div>
+        <div>Комментариев - @Model.CommentsCount</div>
+        <a class="custom-red_btn" asp-action="ReadPost" asp-controller="Posts" asp-route-postId="@Model.Id">Открыть пост</a>
+    </div>
+</div>
