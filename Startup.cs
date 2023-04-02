@@ -36,6 +36,7 @@ namespace CourseWorkSpring2023
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
+            services.AddServerSideBlazor();
 
             services.
                 AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)
@@ -92,6 +93,8 @@ namespace CourseWorkSpring2023
                     name: "default",
                     pattern: "{controller=Posts}/{action=Index}/{id?}");
                 endpoints.MapRazorPages();
+
+                endpoints.MapBlazorHub();
             });
         }
     }

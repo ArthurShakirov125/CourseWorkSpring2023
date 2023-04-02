@@ -1,0 +1,13 @@
+﻿@using Microsoft.AspNetCore.Components
+     <h3>Blazor Component in MVC</h3>
+     <button @onclick="Click" class="btn btn-dark">Click to get answer</button>
+     <br />
+     <div >@Data </div>
+ @code {
+     [Parameter]  
+     public string Data { get; set; } = string.Empty;
+        private void Click()
+     {
+         Data = "Button Clicked";
+     }
+ }   
