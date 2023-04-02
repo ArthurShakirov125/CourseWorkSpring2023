@@ -17,7 +17,7 @@
     <div class="custom-user_posts">
         <div>
             <h3>
-                Посты
+                Мои посты
             </h3>
             <div>
                 <a class="custom-red_btn">Новые</a>
@@ -27,6 +27,7 @@
         <div class="custom-posts_container">
             @foreach(var post in Model.Posts)
             {
+                @if (post.IsHidden) continue;
                 @await Html.PartialAsync("Partial/PostInfo.cshtml", post);
             }
         </div>
@@ -36,7 +37,7 @@
 
         <div class="custom-userpage_info_btns">
             @(await Html.RenderComponentAsync<FollowBtn>(RenderMode.ServerPrerendered,new {  ActiveUserId = (await UserManager.FindByNameAsync(User.Identity.Name)).Id, FollowedUserId = Model.Id }))
-            <a class="custom-red_btn" asp-action="Index" asp-controller="Posts">Вернуться</a>
+            <a class="custom-red_btn" asp-action="Index" asp-controller="Posts">На главную</a>
         </div>
 
     </div>

@@ -1,45 +1,40 @@
 ﻿@model UserViewModel
+<link rel="stylesheet" href="~/css/user_page.css"/>
 
-<h2>Hi @Model.NickName! Have a nice day!</h2>
-<br>
-<img src="@Model.AvatarImagePath" width="100" height="100"/>
+<h1>Привет @Model.NickName!</h1>
+<hr>
 
-<a asp-area="Identity" asp-page="/Account/Manage/Index">Управление акккаунтом</a>
-<a asp-controller="Posts" asp-action="CreatePost">Post</a>
 
-<style>
-    .post{
-        border: black solid 1px;
-        margin: 20px;
-    }
-</style>
 
-<div class="posts-container">
-    @if (Model.Posts.Any())
-    {
-        @foreach (var post in Model.Posts)
-        {
-            <div class="post content">
-                @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id})
-                <br>
-                @post.Header
-                <br>
-                Дата публикации - @post.Posted
-                <br>
-                Комментарии - @post.CommentsCount
-                <br>
-                Пост спрятан - @post.IsHidden
-                <p class="rating">@post.Rating</p>
-                <a class="btn btn-primary" asp-controller="Posts" asp-action="CommentsOfPost" asp-route-postId="@post.Id">Открыть комментарии</a>
+<div class="custom-userpage_container">
+    <div class="custom-user_posts">
+        <div>
+            <h3>
+                Посты
+            </h3>
+            <div>
+                <a class="custom-red_btn">Новые</a>
+                <a class="custom-red_btn">Лучшие</a>
             </div>
-        }
+        </div>
+        <div class="custom-posts_container">
+            @foreach(var post in Model.Posts)
+            {
+                @await Component.InvokeAsync("ModeratorTools", new { ContentType = "post", Id = post.Id}) 
+                @await Html.PartialAsync("Partial/PostInfo.cshtml", post);
+            }
+        </div>
+    </div>
+    <div class="custom-userpage_info">
+        <img src="@Model.AvatarImagePath" width="100" height="100"/>
 
-    }
-    else
-    {
-        <p>У вас пока нет постов</p>
-        <a asp-controller="Posts" asp-action="CreatePost">Post</a>
-    }
+        <div class="custom-usermainpage-btns">
+            <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Manage/Index">Управление акккаунтом</a>
+            <a class="custom-red_btn" asp-controller="Posts" asp-action="CreatePost">Сделать пост</a>
+            <a class="custom-red_btn" asp-action="Index" asp-controller="Posts">На главную</a>
+        </div>
+
+    </div>
 </div>
 
 @section scripts{

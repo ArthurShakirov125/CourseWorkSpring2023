@@ -37,6 +37,14 @@
     height: 45%;
 }
 
+.custom-usermainpage-btns {
+    display: flex;
+    flex-direction: column;
+    width: 65%;
+    height: 45%;
+    gap: 0.3rem;
+}
+
 .custom-posts_container{
     margin-top:3rem;
 }
