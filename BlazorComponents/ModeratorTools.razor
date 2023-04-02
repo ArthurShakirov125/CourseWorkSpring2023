@@ -1,0 +1,53 @@
+﻿@inject ClientServerBlazor.BlazorCallsHandler server
+
+<div class="custom-moder_tools">
+
+    @if (IsHidden)
+    {
+        <button @ref="button1" class="custom-red_btn" @onclick="Show">Показать</button>
+    }
+    else
+    {
+        <button @ref="button1" class="custom-red_btn" @onclick="Hide">Скрыть</button>
+    }
+   <button @ref="button2" class="custom-red_btn" @onclick="Delete">Удалить</button>
+</div>
+
+
+@code {
+    [Parameter]
+    public int Id { get; set; }
+
+    [Parameter]
+    public string ContentType { get; set; }
+
+    [Parameter]
+    public bool IsHidden { get; set; }
+
+    ElementReference button1;
+
+    ElementReference button2;
+
+    public void Hide()
+    {
+        server.Hide(Id);
+    }
+
+    public void Show()
+    {
+        server.Show(Id);
+    }
+
+    public void Delete()
+    {
+        if(ContentType == "comment")
+        {
+            server.DeleteComment(Id);
+        }
+        if(ContentType == "post")
+        {
+            server.DeletePost(Id);
+        }
+    }
+
+}

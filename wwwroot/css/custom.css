@@ -163,3 +163,18 @@ main {
 .custom-postIsHidden {
     background-color: rgb(181, 181, 181);
 }
+/*body*/
+
+/*moder*/
+.custom-moder_tools button {
+    border: none;
+    background-color: #939393;
+    color: black;
+    margin-right:0.2rem;
+}
+
+.custom-moder_tools :last-child{
+    border: none;
+    background-color: #F00;
+    color: black;
+}
