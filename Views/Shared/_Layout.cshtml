@@ -8,7 +8,6 @@
   <!--
       <link rel="stylesheet" href="~/css/site.css" />
   -->  
-    <link rel="stylesheet" href="~/css/custom.css"/>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
     @if (User.IsInRole("Moderator"))
@@ -16,6 +15,12 @@
         <!--<script src="~/js/Moderator/Moderator.js" defer></script>-->
         <script src="~/js/Blazor/Moderator.js"></script>
     }
+    @if (IsSectionDefined("AddToHead"))
+    {
+            @RenderSection("AddToHead", required: false)
+    }
+    <link rel="stylesheet" href="~/css/custom.css"/>
+    @RenderSection("AddToHeadAnotherWay", required: false)
 </head>
 <body>
     <header>

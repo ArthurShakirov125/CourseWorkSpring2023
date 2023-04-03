@@ -88,9 +88,10 @@ namespace CourseWorkSpring2023.Controllers
                     }
                 case "comment":
                     {
-                        int postId = int.Parse(Request.Form["PostId"]);
+                       /* int postId = int.Parse(Request.Form["PostId"]);
                         int commentId = postsManager.AddComment(user, postId, Request.Form["Text"]);
-                        return Json(new { reply = 200, commentId = commentId.ToString(), username = user.NickName });
+                        return Json(new { reply = 200, commentId = commentId.ToString(), username = user.NickName });*/
+                       return Json(new { reply = 200 });
                     }
                 case "hide":
                     {

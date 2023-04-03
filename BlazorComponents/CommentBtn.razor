@@ -1,0 +1,29 @@
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@inject CourseWorkSpring2023.ClientServerBlazor.BlazorCallsHandler server
+
+<div class="custom-red_btn" @onclick="Comment">Оставить комментарий</div>
+
+<p>@Text</p>
+
+@code {
+
+    [Parameter]
+    public int PostId { get; set; }
+
+    [Parameter]
+    public int CommentId { get; set; }
+
+    [Parameter]
+    public string Text { get; set; }
+
+    [Parameter]
+    public string UserName { get; set; }
+
+    public async void Comment()
+    {
+        Text = await JSRuntime.InvokeAsync<string>("GetInputText");
+        CommentId = server.CreateComment(UserName, PostId, Text);
+        Text = "comment is posted";
+    }
+}

@@ -33,10 +33,10 @@ namespace CourseWorkSpring2023.Models.IndexViewModel
 
         [Required(ErrorMessage = "Заголовок обязателен")]
         [Display(Name = "Заголовок")]
-        [StringLength(10, ErrorMessage = "Ограничение на 250 символов")]
+        [StringLength(50, ErrorMessage = "Ограничение на 50 символов")]
         public string Header { get; set; }
 
-        [StringLength(250, ErrorMessage = "Ограничение на 250 символов")]
+        [StringLength(5000, ErrorMessage = "Ограничение на 5000 символов")]
         public string RawText { get; set; }
 
         public HtmlString ProcessedText { get; set; }

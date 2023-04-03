@@ -18,7 +18,8 @@
         }
         @if (User.IsInRole("Moderator"))
         {
-            @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "post", Id = post.Id, IsHidden = post.IsHidden}))
+            @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+            ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "post", Id = post.Id, IsHidden = post.IsHidden}))
             if(post.IsHidden){
                 HiddenPostStyle = "custom-postIsHidden";
             }

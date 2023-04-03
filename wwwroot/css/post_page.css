@@ -1,0 +1,48 @@
+﻿h1 {
+    font-family: 'Oswald', sans-serif;
+}
+
+
+.custom-post_strip {
+    background: black;
+    width: 100%;
+    position: fixed;
+    top: 68px;
+    left: 0;
+    z-index: 12;
+    display: flex;
+    color: white;
+    justify-content: space-around;
+    padding: 0.4rem;
+}
+
+.custom-post_strip div{
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+}
+
+.custom-post_strip a{
+    text-decoration: none;
+    color:#FCF7F4;
+}
+
+.custom-posts_container{
+    margin-top:8rem;
+}
+
+.custom-post_header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.custom-post_text {
+    font-family: 'Lora', serif;
+    font-size: 18px;
+    margin-bottom: 5rem;
+}
+
+.trumbowyg{
+    margin-bottom: 2rem;
+}

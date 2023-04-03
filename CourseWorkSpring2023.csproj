@@ -35,7 +35,7 @@
 
   <ItemGroup>
     <Folder Include="Models\Component\" />
-    <Folder Include="wwwroot\js\Blazor\" />
+    <Folder Include="wwwroot\js\RichTextArea\" />
     <Folder Include="wwwroot\Users\UsersAvatarsImages\" />
   </ItemGroup>
 

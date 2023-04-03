@@ -49,5 +49,10 @@ namespace CourseWorkSpring2023.ClientServerBlazor
         {
             contentManager.UnHide(id);
         }
+
+        public int CreateComment(string userName, int postId, string text)
+        {
+            return postsManager.AddComment(userName, postId, text);
+        }
     }
 }
