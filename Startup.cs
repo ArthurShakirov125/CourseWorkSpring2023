@@ -29,7 +29,7 @@ namespace CourseWorkSpring2023
                     Configuration.GetConnectionString("DefaultConnection")));
 
             services.AddDatabaseDeveloperPageExceptionFilter();
-            services.AddServerSideBlazor();
+            services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 
             services.
                 AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)

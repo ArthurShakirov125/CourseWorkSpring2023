@@ -1,16 +1,17 @@
-﻿@inject ClientServerBlazor.BlazorCallsHandler server
+﻿@using Microsoft.JSInterop
+@inject IJSRuntime JSRuntime
+@inject ClientServerBlazor.BlazorCallsHandler server
 
 <div class="custom-moder_tools">
 
-    @if (IsHidden)
-    {
-        <button @ref="button1" class="custom-red_btn" @onclick="Show">Показать</button>
+    
+    @{
+        btnText = IsHidden ? "Показать" : "Скрыть";
     }
-    else
-    {
-        <button @ref="button1" class="custom-red_btn" @onclick="Hide">Скрыть</button>
-    }
-   <button @ref="button2" class="custom-red_btn" @onclick="Delete">Удалить</button>
+
+    <button class="custom-red_btn" @onclick="ShowHide">@btnText</button>
+    
+    <button class="custom-red_btn" @onclick="Delete">Удалить</button>
 </div>
 
 
@@ -24,19 +25,39 @@
     [Parameter]
     public bool IsHidden { get; set; }
 
-    ElementReference button1;
+    [Parameter]
+    public string btnText { get; set; }
 
-    ElementReference button2;
-
-    public void Hide()
+    public void ShowHide()
     {
+        if (IsHidden)
+        {
+            JSRuntime.InvokeVoidAsync("Show", Id);
+            btnText = "Показать";
+            server.Show(Id);
+            IsHidden = !IsHidden;
+        }
+        else
+        {
+            JSRuntime.InvokeVoidAsync("Hide", Id);
+            btnText = "Скрыть";
+            server.Hide(Id);
+            IsHidden = !IsHidden;
+        }
+    }
+
+
+   /* public async void Hide(ElementReference element)
+    {
+        await JSRuntime.InvokeVoidAsync("Test", element);
         server.Hide(Id);
     }
 
-    public void Show()
+    public async void Show(ElementReference element)
     {
+        await JSRuntime.InvokeVoidAsync("Test", element);
         server.Show(Id);
-    }
+    }*/
 
     public void Delete()
     {
