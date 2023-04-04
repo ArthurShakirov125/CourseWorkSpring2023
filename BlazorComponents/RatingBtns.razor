@@ -1,0 +1,98 @@
+﻿@inject ClientServerBlazor.BlazorCallsHandler server
+
+
+@{
+    LikeStyle = IsPostLiked ? "custom-rate_btn_pressed" : "";
+    DisStyle = IsPostDisLiked ? "custom-rate_btn_pressed" : "";
+}
+
+
+<div><img class="@LikeStyle" src="/icons/RatingIcon.svg" @onclick="LikeClick"/></div>
+
+<div class="rating">@Rating</div>              
+
+<div><img class="@DisStyle" src="/icons/RatingIcon.svg" @onclick="DislikeClick"/></div>
+
+@code {
+
+
+    [Parameter]
+    public string UserId { get; set; }
+
+    [Parameter]
+    public int ContentId { get; set; }
+
+    [Parameter]
+    public int Rating { get; set; }
+
+    [Parameter]
+    public bool IsPostLiked { get; set; } = false;
+
+    [Parameter]
+    public bool IsPostDisLiked { get; set; } = false;
+
+    public string LikeStyle { get; set; }
+
+    public string DisStyle { get; set; }
+
+    public void LikeClick()
+    {
+        // просто лайк
+        if (!IsPostDisLiked && !IsPostLiked)
+        {
+            server.Upvote(ContentId, UserId);
+            IsPostLiked = true;
+            Rating++;
+            LikeStyle = "custom-rate_btn_pressed";
+        }
+        //убрать лайк
+        else if (IsPostLiked)
+        {
+            server.RemoveUpvote(ContentId, UserId);
+            IsPostLiked = false;
+            Rating--;
+            LikeStyle = "";
+
+        }
+        // лайк и убрать диз
+        else if (IsPostDisLiked)
+        {
+            server.UpvoteRemoveDownvote(ContentId, UserId);
+            IsPostLiked = true;
+            IsPostDisLiked = false;
+            Rating += 2;
+            LikeStyle = "custom-rate_btn_pressed";
+            DisStyle = "";
+        }
+    }
+
+    public void DislikeClick()
+    {
+        // просто диз
+        if (!IsPostDisLiked && !IsPostLiked)
+        {
+            server.Downvote(ContentId, UserId);
+            IsPostDisLiked = true;
+            Rating--;
+            DisStyle = "custom-rate_btn_pressed";
+        }
+        // убрать диз
+        else if (IsPostDisLiked)
+        {
+            server.RemoveDownvote(ContentId, UserId);
+            IsPostDisLiked = false;
+            Rating++;
+            DisStyle = "";
+        }
+        // убрать лайк и поставить диз
+        else if (IsPostLiked)
+        {
+            server.DownvoteRemoveUpvote(ContentId, UserId);
+            IsPostDisLiked = true;
+            IsPostLiked = false;
+            Rating -= 2;
+            DisStyle = "custom-rate_btn_pressed";
+            LikeStyle = "";
+        }
+    }
+}

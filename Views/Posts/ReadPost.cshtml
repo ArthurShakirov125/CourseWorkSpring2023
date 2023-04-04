@@ -5,9 +5,32 @@
 <div class="custom-post_strip">
     <div>
         <div>@Model.Header</div>
-        <div>
-            111
-        </div>
+            <div class="custom-rate-btns">
+                        @if(Model.ActiveUser == null)
+                        {
+                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/></a>
+                            <div class="rating">@Model.Rating</div>
+                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/> </a>
+                        }
+                        else
+                        {
+                            @if (Model.UpvotedCommentsIds.Contains(Model.Id))
+                            {
+                                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                                RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = Model.Id, Rating = Model.Rating, ISPostLiked = true }))
+                            }
+                            else if (Model.DownvotedCommentsIds.Contains(Model.Id))
+                            {
+                                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                                RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = Model.Id, Rating = Model.Rating, IsPostDisLiked = true }))
+                            }
+                            else
+                            {
+                                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                                RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = Model.Id, Rating = Model.Rating }))
+                            }
+                        }
+            </div>
     </div>
     <div>
         <div>@Html.ActionLink(@Model.Author.NickName, "UserPage", "User", new { userName = Model.Author.UserName})</div>
@@ -36,7 +59,7 @@
                         CommentBtn>(RenderMode.ServerPrerendered,new { PostId = Model.Id, UserName = User.Identity.Name}))
     }
 
-    <div class="comment-section">
+    <div class="custom-comment_section">
         @if(Model.Comments.Any()){
             @foreach (var comment in Model.Comments)
             {
@@ -45,32 +68,29 @@
                         ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = comment.Id, IsHidden = comment.IsHidden}))
 
                 <div class="custom-comment" id="@comment.Id">
-                    <div>
+                    <div class="custom-rate-btns">
                         @if(Model.ActiveUser == null)
                         {
-                            <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">+</a>
-                            <p class="rating">@comment.Rating</p>
-                            <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">-</a>
+                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/></a>
+                            <div class="rating">@comment.Rating</div>
+                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/> </a>
                         }
                         else
                         {
                             @if (Model.UpvotedCommentsIds.Contains(comment.Id))
                             {
-                                <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-Id=@comment.Id data-action="remove_upvote">+</button>
-                                <p class="rating">@comment.Rating</p>
-                                <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote_and_remove_upvote">-</button>
+                                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                                RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = comment.Id, Rating = comment.Rating, ISPostLiked = true }))
                             }
                             else if (Model.DownvotedCommentsIds.Contains(comment.Id))
                             {
-                                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote_and_remove_downvote">+</button>
-                                <p class="rating">@comment.Rating</p>
-                                <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-Id=@comment.Id data-action="remove_downvote">-</button>
+                                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                                RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = comment.Id, Rating = comment.Rating, IsPostDisLiked = true }))
                             }
                             else
                             {
-                                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote">+</button>
-                                <p class="rating">@comment.Rating</p>
-                                <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote">-</button>
+                                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                                RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = comment.Id, Rating = comment.Rating }))
                             }
                         }
                     </div>

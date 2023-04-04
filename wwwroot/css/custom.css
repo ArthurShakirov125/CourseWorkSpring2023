@@ -104,12 +104,19 @@ main {
     flex-direction: column;
     align-items: center;
     width: 33px;
-    position: absolute;
-    top: 0.2rem;
-    left: 0.5rem;
+    margin-left: 0.2rem;
+    margin-top: 0.2rem;
 }
 
-.custom-rate-btns div{
+.custom-rate_btn_pressed {
+    filter: invert(15%) sepia(100%) saturate(3931%) hue-rotate(346deg) brightness(59%) contrast(109%) !important;
+}
+
+.custom-rate-btns img:hover {
+    filter: invert(15%) sepia(100%) saturate(3931%) hue-rotate(346deg) brightness(59%) contrast(109%);
+}
+
+.custom-rate-btns div {
     margin: 0.2rem 0 0.2rem 0;
 }
 

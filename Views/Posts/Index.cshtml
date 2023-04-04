@@ -63,35 +63,20 @@
             {
                 @if (Model.UpvotedPostsIds.Contains(post.Id))
                 {
-                    <div class="likeBtn" data-isPicked="true" data-Id=@post.Id data-action="remove_upvote">
-                        <img src="~/icons/RatingIcon.svg"/>
-                        </div>
-                    <div class="rating">@post.Rating</div>
-                    <div class="dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote_and_remove_upvote">
-                        <img src="~/icons/RatingIcon.svg"/>
-                    </div>
+                    @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                        RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = post.Id, Rating = post.Rating, ISPostLiked = true }))
                 }
                 else if (Model.DownvotedPostsIds.Contains(post.Id))
                 {
-                    <div class="likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote_and_remove_downvote">
-                        <img src="~/icons/RatingIcon.svg"/>
-                    </div>
-                    <div class="rating">@post.Rating</div>
-                    <div class="dislikeBtn" data-isPicked="true" data-Id=@post.Id data-action="remove_downvote">
-                        <img src="~/icons/RatingIcon.svg"/>
-                    </div>
+                    @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                        RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = post.Id, Rating = post.Rating, IsPostDisLiked = true }))
                 }
                 else
-                {
-                    <div class="likeBtn" data-isPicked="false" data-Id=@post.Id data-action="upvote">
-                        <img src="~/icons/RatingIcon.svg"/>
-                    </div>
-                    <div class="rating">@post.Rating</div>
-                    <div class="dislikeBtn" data-isPicked="false" data-Id=@post.Id data-action="downvote">
-                        <img src="~/icons/RatingIcon.svg"/>
-                    </div>
+                    {
+                        @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                        RatingBtns>(RenderMode.ServerPrerendered,new { UserId = Model.ActiveUser.Id, ContentId = post.Id, Rating = post.Rating }))
+                    }
                 }
-            }
             </div>
             <a class="custom-post-open custom-red_btn" asp-action="ReadPost" asp-route-postId=@post.Id>Открыть</a>
         </div>

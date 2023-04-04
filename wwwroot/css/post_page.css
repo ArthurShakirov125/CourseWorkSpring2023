@@ -16,7 +16,16 @@
     padding: 0.4rem;
 }
 
-.custom-post_strip div{
+.custom-post_strip .custom-rate-btns{
+    flex-direction: row;
+    gap: 1rem;
+}
+
+.custom-post_strip .custom-rate-btns img{
+    filter: invert(100%) sepia(100%) saturate(0%) hue-rotate(340deg) brightness(106%) contrast(101%);
+}
+
+.custom-post_strip div {
     display: flex;
     align-items: center;
     gap: 1.5rem;
@@ -45,6 +54,10 @@
 
 .trumbowyg{
     margin-bottom: 2rem;
+}
+
+.custom-comment_section{
+    margin-top: 2rem;
 }
 
 .custom-comment {

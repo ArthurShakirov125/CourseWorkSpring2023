@@ -42,42 +42,45 @@ namespace CourseWorkSpring2023.DataAccessLayer
             return content;
         }
 
-        public void Upvote(int contentId, CustomUser user)
+        public void Upvote(int contentId, string userId)
         {
+            var user = db.Users.Find(userId);
             UploadableContent content = FindContent(contentId);
             content.Upvotes++;
             db.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = true });
             db.SaveChanges();
         }
-        public void RemoveUpvote(int contentId, CustomUser user)
+        public void RemoveUpvote(int contentId, string userId)
         {
-            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+
+            var entry = db.Rates.First(p => p.CustomUser.Id == userId && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
             content.Upvotes--;
             db.Rates.Remove(entry);
             db.SaveChanges();
         }
 
-        public void Downvote(int contentId, CustomUser user)
+        public void Downvote(int contentId, string userId)
         {
+            var user = db.Users.Find(userId);
             UploadableContent content = FindContent(contentId);
             content.Downvotes++;
             db.Rates.Add(new UserContentRates() { CustomUser = user, Content = content, isUpvote = false });
             db.SaveChanges();
         }
 
-        public void RemoveDownvote(int contentId, CustomUser user)
+        public void RemoveDownvote(int contentId, string userId)
         {
-            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            var entry = db.Rates.First(p => p.CustomUser.Id == userId && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
             content.Downvotes--;
             db.Rates.Remove(entry);
             db.SaveChanges();
         }
 
-        public void DownvoteAndRemoveUpvote(int contentId, CustomUser user)
+        public void DownvoteAndRemoveUpvote(int contentId, string userId)
         {
-            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            var entry = db.Rates.First(p => p.CustomUser.Id == userId && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
 
             entry.isUpvote = false;
@@ -88,9 +91,9 @@ namespace CourseWorkSpring2023.DataAccessLayer
             db.SaveChanges();
         }
 
-        public void UpvoteAndRemoveDownvote(int contentId, CustomUser user)
+        public void UpvoteAndRemoveDownvote(int contentId, string userId)
         {
-            var entry = db.Rates.First(p => p.CustomUser.Id == user.Id && p.Content.Id == contentId);
+            var entry = db.Rates.First(p => p.CustomUser.Id == userId && p.Content.Id == contentId);
             UploadableContent content = FindContent(contentId);
 
             entry.isUpvote = true;

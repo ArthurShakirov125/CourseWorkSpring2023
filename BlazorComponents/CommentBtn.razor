@@ -4,8 +4,6 @@
 
 <div class="custom-red_btn" @onclick="Comment">Оставить комментарий</div>
 
-<p>@Text</p>
-
 @code {
 
     [Parameter]
@@ -24,6 +22,6 @@
     {
         Text = await JSRuntime.InvokeAsync<string>("GetInputText");
         CommentId = server.CreateComment(UserName, PostId, Text);
-        Text = "comment is posted";
+        Text = "";
     }
 }

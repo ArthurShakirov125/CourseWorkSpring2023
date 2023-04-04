@@ -15,6 +15,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using NuGet.Protocol.Core.Types;
 
 namespace CourseWorkSpring2023.Controllers
 {
@@ -54,7 +55,7 @@ namespace CourseWorkSpring2023.Controllers
             }
             CustomUser user = await GetUser();
 
-            switch (Request.Form["Action"])
+           /* switch (Request.Form["Action"])
             {
                 case "upvote":
                     {
@@ -90,7 +91,7 @@ namespace CourseWorkSpring2023.Controllers
                     {
                        /* int postId = int.Parse(Request.Form["PostId"]);
                         int commentId = postsManager.AddComment(user, postId, Request.Form["Text"]);
-                        return Json(new { reply = 200, commentId = commentId.ToString(), username = user.NickName });*/
+                        return Json(new { reply = 200, commentId = commentId.ToString(), username = user.NickName });
                        return Json(new { reply = 200 });
                     }
                 case "hide":
@@ -114,16 +115,9 @@ namespace CourseWorkSpring2023.Controllers
                         return Json(new { reply = 200 });
                     }
                 default:
-                    return Json(new { reply = 400 });
-            }
-        }
+                    return Json(new { reply = 400 }); */
 
-
-
-        [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        public IActionResult Error()
-        {
-            return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+            return Json(new { id, user });
         }
     }
 }
