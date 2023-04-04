@@ -34,6 +34,9 @@ namespace CourseWorkSpring2023.Models
 
         public IEnumerable<Comment> Comments { get; set; }
 
+
+        public List<string> FollowersIds { get; set; }
+
         public string AvatarImagePath
         {
             get
@@ -42,5 +45,11 @@ namespace CourseWorkSpring2023.Models
                 return path;
             }
         }
+
+        public bool IsFollowing(string id)
+        {
+            return FollowersIds.Contains(id);
+        }
+
     }
 }

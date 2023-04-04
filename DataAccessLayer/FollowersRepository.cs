@@ -1,5 +1,7 @@
 ﻿using CourseWorkSpring2023.Data;
 using CourseWorkSpring2023.Entities;
+using System;
+using System.Collections.Generic;
 using System.Linq;
 
 namespace CourseWorkSpring2023.DataAccessLayer
@@ -33,5 +35,9 @@ namespace CourseWorkSpring2023.DataAccessLayer
             db.SaveChanges();
         }
 
+        public List<string> UserFollowers(string id)
+        {
+            return db.Followers.Where(pair => pair.FollowedId == id).Select(p => p.FollowerId).ToList();
+        }
     }
 }

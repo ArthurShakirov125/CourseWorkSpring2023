@@ -1,7 +1,11 @@
 ﻿@using Microsoft.AspNetCore.Components
 @inject CourseWorkSpring2023.ClientServerBlazor.BlazorCallsHandler server
 
-<a class="custom-red_btn" @onclick="Click">Отслеживать</a>
+@{
+    FollowedBtnClass = IsFollowed ? "custom-followed" : "custom-not_followed";
+    BtnText = IsFollowed ? "Отписаться" : "Отслеживать";
+}
+<a class="custom-red_btn @FollowedBtnClass" @onclick="Click">@BtnText</a>
 
 
 @code {
@@ -11,8 +15,31 @@
     [Parameter]
     public string FollowedUserId { get; set; }
 
+    [Parameter]
+    public bool IsFollowed { get; set; }
+
+    [Parameter]
+    public string FollowedBtnClass { get; set; }
+
+    [Parameter]
+    public string BtnText { get; set; }
+
     private void Click()
     {
-        server.Follow(ActiveUserId, FollowedUserId);
+        if (!IsFollowed)
+        {
+            FollowedBtnClass = "custom-followed";
+            IsFollowed = true;
+            BtnText = "Отписаться";
+            server.Follow(ActiveUserId, FollowedUserId);
+        }
+        else
+        {
+            FollowedBtnClass = "custom-not_followed";
+            IsFollowed = false;
+            BtnText = "Отслеживать";
+            server.UnFollowUser(ActiveUserId, FollowedUserId);
+        }
+        
      }
  }   

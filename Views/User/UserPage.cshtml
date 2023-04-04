@@ -32,7 +32,8 @@
         <div class="custom-userpage_info_btns">
             @if (SignInManager.IsSignedIn(User))
             {
-                @(await Html.RenderComponentAsync<FollowBtn>(RenderMode.ServerPrerendered,new {  ActiveUserId = (await UserManager.FindByNameAsync(User.Identity.Name)).Id, FollowedUserId = Model.Id }))
+                string ActiveUserId = (await UserManager.FindByNameAsync(User.Identity.Name)).Id;
+                @(await Html.RenderComponentAsync<FollowBtn>(RenderMode.ServerPrerendered,new {  ActiveUserId = ActiveUserId, FollowedUserId = Model.Id, IsFollowed = Model.IsFollowing(ActiveUserId) }))
             }else{
                 <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Register">Отсележивать</a>
             }
