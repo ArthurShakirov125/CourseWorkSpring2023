@@ -7,11 +7,6 @@
 		$(window).scroll(function(){
 			// отступ сверху
 			let top = $(this).scrollTop();
-			console.log("Header height - " + h_hght);
-			console.log("Strip height - " + h_nav);
-			console.log("scroll - " + top);
-			console.log("------------------------------");
-
 			if (top > 0) {
 				$(".custom-post_strip").css("top", "0");
 			}
