@@ -11,5 +11,14 @@ namespace CourseWorkSpring2023.Abstract
         public int Downvotes { get; set; }
         public DateTime Uploaded { get; set; }
         public bool IsHidden { get; set; } = false;
+
+        public string UserAvatarPath
+        {
+            get
+            {
+                string path = @"/Users/UsersAvatarsImages/" + User.AvatarImgName;
+                return path;
+            }
+        }
     }
 }

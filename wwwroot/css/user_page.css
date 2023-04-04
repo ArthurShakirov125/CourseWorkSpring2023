@@ -4,6 +4,7 @@
 .custom-userpage_container {
     display: flex;
     min-height: 500px;
+    margin-bottom:3rem;
 }
 
 .custom-user_posts{
@@ -68,4 +69,9 @@
     background-color: #FCF7F4;
     color: #980110;
     border: 1px solid #980110;
+}
+
+.custom-post .custom-moder_tools {
+    display: flex;
+    flex-direction: column;
 }

@@ -22,15 +22,6 @@ namespace CourseWorkSpring2023.Entities
             get { return Upvotes - Downvotes; }
         }
 
-        public string UserAvatarPath
-        {
-            get
-            {
-                string path = @"/Users/UsersAvatarsImages/" + User.AvatarImgName;
-                return path;
-            }
-        }
-
 
     }
 }

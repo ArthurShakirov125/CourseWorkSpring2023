@@ -31,6 +31,10 @@
     gap: 1.5rem;
 }
 
+.custom-post_strip .custom-strip_author{
+    gap: 0.2rem;
+}
+
 .custom-post_strip a{
     text-decoration: none;
     color:#FCF7F4;

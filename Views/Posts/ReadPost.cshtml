@@ -33,7 +33,10 @@
             </div>
     </div>
     <div>
-        <div>@Html.ActionLink(@Model.Author.NickName, "UserPage", "User", new { userName = Model.Author.UserName})</div>
+        <div class="custom-strip_author">
+                <img class="custom-greet_img" src="@Model.UserAvatar" />
+                @Html.ActionLink(@Model.Author.NickName, "UserPage", "User", new { userName = Model.Author.UserName})
+        </div>
         <div>@Html.ActionLink("Закрыть", "Index", "Posts")</div>
     </div>
 </div>
@@ -63,7 +66,7 @@
         @if(Model.Comments.Any()){
             @foreach (var comment in Model.Comments)
             {
-                @if (User.IsInRole("Moderator"))
+                @if (User.IsInRole("Moderator") || User.Identity.Name == Model.Author.Email)
                 @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
                         ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = comment.Id, IsHidden = comment.IsHidden}))
 

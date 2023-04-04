@@ -1,0 +1,33 @@
+﻿.custom-post_form .title {
+    display: flex;
+    flex-direction: column;
+    margin-top: 2rem;
+    margin-bottom: 1rem;
+}
+.custom-post_form_title {
+    font-size: 24px;
+    border: solid 1px #980110;
+    background-color: #FCF7F4;
+    border-radius: 5px;
+}
+
+.custom-post_form .text {
+    margin-bottom: 1rem;
+    font-family: 'Lora', serif;
+}
+
+.custom-post_form .text .label_text{
+    font-family: 'Montserrat', sans-serif;
+}
+
+.custom-post_form .create_post {
+    border: none;
+    font-size: 16px;
+    font-family: 'Montserrat', sans-serif;
+}
+
+.custom-post_form .btns {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}

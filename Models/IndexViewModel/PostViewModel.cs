@@ -25,6 +25,7 @@ namespace CourseWorkSpring2023.Models.IndexViewModel
             Author = post.User;
             IsHidden = post.IsHidden;
             Comments = post.Comments;
+            UserAvatar = post.UserAvatarPath;
 
             ProcessedText = new HtmlString(RawText);
         }
@@ -33,10 +34,11 @@ namespace CourseWorkSpring2023.Models.IndexViewModel
 
         [Required(ErrorMessage = "Заголовок обязателен")]
         [Display(Name = "Заголовок")]
-        [StringLength(50, ErrorMessage = "Ограничение на 50 символов")]
+        [StringLength(100, ErrorMessage = "Ограничение на 100 символов")]
         public string Header { get; set; }
 
         [StringLength(5000, ErrorMessage = "Ограничение на 5000 символов")]
+        [Display(Name = "Текст")]
         public string RawText { get; set; }
 
         public HtmlString ProcessedText { get; set; }
@@ -51,6 +53,7 @@ namespace CourseWorkSpring2023.Models.IndexViewModel
 
         public IEnumerable<PostsTags> Tags { get; set; }
         public IEnumerable<Comment> Comments { get; set; }
+        public string UserAvatar { get; }
         public bool IsHidden { get; }
         public CustomUser Author { get; set; }
 

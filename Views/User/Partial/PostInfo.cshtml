@@ -1,6 +1,8 @@
 ﻿@model CourseWorkSpring2023.Models.IndexViewModel.PostViewModel
 
 <div class="custom-post" id="@Model.Id">
+                    @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                        ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = Model.Id, IsHidden = Model.IsHidden}))
     <div>
         <h3>
             @Model.Header

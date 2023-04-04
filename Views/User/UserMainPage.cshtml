@@ -17,8 +17,6 @@
         <div class="custom-posts_container">
             @foreach(var post in Model.Posts)
             {
-                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
-                        ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = post.Id, IsHidden = post.IsHidden}))
                 @await Html.PartialAsync("Partial/PostInfo.cshtml", post);
             }
         </div>
