@@ -150,6 +150,12 @@ main {
     text-align: center;
 }
 
+.custom-red_btn:hover{
+    background-color: #FCF7F4;
+    color: #980110;
+    border: 1px solid #980110;
+}
+
 .custom-posts_filter {
     display: flex;
     justify-content: space-between;

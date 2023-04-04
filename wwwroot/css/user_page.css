@@ -71,6 +71,11 @@
     border: 1px solid #980110;
 }
 
+.custom-post .custom-red_btn:hover{
+    background: #980110;
+    color: #FCF7F4;
+}
+
 .custom-post .custom-moder_tools {
     display: flex;
     flex-direction: column;
