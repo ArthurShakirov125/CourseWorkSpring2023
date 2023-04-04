@@ -7,7 +7,7 @@
     background: black;
     width: 100%;
     position: fixed;
-    top: 68px;
+    top: 68px;  
     left: 0;
     z-index: 12;
     display: flex;
@@ -45,4 +45,29 @@
 
 .trumbowyg{
     margin-bottom: 2rem;
+}
+
+.custom-comment {
+    display: flex;
+    border: 1px #980110 solid;
+    width: 100%;
+    gap: 2.5rem;
+    margin-bottom: 0.5rem;
+}
+
+.custom-comment_info {
+    display: flex;
+    gap: 0.5rem;
+    margin-top: 0.5rem;
+    align-items: center;
+    margin-bottom: 0.3rem;
+}
+.custom-comment_info a{
+    text-decoration: none;
+    color: #980110;
+}
+
+.custom-comment_info img{
+    width: 40px;
+    height: 40px;
 }

@@ -40,41 +40,49 @@
         @if(Model.Comments.Any()){
             @foreach (var comment in Model.Comments)
             {
-                <div class="comment content" id="@comment.Id">
-                    @if (User.IsInRole("Moderator"))
-                        //@await Component.InvokeAsync("ModeratorTools", new { ContentType = "comment", Id = comment.Id})
-                        @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                @if (User.IsInRole("Moderator"))
+                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
                         ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = comment.Id, IsHidden = comment.IsHidden}))
 
-                    <h4>@Html.ActionLink(comment.User.NickName, "UserPage", "Home", new { userName = comment.User.UserName})</h4>
-                    <p>@comment.ProcessedText</p>
-                    <p>Рейтинг:</p>
-                    <p>isHidden  -  @comment.IsHidden</p>
-                    <p class="rating">@comment.Rating</p>
-            
-                @if(Model.ActiveUser == null)
-                {
-                    <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">+</a>
-                    <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">-</a>
-                }
-                else
-                {
-                    @if (Model.UpvotedCommentsIds.Contains(comment.Id))
-                    {
-                        <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-Id=@comment.Id data-action="remove_upvote">+</button>
-                        <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote_and_remove_upvote">-</button>
-                    }
-                    else if (Model.DownvotedCommentsIds.Contains(comment.Id))
-                    {
-                        <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote_and_remove_downvote">+</button>
-                        <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-Id=@comment.Id data-action="remove_downvote">-</button>
-                    }
-                    else
-                    {
-                        <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote">+</button>
-                        <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote">-</button>
-                    }
-                }
+                <div class="custom-comment" id="@comment.Id">
+                    <div>
+                        @if(Model.ActiveUser == null)
+                        {
+                            <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">+</a>
+                            <p class="rating">@comment.Rating</p>
+                            <a class="btn btn-secondary" asp-area="Identity" asp-page="/Account/Register">-</a>
+                        }
+                        else
+                        {
+                            @if (Model.UpvotedCommentsIds.Contains(comment.Id))
+                            {
+                                <button class="btn btn-warning likeBtn"   data-isPicked="true"  data-Id=@comment.Id data-action="remove_upvote">+</button>
+                                <p class="rating">@comment.Rating</p>
+                                <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote_and_remove_upvote">-</button>
+                            }
+                            else if (Model.DownvotedCommentsIds.Contains(comment.Id))
+                            {
+                                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote_and_remove_downvote">+</button>
+                                <p class="rating">@comment.Rating</p>
+                                <button class="btn btn-warning dislikeBtn"   data-isPicked="true" data-Id=@comment.Id data-action="remove_downvote">-</button>
+                            }
+                            else
+                            {
+                                <button class="btn btn-secondary likeBtn" data-isPicked="false" data-Id=@comment.Id data-action="upvote">+</button>
+                                <p class="rating">@comment.Rating</p>
+                                <button class="btn btn-secondary dislikeBtn" data-isPicked="false" data-Id=@comment.Id data-action="downvote">-</button>
+                            }
+                        }
+                    </div>
+
+                    <div>
+                        <div class="custom-comment_info">
+                            <img class="custom-greet_img" src="@comment.UserAvatarPath">
+                            <div>@Html.ActionLink(comment.User.NickName, "UserPage", "Home", new { userName = comment.User.UserName})</div>
+                            <div>@comment.Uploaded</div>
+                        </div>
+                        <div>@comment.ProcessedText</div>
+                    </div>
                 </div>
             }
         }else{
@@ -91,6 +99,7 @@
     <script src="~/lib/Trumbowyg/dist/langs/ru.js"></script>
     <script src="~/js/RichTextArea/rich_text_area.js"></script>
     <script src="~/js/Blazor/BlazorHandler.js"></script>
+    <script src="~/js/fixedStrip.js"></script>
 }
 
 @section AddToHead{
