@@ -13,15 +13,19 @@
 
 <div>
     <hr />
-    <div class="row">
-        <div class="col-md-3">
+    <div class="custom-manage_container">
+        <div class="custom-nav">
             <partial name="_ManageNav" />
         </div>
-        <div class="col-md-9">
+        <div class="custom-manage">
             @RenderBody()
         </div>
     </div>
 </div>
+
+@section AddToHead{
+    <link rel="stylesheet" href="~/css/manage_account.css"/>
+}
 
 @section Scripts {
     @RenderSection("Scripts", required: false)
