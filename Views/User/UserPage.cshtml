@@ -1,4 +1,5 @@
 ﻿@using CourseWorkSpring2023.BlazorComponents;
+@using CourseWorkSpring2023.Models.IndexViewModel;
 @using Microsoft.AspNetCore.Identity;
 @model UserViewModel
 @inject SignInManager<CustomUser> SignInManager
@@ -22,7 +23,7 @@
             @foreach(var post in Model.Posts)
             {
                 @if (post.IsHidden) continue;
-                @await Html.PartialAsync("Partial/PostInfo.cshtml", post);
+                @await Html.PartialAsync("Partial/PostInfo.cshtml", new PostInfoViewModel() {Post = post, IsModer = User.IsInRole("Moderator") });
             }
         </div>
     </div>

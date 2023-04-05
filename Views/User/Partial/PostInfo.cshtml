@@ -1,18 +1,22 @@
-﻿@model CourseWorkSpring2023.Models.IndexViewModel.PostViewModel
+﻿@model CourseWorkSpring2023.Models.IndexViewModel.PostInfoViewModel
 
-<div class="custom-post" id="@Model.Id">
-                    @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
-                        ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = Model.Id, IsHidden = Model.IsHidden}))
-    <div>
-        <h3>
-            @Model.Header
-        </h3>
-        <div>Лайки - @Model.Upvotes</div>
-        <div>Дизлайки - @Model.Downvotes</div>
+
+
+    <div class="custom-post" id="@Model.Post.Id">
+        @if(Model.IsModer){
+            @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
+                ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = Model.Post.Id, IsHidden = Model.Post.IsHidden}))
+        }
+        <div>
+            <h3>
+                @Model.Post.Header
+            </h3>
+            <div>Лайки - @Model.Post.Upvotes</div>
+        <div>Дизлайки - @Model.Post.Downvotes</div>
+        </div>
+        <div>
+            <div>Дата публикации - @Model.Post.Posted</div>
+            <div>Комментариев - @Model.Post.CommentsCount</div>
+            <a class="custom-red_btn" asp-action="ReadPost" asp-controller="Posts" asp-route-postId="@Model.Post.Id">Открыть пост</a>
+        </div>
     </div>
-    <div>
-        <div>Дата публикации - @Model.Posted</div>
-        <div>Комментариев - @Model.CommentsCount</div>
-        <a class="custom-red_btn" asp-action="ReadPost" asp-controller="Posts" asp-route-postId="@Model.Id">Открыть пост</a>
-    </div>
-</div>

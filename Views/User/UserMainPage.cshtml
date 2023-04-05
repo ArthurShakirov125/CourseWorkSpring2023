@@ -1,4 +1,5 @@
-﻿@model UserViewModel
+﻿@using CourseWorkSpring2023.Models.IndexViewModel;
+@model UserViewModel
 
 <h1>Привет @Model.NickName!</h1>
 <hr>
@@ -17,7 +18,7 @@
         <div class="custom-posts_container">
             @foreach(var post in Model.Posts)
             {
-                @await Html.PartialAsync("Partial/PostInfo.cshtml", post);
+                @await Html.PartialAsync("Partial/PostInfo.cshtml", new PostInfoViewModel(){Post = post, IsModer = true})
             }
         </div>
     </div>
