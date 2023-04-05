@@ -43,12 +43,14 @@ namespace CourseWorkSpring2023.Areas.Identity.Pages.Account
 
         public class InputModel
         {
-            [Required]
+            [Required(ErrorMessage = "Укажите почту")]
             [EmailAddress]
+            [Display(Name = "Почта")]
             public string Email { get; set; }
 
-            [Required]
+            [Required(ErrorMessage = "Укажите пароль")]
             [DataType(DataType.Password)]
+            [Display(Name = "Пароль")]
             public string Password { get; set; }
 
             [Display(Name = "Запомнить меня?")]

@@ -12,12 +12,12 @@
             <div class="title">
                 <label asp-for="Header"></label>
                 <input class="custom-post_form_title" asp-for="Header"/>
-                <span asp-validation-for="Header"></span>
+                <span class="text-danger" asp-validation-for="Header"></span>
             </div>
             <div class="text">
                 <label class="label_text" asp-for="RawText"></label>
                 <textarea asp-for="RawText"></textarea>
-                <span asp-validation-for="RawText"></span>
+                <span class="text-danger" asp-validation-for="RawText"></span>
             </div>
             <div class="btns">
                 <input type="submit" value="Запостить" class="custom-red_btn create_post" />

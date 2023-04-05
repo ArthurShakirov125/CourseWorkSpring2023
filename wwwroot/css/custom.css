@@ -148,6 +148,7 @@ main {
     text-decoration: none;
     cursor: pointer;
     text-align: center;
+    border: none;
 }
 
 .custom-red_btn:hover{
@@ -191,4 +192,9 @@ main {
     border: none;
     background-color: #F00;
     color: black;
+}
+
+.text-danger {
+    color: red;
+    font-size: 18px;
 }

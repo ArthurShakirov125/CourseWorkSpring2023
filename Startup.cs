@@ -32,7 +32,12 @@ namespace CourseWorkSpring2023
             services.AddServerSideBlazor().AddCircuitOptions(options => { options.DetailedErrors = true; });
 
             services.
-                AddDefaultIdentity<CustomUser>(options => options.SignIn.RequireConfirmedAccount = true)
+                AddDefaultIdentity<CustomUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;
+                    options.User.RequireUniqueEmail = true;
+                }
+                )
                 .AddRoles<IdentityRole>()
                 .AddEntityFrameworkStores<ApplicationDbContext>();
 
