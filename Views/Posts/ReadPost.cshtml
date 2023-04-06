@@ -66,11 +66,11 @@
         @if(Model.Comments.Any()){
             @foreach (var comment in Model.Comments)
             {
-                @if (User.IsInRole("Moderator") || User.Identity.Name == Model.Author.Email)
-                @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
-                        ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = comment.Id, IsHidden = comment.IsHidden}))
 
                 <div class="custom-comment" id="@comment.Id">
+                    @if (User.IsInRole("Moderator") || User.Identity.Name == Model.Author.Email)
+                        @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.ModeratorTools>(RenderMode.ServerPrerendered,new { ContentType = "comment", Id = comment.Id, IsHidden = comment.IsHidden}))
+                    
                     <div class="custom-rate-btns">
                         @if(Model.ActiveUser == null)
                         {

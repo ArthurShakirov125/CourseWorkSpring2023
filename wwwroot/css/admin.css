@@ -1,0 +1,41 @@
+﻿a {
+    text-decoration: none;
+    color: #980110;
+}
+
+input {
+    font-size: 18px;
+    border: solid 1px #980110;
+    background-color: #FCF7F4;
+    border-radius: 5px;
+}
+
+.form-group {
+    margin-bottom: 1rem;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+}
+
+.form-btn{
+    margin-bottom:3rem;
+}
+
+.user-list th, td {
+    padding: 8px;
+    border-bottom: 1px solid #ddd;
+}
+
+.user-list tr:nth-child(even) {
+    background-color: #ddd;
+}
+.user-list {
+    margin-bottom: 3rem;
+}
+
+.nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-top: 3rem;
+}

@@ -3,14 +3,20 @@
 @model IEnumerable<CustomUser>
 
 <h2>Список пользователей</h2>
-<table class="table">
+<table class="user-list">
+    <tr>
+        <th>Имя пользователя</th>
+        <th></th>
+    </tr>
     @foreach (var user in Model)
     {
             <tr>
                 <td>@user.Email</td>
                 <td>
-                        <a class="btn btn-sm btn-primary" asp-action="EditUserRole" asp-route-userid="@user.Id">Права доступа</a>
+                        <a asp-action="EditUserRole" asp-route-userid="@user.Id">Права доступа</a>
                 </td>
             </tr>
     }
 </table>
+
+@Html.ActionLink("Назад", "Index")

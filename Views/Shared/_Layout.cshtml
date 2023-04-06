@@ -19,6 +19,10 @@
     {
             @RenderSection("AddToHead", required: false)
     }
+    @if (User.IsInRole("Admin"))
+    {
+        <link rel="stylesheet" href="~/css/admin.css"/>
+    }
     <link rel="stylesheet" href="~/css/custom.css"/>
     <link rel="stylesheet" href="~/css/login.css"/>
     @RenderSection("AddToHeadAnotherWay", required: false)
@@ -34,6 +38,12 @@
                     <li>
                         <a asp-controller="Posts" asp-action="Index">Home</a>
                     </li>
+                    @if (User.IsInRole("Admin"))
+                    {
+                        <li>
+                            <a asp-controller="Admin" asp-action="Index">Admin</a>
+                        </li>
+                    }
                 </ul>
             </div>
             <div class="custom-nav-links">

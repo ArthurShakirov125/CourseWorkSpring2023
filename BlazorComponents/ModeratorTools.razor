@@ -51,10 +51,12 @@
         if(ContentType == "comment")
         {
             server.DeleteComment(Id);
+            JSRuntime.InvokeVoidAsync("Delete", Id);  
         }
         if(ContentType == "post")
         {
-            server.DeletePost(Id);
+           server.DeletePost(Id);
+           JSRuntime.InvokeVoidAsync("Delete", Id);  
         }
     }
 

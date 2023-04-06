@@ -1,4 +1,4 @@
 function GetInputText() {
-    let txt = $("#text_input").val();
+    var txt = $("#text_input").val();
     return txt;
 }

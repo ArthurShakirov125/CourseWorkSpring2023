@@ -1,4 +1,5 @@
 ﻿@using Microsoft.JSInterop
+@inject NavigationManager uriHelper;
 @inject IJSRuntime JSRuntime
 @inject CourseWorkSpring2023.ClientServerBlazor.BlazorCallsHandler server
 
@@ -18,10 +19,13 @@
     [Parameter]
     public string UserName { get; set; }
 
+    RenderFragment comment;
+
     public async void Comment()
     {
         Text = await JSRuntime.InvokeAsync<string>("GetInputText");
         CommentId = server.CreateComment(UserName, PostId, Text);
         Text = "";
+        uriHelper.NavigateTo(uriHelper.Uri, forceLoad: true);
     }
 }

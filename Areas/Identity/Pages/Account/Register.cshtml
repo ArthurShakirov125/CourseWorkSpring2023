@@ -42,6 +42,7 @@
                 <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
             </div>
             <button type="submit" class="custom-red_btn">Регистрация</button>
+            <a asp-page="./Login" asp-route-returnUrl="@Model.ReturnUrl">Уже зарегестрированы?</a>
         </form>
         </div>
         
