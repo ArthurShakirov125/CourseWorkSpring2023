@@ -11,7 +11,7 @@
             }
             else
             {
-                <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Register">Подписки</a>
+                <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Context.Request.Path">Подписки</a>
             }
         </div>
         <div>
@@ -31,7 +31,7 @@
         }
         else
         {
-            <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Register">Сделать пост</a>
+            <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Context.Request.Path">Сделать пост</a>
         }
         </div>
     

@@ -56,9 +56,9 @@
             <div class="custom-rate-btns">
             @if(Model.ActiveUser == null)
             {
-                <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/></a>
+                <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Context.Request.Path"> <img src="~/icons/RatingIcon.svg"/></a>
                 <div class="rating">@post.Rating</div>
-                <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/> </a>
+                <a asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Context.Request.Path"> <img src="~/icons/RatingIcon.svg"/> </a>
             }
             else
             {

@@ -2,15 +2,18 @@
 @using CourseWorkSpring2023.Models.Moderator;
 @model PostViewModel
 
+@{
+    string retUrl = Context.Request.Path + Context.Request.QueryString;
+}
 <div class="custom-post_strip">
     <div>
         <div>@Model.Header</div>
             <div class="custom-rate-btns">
                         @if(Model.ActiveUser == null)
                         {
-                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/></a>
+                            <a class="" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@retUrl"> <img src="~/icons/RatingIcon.svg"/></a>
                             <div class="rating">@Model.Rating</div>
-                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/> </a>
+                            <a class="" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@retUrl"> <img src="~/icons/RatingIcon.svg"/> </a>
                         }
                         else
                         {
@@ -55,7 +58,7 @@
     <p>Комментариев - @Model.CommentsCount</p>
 
     @if(Model.ActiveUser == null){
-        <a class="custom-red_btn custom-leave_message_unsigned" asp-area="Identity" asp-page="/Account/Register">Оставить комментарий</a>
+        <a class="custom-red_btn custom-leave_message_unsigned" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@retUrl">Оставить комментарий</a>
     }
     else{
         @(await Html.RenderComponentAsync<CourseWorkSpring2023.BlazorComponents.
@@ -74,9 +77,9 @@
                     <div class="custom-rate-btns">
                         @if(Model.ActiveUser == null)
                         {
-                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/></a>
+                            <a class="" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@retUrl"> <img src="~/icons/RatingIcon.svg"/></a>
                             <div class="rating">@comment.Rating</div>
-                            <a class="" asp-area="Identity" asp-page="/Account/Register"> <img src="~/icons/RatingIcon.svg"/> </a>
+                            <a class="" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@retUrl"> <img src="~/icons/RatingIcon.svg"/> </a>
                         }
                         else
                         {
