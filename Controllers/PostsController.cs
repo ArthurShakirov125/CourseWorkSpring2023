@@ -34,7 +34,7 @@ namespace CourseWorkSpring2023.Controllers
             return await userManager.GetUserAsync(User);
         }
 
-        public async Task<IActionResult> Index(string filter = null)
+        public async Task<IActionResult> Index(int days = 0, string filter = null)
         {
             CustomUser user = await GetUser();
             var model = new IndexViewModel();
@@ -55,7 +55,10 @@ namespace CourseWorkSpring2023.Controllers
             switch (filter)
             {
                 case "top":
-                    model.Posts = postsManager.GetList().OrderByDescending(p => p.Upvotes).Select(p => new PostViewModel(p));
+                    var rawPosts = postsManager.GetList().OrderByDescending(p => p.Upvotes).Select(p => new PostViewModel(p));
+                    DateTime DaysFromToday = DateTime.Today.AddDays(-days);
+
+                    model.Posts = rawPosts.Where(p => p.Posted > DaysFromToday);
                     return View(model);
                 case "new":
                     model.Posts = postsManager.GetList().OrderByDescending(p => p.Uploaded).Select(p => new PostViewModel(p));

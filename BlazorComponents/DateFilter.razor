@@ -1,0 +1,26 @@
+﻿
+
+
+
+@code {
+    string FilterStr = "День";
+
+    string style = "none";
+
+    bool isMenuShowed = false; 
+
+    void SelectFilter()
+    {
+        if (!isMenuShowed)
+        {
+            style = "block";
+            isMenuShowed = true;
+        }
+        else
+        {
+            style = "none";
+            isMenuShowed = false;
+        }
+
+    }
+}

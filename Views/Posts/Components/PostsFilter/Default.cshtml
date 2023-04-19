@@ -14,9 +14,7 @@
                 <a class="custom-red_btn" asp-area="Identity" asp-page="/Account/Register" asp-route-returnUrl="@Context.Request.Path">Подписки</a>
             }
         </div>
-        <div>
-            <a class="custom-red_btn" asp-action="Index" asp-controller="Posts" asp-route-filter="top">Лучшие</a>
-        </div>
+            @await Html.PartialAsync("PostFilterDates")
         <div>
             <a class="custom-red_btn" asp-action="Index" asp-controller="Posts" asp-route-filter="new">Новые</a>
         </div>

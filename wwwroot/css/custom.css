@@ -179,6 +179,14 @@ main {
     background-color: rgb(181, 181, 181);
 }
 /*body*/
+/*posts filter*/
+
+.component-post_filter {
+    display: none;
+}
+
+/*posts filter*/
+
 
 /*moder*/
 .custom-moder_tools button {
